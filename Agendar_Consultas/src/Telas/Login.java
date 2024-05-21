@@ -1,4 +1,4 @@
-package Projeto;
+package Telas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -18,8 +18,8 @@ public class Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtEmail;
+	private JTextField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -68,27 +68,27 @@ public class Login extends JFrame {
 		lblNewLabel_1.setBounds(10, 57, 49, 14);
 		panel.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(56, 56, 156, 20);
-		panel.add(textField);
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(56, 56, 156, 20);
+		panel.add(txtEmail);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Senha:");
 		lblNewLabel_1_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
 		lblNewLabel_1_1.setBounds(10, 112, 49, 14);
 		panel.add(lblNewLabel_1_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(56, 111, 156, 20);
-		panel.add(textField_1);
+		txtSenha = new JTextField();
+		txtSenha.setColumns(10);
+		txtSenha.setBounds(56, 111, 156, 20);
+		panel.add(txtSenha);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.setBounds(10, 199, 89, 23);
-		panel.add(btnNewButton);
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setBounds(10, 199, 89, 23);
+		panel.add(btnLogin);
 		
-		JButton btnNewButton_1 = new JButton("Cadastrar");
-		btnNewButton_1.setBounds(109, 199, 103, 23);
-		panel.add(btnNewButton_1);
+		JButton btnCad = new JButton("Cadastrar");
+		btnCad.setBounds(109, 199, 103, 23);
+		panel.add(btnCad);
 	}
 }
