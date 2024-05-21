@@ -6,13 +6,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Sistema.Usuario;
+
 import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import javax.security.auth.login.FailedLoginException;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
@@ -20,10 +26,9 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtEmail;
 	private JTextField txtSenha;
+	
+	Usuario loginUsuario = new Usuario();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -84,6 +89,17 @@ public class Login extends JFrame {
 		panel.add(txtSenha);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String email_usuario, senha_usuario;
+				
+				email_usuario = txtEmail.getText();
+				senha_usuario = txtSenha.getText();
+				
+				loginUsuario.setNome(email_usuario);
+				loginUsuario.setSenha(senha_usuario);
+			}
+		});
 		btnLogin.setBounds(10, 199, 89, 23);
 		panel.add(btnLogin);
 		
