@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-public class ConexaoLogin {
+public class Conexao {
 	public Connection conexaoDB() {
 		Connection conexao = null;
 			

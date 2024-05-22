@@ -14,7 +14,7 @@ public class UsuarioLogin {
 	Connection conexao;
 	
 	public ResultSet autenticacaoUsuario(Usuario objusuario) {
-		conexao = new ConexaoLogin().conexaoDB();
+		conexao = new Conexao().conexaoDB();
 		
 		try{
 			String sql = "SELECT * FROM usuario WHERE nome_usuario = ? and senha = ?";
