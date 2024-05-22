@@ -7,17 +7,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Conexoes.UsuarioLogin;
 import Sistema.Usuario;
 
 import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.security.auth.login.FailedLoginException;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
@@ -26,7 +31,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtEmail;
 	private JTextField txtSenha;
-	
+
 	Usuario loginUsuario = new Usuario();
 
 	public static void main(String[] args) {
@@ -91,13 +96,28 @@ public class Login extends JFrame {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String email_usuario, senha_usuario;
+				try {
+					String email_usuario, senha_usuario;
 				
-				email_usuario = txtEmail.getText();
-				senha_usuario = txtSenha.getText();
+					email_usuario = txtEmail.getText();
+					senha_usuario = txtSenha.getText();
 				
-				loginUsuario.setNome(email_usuario);
-				loginUsuario.setSenha(senha_usuario);
+					loginUsuario.setNome(email_usuario);
+					loginUsuario.setSenha(senha_usuario);
+					
+					UsuarioLogin objusuariologin = new UsuarioLogin();
+					ResultSet rsusuario = objusuariologin.autenticacaoUsuario(loginUsuario);
+					
+					if(rsusuario.next()) {
+						TelaPrincipal principal = new TelaPrincipal();
+						principal.setVisible(true);
+						dispose();
+					}else {
+						JOptionPane.showMessageDialog(null, "Usuário ou senha inválido");
+					}
+				}catch(SQLException erro) {
+					JOptionPane.showMessageDialog(null, "Login" + erro);
+				}
 			}
 		});
 		btnLogin.setBounds(10, 199, 89, 23);
