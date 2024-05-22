@@ -124,6 +124,13 @@ public class Login extends JFrame {
 		panel.add(btnLogin);
 		
 		JButton btnCad = new JButton("Cadastrar");
+		btnCad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+			}
+		});
 		btnCad.setBounds(109, 199, 103, 23);
 		panel.add(btnCad);
 	}
