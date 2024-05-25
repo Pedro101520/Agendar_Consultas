@@ -16,7 +16,7 @@ public class UsuarioLogin {
 	public ResultSet autenticacaoUsuario(Usuario objusuario) {
 		conexao = new Conexao().conexaoDB();
 		
-		try{
+		try{ 
 			String sql = "SELECT email, senha FROM usuarios WHERE email = ? and senha = ?";
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Conexoes.UsuarioCad;
 import Conexoes.UsuarioLogin;
 import Sistema.Usuario;
 
@@ -37,6 +38,7 @@ public class TelaCadastro extends JFrame {
 	private JTextField txtEstado;
 
 	Usuario cadastroUsuario = new Usuario();
+	UsuarioCad cadastra = new UsuarioCad();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -93,43 +95,49 @@ public class TelaCadastro extends JFrame {
 		txtData.setBounds(100, 72, 156, 20);
 		panel.add(txtData);
 		
-		JButton btnLogin = new JButton("Confirmar");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnLogin.setBounds(10, 302, 103, 23);
-		panel.add(btnLogin);
-		
-		JButton btnCad = new JButton("Voltar");
+		JButton btnCad = new JButton("Confirmar");
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String email_usuario, senha_usuario;
-				
-					email_usuario = txtEmail.getText();
-					senha_usuario = txtSenha.getText();
-				
-					loginUsuario.setNome(email_usuario);
-					loginUsuario.setSenha(senha_usuario);
+				try {		
+					cadastroUsuario.setNome(txtNome.getText());
+					cadastroUsuario.setEmail(txtEmail.getText());
+					cadastroUsuario.setNascimento(txtData.getText());
+					cadastroUsuario.setCpf(txtCPF.getText());
+					cadastroUsuario.setRua(txtRua.getText());
+					cadastroUsuario.setBairro(txtBairro.getText());
+					cadastroUsuario.setCidade(txtCidade.getText());
+					cadastroUsuario.setEstado(txtEstado.getText());
+					cadastroUsuario.setSenha(txtSenha.getText());
 					
-					UsuarioLogin objusuariologin = new UsuarioLogin();
-					ResultSet rsusuario = objusuariologin.autenticacaoUsuario(loginUsuario);
+					UsuarioCad objusuarioCadastra = new UsuarioCad();
+					boolean rsCadastro = objusuarioCadastra.cadastrarUsuario(cadastroUsuario);
 					
-					if(rsusuario.next()) {
-						TelaPrincipal principal = new TelaPrincipal();
-						principal.setVisible(true);
+					if(rsCadastro) {
+						Login telaLogin = new Login();
+						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+						telaLogin.setVisible(true);
 						dispose();
 					}else {
-						JOptionPane.showMessageDialog(null, "Usuário ou senha inválido");
+						JOptionPane.showMessageDialog(null, "Verifique as informações e tente novamente!");
 					}
-				}catch(SQLException erro) {
-					JOptionPane.showMessageDialog(null, "Login" + erro);
+				}catch(Exception erro) {
+					JOptionPane.showMessageDialog(null, "Cadastro" + erro);
 				}
 			}
 		});
-		btnLogin.setBounds(10, 199, 89, 23);
-		panel.add(btnLogin);
+		btnCad.setBounds(10, 298, 103, 23);
+		panel.add(btnCad);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login login = new Login();
+				login.setVisible(true);
+				dispose();
+			}
+		});
+		btnVoltar.setBounds(167, 298, 89, 23);
+		panel.add(btnVoltar);
 		
 		txtNome = new JTextField();
 		txtNome.setColumns(10);
