@@ -17,10 +17,10 @@ public class UsuarioLogin {
 		conexao = new Conexao().conexaoDB();
 		
 		try{
-			String sql = "SELECT * FROM usuario WHERE nome_usuario = ? and senha = ?";
+			String sql = "SELECT email, senha FROM usuarios WHERE email = ? and senha = ?";
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
-			pstm.setString(1, objusuario.getNome());
+			pstm.setString(1, objusuario.getEmail());
 			pstm.setString(2, objusuario.getSenha());
 			
 			ResultSet rs = pstm.executeQuery();

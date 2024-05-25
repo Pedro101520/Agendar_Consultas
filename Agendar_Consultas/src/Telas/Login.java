@@ -47,9 +47,6 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Biblioteca\\Downloads\\cadeado.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,7 +99,7 @@ public class Login extends JFrame {
 					email_usuario = txtEmail.getText();
 					senha_usuario = txtSenha.getText();
 				
-					loginUsuario.setNome(email_usuario);
+					loginUsuario.setEmail(email_usuario);
 					loginUsuario.setSenha(senha_usuario);
 					
 					UsuarioLogin objusuariologin = new UsuarioLogin();
