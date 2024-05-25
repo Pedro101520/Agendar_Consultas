@@ -126,9 +126,9 @@ public class Login extends JFrame {
 		JButton btnCad = new JButton("Cadastrar");
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
+				TelaCadastro cadastro = new TelaCadastro();
+				cadastro.setVisible(true);
+				dispose();			
 			}
 		});
 		btnCad.setBounds(109, 199, 103, 23);

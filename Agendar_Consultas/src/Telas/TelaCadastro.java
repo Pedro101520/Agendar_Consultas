@@ -94,6 +94,13 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnLogin);
 		
 		JButton btnCad = new JButton("Voltar");
+		btnCad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login login = new Login();
+				login.setVisible(true);
+				dispose();		
+			}
+		});
 		btnCad.setBounds(109, 199, 103, 23);
 		panel.add(btnCad);
 		
