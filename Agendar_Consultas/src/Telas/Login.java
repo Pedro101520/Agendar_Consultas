@@ -24,15 +24,16 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
 
 	Usuario loginUsuario = new Usuario();
+	private JPasswordField psSenha;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -85,11 +86,6 @@ public class Login extends JFrame {
 		lblNewLabel_1_1.setBounds(10, 112, 49, 14);
 		panel.add(lblNewLabel_1_1);
 		
-		txtSenha = new JTextField();
-		txtSenha.setColumns(10);
-		txtSenha.setBounds(56, 111, 156, 20);
-		panel.add(txtSenha);
-		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,7 +93,7 @@ public class Login extends JFrame {
 					String email_usuario, senha_usuario;
 				
 					email_usuario = txtEmail.getText();
-					senha_usuario = txtSenha.getText();
+					senha_usuario = new String(psSenha.getPassword());
 				
 					loginUsuario.setEmail(email_usuario);
 					loginUsuario.setSenha(senha_usuario);
@@ -130,5 +126,9 @@ public class Login extends JFrame {
 		});
 		btnCad.setBounds(109, 199, 103, 23);
 		panel.add(btnCad);
+		
+		psSenha = new JPasswordField();
+		psSenha.setBounds(56, 111, 156, 20);
+		panel.add(psSenha);
 	}
 }

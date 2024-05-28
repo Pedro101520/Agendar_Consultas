@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import Conexoes.UsuarioCad;
 import Conexoes.UsuarioLogin;
 import Sistema.Usuario;
+import view.util.LimitarCaracteres;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -140,6 +141,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnVoltar);
 		
 		txtNome = new JTextField();
+		txtNome.setDocument(new LimitarCaracteres(60, LimitarCaracteres.TipoEntrada.NOME));
 		txtNome.setColumns(10);
 		txtNome.setBounds(100, 11, 156, 20);
 		panel.add(txtNome);
@@ -150,6 +152,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_1_1);
 		
 		txtCPF = new JTextField();
+		
 		txtCPF.setColumns(10);
 		txtCPF.setBounds(100, 103, 156, 20);
 		panel.add(txtCPF);
