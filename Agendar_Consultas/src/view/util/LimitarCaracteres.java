@@ -5,7 +5,7 @@ import javax.swing.text.PlainDocument;
 
 public class LimitarCaracteres extends PlainDocument {
     public enum TipoEntrada {
-        NOME;
+        NOME, EMAIL, DATA;
     }
 
     private int qtdeCaracteres;
@@ -24,6 +24,8 @@ public class LimitarCaracteres extends PlainDocument {
 
         if (tpEntrada == TipoEntrada.NOME) {
             str = str.replaceAll("[^\\p{L} ]", "");
+        }else if(tpEntrada == TipoEntrada.EMAIL) {
+            str = str.replaceAll("[^\\p{L}\\d@._-]", "");
         }
 
         if ((getLength() + str.length()) <= qtdeCaracteres) {

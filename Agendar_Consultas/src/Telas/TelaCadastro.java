@@ -82,6 +82,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1);
 		
 		txtEmail = new JTextField();
+		txtEmail.setDocument(new LimitarCaracteres(60, LimitarCaracteres.TipoEntrada.EMAIL));
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(100, 41, 156, 20);
 		panel.add(txtEmail);
