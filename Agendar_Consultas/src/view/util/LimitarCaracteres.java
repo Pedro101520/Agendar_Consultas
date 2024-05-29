@@ -26,6 +26,8 @@ public class LimitarCaracteres extends PlainDocument {
             str = str.replaceAll("[^\\p{L} ]", "");
         }else if(tpEntrada == TipoEntrada.EMAIL) {
             str = str.replaceAll("[^\\p{L}\\d@._-]", "");
+        }else if(tpEntrada == TipoEntrada.DATA) {
+            str = str.replaceAll("[^0-9/]", "");
         }
 
         if ((getLength() + str.length()) <= qtdeCaracteres) {

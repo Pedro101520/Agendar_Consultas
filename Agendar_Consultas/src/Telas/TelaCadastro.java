@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import Conexoes.UsuarioCad;
 import Conexoes.UsuarioLogin;
@@ -23,6 +24,10 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JEditorPane;
+import javax.swing.DropMode;
+import java.awt.TextField;
+import javax.swing.JFormattedTextField;
 
 public class TelaCadastro extends JFrame {
 
@@ -54,6 +59,8 @@ public class TelaCadastro extends JFrame {
 		});
 	}
 
+	private JFormattedTextField txtDataFormatted;
+	
 	public TelaCadastro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 450);
@@ -92,10 +99,15 @@ public class TelaCadastro extends JFrame {
 		lblNewLabel_1_1.setBounds(10, 73, 80, 14);
 		panel.add(lblNewLabel_1_1);
 		
-		txtData = new JTextField();
-		txtData.setColumns(10);
-		txtData.setBounds(100, 72, 156, 20);
-		panel.add(txtData);
+		// Vou fazer alterações aqui é no banco de dados
+		try {
+		    MaskFormatter mask = new MaskFormatter("####-##-##");
+		    txtDataFormatted = new JFormattedTextField(mask);
+		    txtDataFormatted.setBounds(100, 72, 156, 20); // Usei 72 para alinhamento com a sua posição original
+		    panel.add(txtDataFormatted);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 		
 		JButton btnCad = new JButton("Confirmar");
 		btnCad.addActionListener(new ActionListener() {
@@ -103,17 +115,17 @@ public class TelaCadastro extends JFrame {
 				try {		
 					cadastroUsuario.setNome(txtNome.getText());
 					cadastroUsuario.setEmail(txtEmail.getText());
-					cadastroUsuario.setNascimento(txtData.getText());
+					cadastroUsuario.setNascimento(txtDataFormatted.getText());
 					cadastroUsuario.setCpf(txtCPF.getText());
 					cadastroUsuario.setRua(txtRua.getText());
 					cadastroUsuario.setBairro(txtBairro.getText());
 					cadastroUsuario.setCidade(txtCidade.getText());
 					cadastroUsuario.setEstado(txtEstado.getText());
 					cadastroUsuario.setSenha(txtSenha.getText());
-					
+									
 					UsuarioCad objusuarioCadastra = new UsuarioCad();
 					boolean rsCadastro = objusuarioCadastra.cadastrarUsuario(cadastroUsuario);
-					
+										
 					if(rsCadastro) {
 						Login telaLogin = new Login();
 						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
@@ -153,7 +165,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_1_1);
 		
 		txtCPF = new JTextField();
-		
+//		txtCPF.setDocument(new LimitarCaracteres(60, LimitarCaracteres.TipoEntrada.CPF));
 		txtCPF.setColumns(10);
 		txtCPF.setBounds(100, 103, 156, 20);
 		panel.add(txtCPF);
@@ -212,5 +224,6 @@ public class TelaCadastro extends JFrame {
 		txtSenha.setBounds(100, 256, 156, 20);
 		panel.add(txtSenha);
 		txtSenha.setColumns(10);
+		
 	}
 }
