@@ -9,6 +9,7 @@ import javax.swing.text.MaskFormatter;
 
 import Conexoes.UsuarioCad;
 import Conexoes.UsuarioLogin;
+import Sistema.ConverteData;
 import Sistema.Usuario;
 import view.util.LimitarCaracteres;
 
@@ -28,16 +29,14 @@ import javax.swing.JEditorPane;
 import javax.swing.DropMode;
 import java.awt.TextField;
 import javax.swing.JFormattedTextField;
+import javax.swing.JPasswordField;
 
 public class TelaCadastro extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtEmail;
-	private JTextField txtData;
 	private JTextField txtNome;
-	private JTextField txtCPF;
-	private JTextField txtSenha;
 	private JTextField txtRua;
 	private JTextField txtBairro;
 	private JTextField txtCidade;
@@ -45,6 +44,7 @@ public class TelaCadastro extends JFrame {
 
 	Usuario cadastroUsuario = new Usuario();
 	UsuarioCad cadastra = new UsuarioCad();
+	ConverteData data = new ConverteData();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -60,6 +60,8 @@ public class TelaCadastro extends JFrame {
 	}
 
 	private JFormattedTextField txtDataFormatted;
+	private JFormattedTextField txtCPFFormatted;
+	private JPasswordField psSenha;
 	
 	public TelaCadastro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,7 +91,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1);
 		
 		txtEmail = new JTextField();
-		txtEmail.setDocument(new LimitarCaracteres(60, LimitarCaracteres.TipoEntrada.EMAIL));
+		txtEmail.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.EMAIL));
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(100, 41, 156, 20);
 		panel.add(txtEmail);
@@ -99,11 +101,12 @@ public class TelaCadastro extends JFrame {
 		lblNewLabel_1_1.setBounds(10, 73, 80, 14);
 		panel.add(lblNewLabel_1_1);
 		
-		// Vou fazer alterações aqui é no banco de dados
+		// Vou fazer alterações aqui e no banco de dados
 		try {
-		    MaskFormatter mask = new MaskFormatter("####-##-##");
+		    MaskFormatter mask = new MaskFormatter("##/##/####");
 		    txtDataFormatted = new JFormattedTextField(mask);
-		    txtDataFormatted.setBounds(100, 72, 156, 20); // Usei 72 para alinhamento com a sua posição original
+		    txtDataFormatted.setBounds(100, 72, 156, 20);
+		    data.setData(txtDataFormatted.getText());
 		    panel.add(txtDataFormatted);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -115,13 +118,13 @@ public class TelaCadastro extends JFrame {
 				try {		
 					cadastroUsuario.setNome(txtNome.getText());
 					cadastroUsuario.setEmail(txtEmail.getText());
-					cadastroUsuario.setNascimento(txtDataFormatted.getText());
-					cadastroUsuario.setCpf(txtCPF.getText());
+					cadastroUsuario.setNascimento(data.getData());
+					cadastroUsuario.setCpf(txtCPFFormatted.getText());
 					cadastroUsuario.setRua(txtRua.getText());
 					cadastroUsuario.setBairro(txtBairro.getText());
 					cadastroUsuario.setCidade(txtCidade.getText());
 					cadastroUsuario.setEstado(txtEstado.getText());
-					cadastroUsuario.setSenha(txtSenha.getText());
+					cadastroUsuario.setSenha(new String(psSenha.getPassword()));
 									
 					UsuarioCad objusuarioCadastra = new UsuarioCad();
 					boolean rsCadastro = objusuarioCadastra.cadastrarUsuario(cadastroUsuario);
@@ -154,7 +157,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(btnVoltar);
 		
 		txtNome = new JTextField();
-		txtNome.setDocument(new LimitarCaracteres(60, LimitarCaracteres.TipoEntrada.NOME));
+		txtNome.setDocument(new LimitarCaracteres(40, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtNome.setColumns(10);
 		txtNome.setBounds(100, 11, 156, 20);
 		panel.add(txtNome);
@@ -164,11 +167,14 @@ public class TelaCadastro extends JFrame {
 		lblNewLabel_1_1_1.setBounds(10, 12, 49, 14);
 		panel.add(lblNewLabel_1_1_1);
 		
-		txtCPF = new JTextField();
-//		txtCPF.setDocument(new LimitarCaracteres(60, LimitarCaracteres.TipoEntrada.CPF));
-		txtCPF.setColumns(10);
-		txtCPF.setBounds(100, 103, 156, 20);
-		panel.add(txtCPF);
+		try {
+		    MaskFormatter mask = new MaskFormatter("###.###.###-##");
+		    txtCPFFormatted = new JFormattedTextField(mask);
+		    txtCPFFormatted.setBounds(100, 103, 156, 20);
+		    panel.add(txtCPFFormatted);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 		
 		JLabel lblNewLabel_1_2 = new JLabel("CPF:");
 		lblNewLabel_1_2.setFont(new Font("Leelawadee", Font.PLAIN, 15));
@@ -181,6 +187,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_3_1);
 		
 		txtRua = new JTextField();
+		txtRua.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtRua.setColumns(10);
 		txtRua.setBounds(100, 134, 156, 20);
 		panel.add(txtRua);
@@ -191,6 +198,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_3_2);
 		
 		txtBairro = new JTextField();
+		txtBairro.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtBairro.setColumns(10);
 		txtBairro.setBounds(100, 166, 156, 20);
 		panel.add(txtBairro);
@@ -201,6 +209,7 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_3_3);
 		
 		txtCidade = new JTextField();
+		txtCidade.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtCidade.setColumns(10);
 		txtCidade.setBounds(100, 197, 156, 20);
 		panel.add(txtCidade);
@@ -211,7 +220,8 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_3_4);
 		
 		txtEstado = new JTextField();
-		txtEstado.setColumns(10);
+		txtEstado.setDocument(new LimitarCaracteres(20, LimitarCaracteres.TipoEntrada.TEXTO));
+		txtEstado.setColumns(20);
 		txtEstado.setBounds(100, 228, 156, 20);
 		panel.add(txtEstado);
 		
@@ -220,10 +230,10 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_3);
 		lblNewLabel_1_3.setFont(new Font("Leelawadee", Font.PLAIN, 15));
 		
-		txtSenha = new JTextField();
-		txtSenha.setBounds(100, 256, 156, 20);
-		panel.add(txtSenha);
-		txtSenha.setColumns(10);
+		//Dar um limite de 8 caracteres
+		psSenha = new JPasswordField();
+		psSenha.setBounds(100, 256, 156, 20);
+		panel.add(psSenha);
 		
 	}
 }
