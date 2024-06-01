@@ -106,7 +106,6 @@ public class TelaCadastro extends JFrame {
 		    MaskFormatter mask = new MaskFormatter("##/##/####");
 		    txtDataFormatted = new JFormattedTextField(mask);
 		    txtDataFormatted.setBounds(100, 72, 156, 20);
-		    data.setData(txtDataFormatted.getText());
 		    panel.add(txtDataFormatted);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -115,7 +114,9 @@ public class TelaCadastro extends JFrame {
 		JButton btnCad = new JButton("Confirmar");
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {		
+				try {
+				    data.setData(txtDataFormatted.getText());
+
 					cadastroUsuario.setNome(txtNome.getText());
 					cadastroUsuario.setEmail(txtEmail.getText());
 					cadastroUsuario.setNascimento(data.getData());
