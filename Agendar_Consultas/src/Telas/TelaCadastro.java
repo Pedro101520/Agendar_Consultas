@@ -133,6 +133,8 @@ public class TelaCadastro extends JFrame {
 					cadastroUsuario.setNascimento(data.getData());
 					if(valida.valida(txtCPFFormatted.getText())) {
 						cadastroUsuario.setCpf(txtCPFFormatted.getText());
+					}else {
+						return;
 					}
 					cadastroUsuario.setRua(txtRua.getText());
 					cadastroUsuario.setBairro(txtBairro.getText());
