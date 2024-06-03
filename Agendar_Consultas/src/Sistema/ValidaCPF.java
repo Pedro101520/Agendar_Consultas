@@ -20,6 +20,14 @@ public class ValidaCPF {
 	}
 	public boolean valida(String CPF) {
 		String cpf = CPF.replace('-', ' ');
+		System.out.println("Teste: " + cpf);
 		return true;
+//		if(cpf.length() == 11) {
+//			
+//			return true;
+//		}else {
+//			JOptionPane.showMessageDialog(null, "CPF inválido");
+//			return false;
+//		}
 	}
 }

@@ -11,6 +11,7 @@ import Conexoes.UsuarioCad;
 import Conexoes.UsuarioLogin;
 import Sistema.ConverteData;
 import Sistema.Usuario;
+import Sistema.ValidaCPF;
 import view.util.LimitarCaracteres;
 
 import java.awt.Color;
@@ -42,10 +43,11 @@ public class TelaCadastro extends JFrame {
 	private JTextField txtCidade;
 	private JTextField txtEstado;
 
+	ValidaCPF valida = new ValidaCPF();
 	Usuario cadastroUsuario = new Usuario();
 	UsuarioCad cadastra = new UsuarioCad();
 	ConverteData data = new ConverteData();
-	
+			
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -111,6 +113,15 @@ public class TelaCadastro extends JFrame {
 		    e.printStackTrace();
 		}
 		
+		try {
+		    MaskFormatter mask = new MaskFormatter("###.###.###-##");
+		    txtCPFFormatted = new JFormattedTextField(mask);
+		    txtCPFFormatted.setBounds(100, 103, 156, 20);
+		    panel.add(txtCPFFormatted);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
 		JButton btnCad = new JButton("Confirmar");
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -120,7 +131,9 @@ public class TelaCadastro extends JFrame {
 					cadastroUsuario.setNome(txtNome.getText());
 					cadastroUsuario.setEmail(txtEmail.getText());
 					cadastroUsuario.setNascimento(data.getData());
-					cadastroUsuario.setCpf(txtCPFFormatted.getText());
+					if(valida.valida(txtCPFFormatted.getText())) {
+						cadastroUsuario.setCpf(txtCPFFormatted.getText());
+					}
 					cadastroUsuario.setRua(txtRua.getText());
 					cadastroUsuario.setBairro(txtBairro.getText());
 					cadastroUsuario.setCidade(txtCidade.getText());
@@ -167,15 +180,6 @@ public class TelaCadastro extends JFrame {
 		lblNewLabel_1_1_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
 		lblNewLabel_1_1_1.setBounds(10, 12, 49, 14);
 		panel.add(lblNewLabel_1_1_1);
-		
-		try {
-		    MaskFormatter mask = new MaskFormatter("###.###.###-##");
-		    txtCPFFormatted = new JFormattedTextField(mask);
-		    txtCPFFormatted.setBounds(100, 103, 156, 20);
-		    panel.add(txtCPFFormatted);
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
 		
 		JLabel lblNewLabel_1_2 = new JLabel("CPF:");
 		lblNewLabel_1_2.setFont(new Font("Leelawadee", Font.PLAIN, 15));
