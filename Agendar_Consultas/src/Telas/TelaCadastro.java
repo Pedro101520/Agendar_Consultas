@@ -103,7 +103,6 @@ public class TelaCadastro extends JFrame {
 		lblNewLabel_1_1.setBounds(10, 73, 80, 14);
 		panel.add(lblNewLabel_1_1);
 		
-		// Vou fazer alterações aqui e no banco de dados
 		try {
 		    MaskFormatter mask = new MaskFormatter("##/##/####");
 		    txtDataFormatted = new JFormattedTextField(mask);

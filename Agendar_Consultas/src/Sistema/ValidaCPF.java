@@ -1,9 +1,17 @@
 package Sistema;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
+
+import Conexoes.Conexao;
 
 public class ValidaCPF {
 	private String CPF;
+	private String cpfValidado;
 	
 	public ValidaCPF() {
 	}
@@ -36,6 +44,24 @@ public class ValidaCPF {
 		return segNum;
 	}
 	
+	Connection conexao;
+	private ResultSet autenticacaoUsuario() {
+		conexao = new Conexao().conexaoDB();
+		
+		try{ 
+			String sql = "SELECT cpf FROM usuarios WHERE cpf = ?";
+			
+			PreparedStatement pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, this.cpfValidado);
+			
+			ResultSet rs = pstm.executeQuery();
+			return rs;
+		} catch(SQLException erro) {
+			JOptionPane.showConfirmDialog(null, "ValidaCPF: " + erro);
+			return null;
+		}
+	}
+	
 	public boolean valida(String CPF) {
 		String cpf = CPF.replace("-", "").replace(".", "");
 		String semDigito = cpf.substring(0, 9);
@@ -43,10 +69,22 @@ public class ValidaCPF {
 		int num2 = this.segDig(semDigito, num1);
 		String cpfCalculado = semDigito + num1 + num2;
 		if(cpf.equals(cpfCalculado)) {
-			System.out.println("Pedro");
-			return true;
+			this.cpfValidado = CPF;
+            ResultSet rs = autenticacaoUsuario();
+            try {
+                if (rs.next() && rs != null) {
+        			JOptionPane.showMessageDialog(null,"CPF Já cadastrado!");
+                    return false;
+                }else {
+                	return true;
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao validar CPF: " + e);
+                return false;
+            }
+		}else {
+			JOptionPane.showMessageDialog(null,"CPF inválido");
+			return false ;
 		}
-		JOptionPane.showMessageDialog(null,"CPF inválido");
-		return false ;
 	}
 }
