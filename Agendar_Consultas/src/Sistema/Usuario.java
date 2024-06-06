@@ -7,6 +7,7 @@ public class Usuario {
 	private String senha; 
 	private String nascimento;
 	private String cpf;
+	private String cep;
 	private String rua;
 	private String bairro;
 	private String cidade;
@@ -41,6 +42,13 @@ public class Usuario {
 	}
 	public String getCpf() {
 		return this.cpf;
+	}
+	
+	public void setCEP(String cep) {
+		this.cep = cep;
+	}
+	public String getCEP() {
+		return this.cep;
 	}
 	
 	public void setRua(String rua) {

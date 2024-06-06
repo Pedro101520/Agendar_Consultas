@@ -17,7 +17,7 @@ public class UsuarioCad {
 		conexao = new Conexao().conexaoDB();
 		
 		try{ 
-			String sql = "INSERT INTO usuarios (nome, email, senha, data_nascimento, cpf, rua, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO usuarios (nome, email, senha, data_nascimento, cpf, rua, bairro, cidade, estado, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pstm = conexao.prepareStatement(sql);
 			
 			pstm.setString(1, objcadastra.getNome());
@@ -29,6 +29,7 @@ public class UsuarioCad {
 			pstm.setString(7, objcadastra.getBairro());
 			pstm.setString(8, objcadastra.getCidade());
 			pstm.setString(9, objcadastra.getEstado());
+			pstm.setString(10, objcadastra.getCEP());
 			
 			pstm.executeUpdate();
 			return true;
