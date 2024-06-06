@@ -73,7 +73,7 @@ public class ValidaCPF {
             ResultSet rs = autenticacaoUsuario();
             try {
                 if (rs.next() && rs != null) {
-        			JOptionPane.showMessageDialog(null,"CPF Já cadastrado!");
+        			JOptionPane.showMessageDialog(null,"CPF Já esta em uso, tente fazer o login!");
                     return false;
                 }else {
                 	return true;

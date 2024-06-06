@@ -12,6 +12,7 @@ import Conexoes.UsuarioLogin;
 import Sistema.ConverteData;
 import Sistema.Usuario;
 import Sistema.ValidaCPF;
+import Sistema.registraEmail;
 import view.util.LimitarCaracteres;
 
 import java.awt.Color;
@@ -47,6 +48,7 @@ public class TelaCadastro extends JFrame {
 	Usuario cadastroUsuario = new Usuario();
 	UsuarioCad cadastra = new UsuarioCad();
 	ConverteData data = new ConverteData();
+	registraEmail regEmail = new registraEmail();
 			
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -128,7 +130,11 @@ public class TelaCadastro extends JFrame {
 				    data.setData(txtDataFormatted.getText());
 
 					cadastroUsuario.setNome(txtNome.getText());
-					cadastroUsuario.setEmail(txtEmail.getText());
+					if(regEmail.emailDB(txtEmail.getText())) {
+						cadastroUsuario.setEmail(txtEmail.getText());
+					}else {
+						return;
+					}
 					cadastroUsuario.setNascimento(data.getData());
 					if(valida.valida(txtCPFFormatted.getText())) {
 						cadastroUsuario.setCpf(txtCPFFormatted.getText());
