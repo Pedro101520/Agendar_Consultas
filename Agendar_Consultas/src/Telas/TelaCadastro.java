@@ -197,7 +197,7 @@ public class TelaCadastro extends JFrame {
 		
 		JLabel lblNewLabel_1_3_1 = new JLabel("CEP:");
 		lblNewLabel_1_3_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_1.setBounds(10, 171, 49, 14);
+		lblNewLabel_1_3_1.setBounds(10, 141, 49, 14);
 		panel.add(lblNewLabel_1_3_1);
 		
 		JLabel lblNewLabel_1_3_2 = new JLabel("Bairro:");
@@ -245,18 +245,18 @@ public class TelaCadastro extends JFrame {
 		
 		txtRua = new JTextField();
 		txtRua.setColumns(10);
-		txtRua.setBounds(100, 140, 156, 20);
+		txtRua.setBounds(100, 171, 156, 20);
 		panel.add(txtRua);
 		
 		JLabel lblNewLabel_1_3_1_1 = new JLabel("Rua:");
 		lblNewLabel_1_3_1_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_1_1.setBounds(10, 141, 49, 14);
+		lblNewLabel_1_3_1_1.setBounds(10, 172, 49, 14);
 		panel.add(lblNewLabel_1_3_1_1);
 		
 		try {
 		    MaskFormatter mask = new MaskFormatter("#####-###");
 		    txtCEPFormatted = new JFormattedTextField(mask);
-		    txtCEPFormatted.setBounds(100, 170, 156, 20);
+		    txtCEPFormatted.setBounds(100, 140, 156, 20);
 		    panel.add(txtCEPFormatted);
 		} catch (Exception e) {
 		    e.printStackTrace();
