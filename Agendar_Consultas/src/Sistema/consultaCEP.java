@@ -8,10 +8,18 @@ import java.net.URL;
 import org.json.JSONObject;
 
 public class consultaCEP {
-    public static void main(String[] args) {
+	
+	private String rua;
+	private String estado;
+	private String cidade;
+	private String bairro;
+	
+	public consultaCEP() {
+	}
+	
+	public void exibeInfo(String cep) {
         try {
             // CEP que você quer consultar
-            String cep = "08565440";
             String url = "https://viacep.com.br/ws/" + cep + "/json/";
 
             // Criação da conexão HTTP
@@ -36,14 +44,44 @@ public class consultaCEP {
             String estado = jsonResponse.getString("uf");
             String rua = jsonResponse.getString("logradouro");
             String bairro = jsonResponse.getString("bairro");
-
-            System.out.println("Cidade: " + cidade);
-            System.out.println("Estado: " + estado);
-            System.out.println("Rua: " + rua);
-            System.out.println("Bairro: " + bairro);
+            
+            
+            this.setCidade(cidade);
+            this.setEstado(estado);
+            this.setRua(rua);
+            this.setBairro(bairro);
+            
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
+          }
+	}
+	
+	public String getRua() {
+		return this.rua;
+	}
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+	
+	public String getEstado() {
+		return this.estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	public String getCidade() {
+		return this.cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	
+	public String getBairro() {
+		return this.bairro;
+	}
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 }
 

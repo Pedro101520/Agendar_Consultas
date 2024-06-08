@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 
 import Conexoes.UsuarioCad;
@@ -12,6 +14,7 @@ import Conexoes.UsuarioLogin;
 import Sistema.ConverteData;
 import Sistema.Usuario;
 import Sistema.ValidaCPF;
+import Sistema.consultaCEP;
 import Sistema.registraEmail;
 import view.util.LimitarCaracteres;
 
@@ -48,6 +51,7 @@ public class TelaCadastro extends JFrame {
 	UsuarioCad cadastra = new UsuarioCad();
 	ConverteData data = new ConverteData();
 	registraEmail regEmail = new registraEmail();
+	consultaCEP consulta = new consultaCEP();
 			
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -87,29 +91,29 @@ public class TelaCadastro extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(240, 249, 242));
-		panel.setBounds(35, 45, 266, 355);
+		panel.setBounds(35, 40, 266, 365);
 		contentPane.add(panel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Email:");
 		lblNewLabel_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(10, 48, 49, 14);
+		lblNewLabel_1.setBounds(10, 49, 49, 14);
 		panel.add(lblNewLabel_1);
 		
 		txtEmail = new JTextField();
 		txtEmail.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.EMAIL));
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(100, 47, 156, 20);
+		txtEmail.setBounds(100, 48, 156, 20);
 		panel.add(txtEmail);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Data Nasc:");
 		lblNewLabel_1_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_1.setBounds(10, 79, 80, 14);
+		lblNewLabel_1_1.setBounds(10, 80, 80, 14);
 		panel.add(lblNewLabel_1_1);
 		
 		try {
 		    MaskFormatter mask = new MaskFormatter("##/##/####");
 		    txtDataFormatted = new JFormattedTextField(mask);
-		    txtDataFormatted.setBounds(100, 78, 156, 20);
+		    txtDataFormatted.setBounds(100, 79, 156, 20);
 		    panel.add(txtDataFormatted);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -118,7 +122,7 @@ public class TelaCadastro extends JFrame {
 		try {
 		    MaskFormatter mask = new MaskFormatter("###.###.###-##");
 		    txtCPFFormatted = new JFormattedTextField(mask);
-		    txtCPFFormatted.setBounds(100, 109, 156, 20);
+		    txtCPFFormatted.setBounds(100, 110, 156, 20);
 		    panel.add(txtCPFFormatted);
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -165,7 +169,7 @@ public class TelaCadastro extends JFrame {
 				}
 			}
 		});
-		btnCad.setBounds(10, 321, 103, 23);
+		btnCad.setBounds(10, 331, 103, 23);
 		panel.add(btnCad);
 		
 		JButton btnVoltar = new JButton("Voltar");
@@ -176,7 +180,7 @@ public class TelaCadastro extends JFrame {
 				dispose();
 			}
 		});
-		btnVoltar.setBounds(167, 321, 89, 23);
+		btnVoltar.setBounds(167, 331, 89, 23);
 		panel.add(btnVoltar);
 		
 		txtNome = new JTextField();
@@ -190,77 +194,119 @@ public class TelaCadastro extends JFrame {
 		lblNewLabel_1_1_1.setBounds(10, 18, 49, 14);
 		panel.add(lblNewLabel_1_1_1);
 		
+	    JLabel lblCepErro = new JLabel("CEP inválido");
+	    lblCepErro.setForeground(new Color(255, 0, 0));
+	    lblCepErro.setBackground(new Color(255, 0, 0));
+	    lblCepErro.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblCepErro.setBounds(103, 160, 49, 14);
+	    panel.add(lblCepErro);
+    	lblCepErro.setVisible(false);
+		
 		JLabel lblNewLabel_1_2 = new JLabel("CPF:");
 		lblNewLabel_1_2.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_2.setBounds(10, 110, 49, 14);
+		lblNewLabel_1_2.setBounds(10, 111, 49, 14);
 		panel.add(lblNewLabel_1_2);
 		
 		JLabel lblNewLabel_1_3_1 = new JLabel("CEP:");
 		lblNewLabel_1_3_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_1.setBounds(10, 141, 49, 14);
+		lblNewLabel_1_3_1.setBounds(10, 142, 49, 14);
 		panel.add(lblNewLabel_1_3_1);
 		
 		JLabel lblNewLabel_1_3_2 = new JLabel("Bairro:");
 		lblNewLabel_1_3_2.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_2.setBounds(10, 201, 49, 14);
+		lblNewLabel_1_3_2.setBounds(10, 211, 49, 14);
 		panel.add(lblNewLabel_1_3_2);
 		
 		txtBairro = new JTextField();
 		txtBairro.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtBairro.setColumns(10);
-		txtBairro.setBounds(100, 200, 156, 20);
+		txtBairro.setBounds(100, 210, 156, 20);
 		panel.add(txtBairro);
 		
 		JLabel lblNewLabel_1_3_3 = new JLabel("Cidade:");
 		lblNewLabel_1_3_3.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_3.setBounds(10, 232, 69, 14);
+		lblNewLabel_1_3_3.setBounds(10, 242, 69, 14);
 		panel.add(lblNewLabel_1_3_3);
 		
 		txtCidade = new JTextField();
 		txtCidade.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtCidade.setColumns(10);
-		txtCidade.setBounds(100, 231, 156, 20);
+		txtCidade.setBounds(100, 241, 156, 20);
 		panel.add(txtCidade);
 		
 		JLabel lblNewLabel_1_3_4 = new JLabel("Estado:");
 		lblNewLabel_1_3_4.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_4.setBounds(10, 263, 49, 14);
+		lblNewLabel_1_3_4.setBounds(10, 273, 49, 14);
 		panel.add(lblNewLabel_1_3_4);
 		
 		txtEstado = new JTextField();
 		txtEstado.setDocument(new LimitarCaracteres(20, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtEstado.setColumns(20);
-		txtEstado.setBounds(100, 262, 156, 20);
+		txtEstado.setBounds(100, 272, 156, 20);
 		panel.add(txtEstado);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Senha:");
-		lblNewLabel_1_3.setBounds(10, 291, 49, 14);
+		lblNewLabel_1_3.setBounds(10, 301, 49, 14);
 		panel.add(lblNewLabel_1_3);
 		lblNewLabel_1_3.setFont(new Font("Leelawadee", Font.PLAIN, 15));
 		
 		//Dar um limite de 8 caracteres
 		psSenha = new JPasswordField();
-		psSenha.setBounds(100, 290, 156, 20);
+		psSenha.setBounds(100, 300, 156, 20);
 		panel.add(psSenha);
 		
 		txtRua = new JTextField();
 		txtRua.setColumns(10);
-		txtRua.setBounds(100, 171, 156, 20);
+		txtRua.setBounds(100, 181, 156, 20);
 		panel.add(txtRua);
 		
 		JLabel lblNewLabel_1_3_1_1 = new JLabel("Rua:");
 		lblNewLabel_1_3_1_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_1_1.setBounds(10, 172, 49, 14);
+		lblNewLabel_1_3_1_1.setBounds(10, 182, 49, 14);
 		panel.add(lblNewLabel_1_3_1_1);
 		
 		try {
 		    MaskFormatter mask = new MaskFormatter("#####-###");
 		    txtCEPFormatted = new JFormattedTextField(mask);
-		    txtCEPFormatted.setBounds(100, 140, 156, 20);
+		    txtCEPFormatted.setBounds(100, 141, 156, 20);
 		    panel.add(txtCEPFormatted);
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
 		
+        txtCEPFormatted.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                verificarCEP();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verificarCEP();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                verificarCEP();
+            }
+
+            private void verificarCEP() {
+                String cep = txtCEPFormatted.getText().replaceAll("-", "").replaceAll(" ", "");
+                String verificaCEP = "";
+                try {
+	                if (cep.length() == 8) {
+	                    verificaCEP += cep;
+	                    consulta.exibeInfo(verificaCEP);
+	                    txtRua.setText(consulta.getRua());
+	                    txtBairro.setText(consulta.getBairro());
+	                    txtCidade.setText(consulta.getCidade());
+	                    txtEstado.setText(consulta.getEstado());  
+	                	lblCepErro.setVisible(false);
+	                }
+                }catch(Exception erro) {
+                	lblCepErro.setVisible(true);
+                }
+            }
+        });	
 	}
 }
