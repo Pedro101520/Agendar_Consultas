@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import Conexoes.Conexao;
+import Telas.TelaCadastro;
 
 public class registraEmail {
 	private String email;
@@ -41,8 +42,12 @@ public class registraEmail {
         	if (rs.next() && rs != null) {
         		JOptionPane.showMessageDialog(null,"Email Já esta em uso, tente fazer o login!");
                 return false;
-        	}else {
-        		return true;
+        	}else if(this.email.length() < 1){
+        		TelaCadastro.setVisibleLabelEmail(true);
+        		return false;
+            }else {
+        		TelaCadastro.setVisibleLabelEmail(false);
+            	return true;
             }
         } catch (SQLException e) {
         	JOptionPane.showMessageDialog(null, "Erro ao registrar Email: " + e);

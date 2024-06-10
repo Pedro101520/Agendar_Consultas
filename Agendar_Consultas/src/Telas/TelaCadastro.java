@@ -33,6 +33,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JEditorPane;
 import javax.swing.DropMode;
 import java.awt.TextField;
+import java.awt.Window;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
 
@@ -71,6 +73,15 @@ public class TelaCadastro extends JFrame {
 	private JFormattedTextField txtCEPFormatted;
 	private JPasswordField psSenha;
 	private JTextField txtRua;
+	private static JLabel lblEmailVazio;
+	private static JLabel lblNomeVazio;
+	private static JLabel lblDataVazio;
+	private static JLabel lblCPFVazio;
+	private static JLabel lblRuaVazio;
+	private static JLabel lblBairroVazio;
+	private static JLabel lblCidadeVazio;
+	private static JLabel lblEstadoVazio;
+	private static JLabel lblSenhaVazio;
 	
 	public TelaCadastro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,6 +158,7 @@ public class TelaCadastro extends JFrame {
 						return;
 					}
 					cadastroUsuario.setCEP(txtCEPFormatted.getText());
+					
 					cadastroUsuario.setRua(txtRua.getText());
 					cadastroUsuario.setBairro(txtBairro.getText());
 					cadastroUsuario.setCidade(txtCidade.getText());
@@ -198,9 +210,81 @@ public class TelaCadastro extends JFrame {
 	    lblCepErro.setForeground(new Color(255, 0, 0));
 	    lblCepErro.setBackground(new Color(255, 0, 0));
 	    lblCepErro.setFont(new Font("Tahoma", Font.PLAIN, 8));
-	    lblCepErro.setBounds(103, 160, 49, 14);
+	    lblCepErro.setBounds(100, 159, 49, 14);
 	    panel.add(lblCepErro);
     	lblCepErro.setVisible(false);
+    	
+	    lblNomeVazio = new JLabel("Informe um Nome");
+	    lblNomeVazio.setForeground(new Color(255, 0, 0));
+	    lblNomeVazio.setBackground(new Color(255, 0, 0));
+	    lblNomeVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblNomeVazio.setBounds(100, 35, 69, 14);
+	    panel.add(lblNomeVazio);
+	    lblNomeVazio.setVisible(false);
+    	
+	    lblEmailVazio = new JLabel("Informe um Email");
+	    lblEmailVazio.setForeground(new Color(255, 0, 0));
+	    lblEmailVazio.setBackground(new Color(255, 0, 0));
+	    lblEmailVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblEmailVazio.setBounds(100, 66, 69, 14);
+	    panel.add(lblEmailVazio);
+	    lblEmailVazio.setVisible(false);
+	    
+	    lblDataVazio = new JLabel("Informe uma data");
+	    lblDataVazio.setForeground(new Color(255, 0, 0));
+	    lblDataVazio.setBackground(new Color(255, 0, 0));
+	    lblDataVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblDataVazio.setBounds(100, 98, 69, 14);
+	    panel.add(lblDataVazio);
+	    lblDataVazio.setVisible(false);
+	    
+	    lblCPFVazio = new JLabel("Informe um CPF");
+	    lblCPFVazio.setForeground(new Color(255, 0, 0));
+	    lblCPFVazio.setBackground(new Color(255, 0, 0));
+	    lblCPFVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblCPFVazio.setBounds(100, 129, 69, 14);
+	    panel.add(lblCPFVazio);
+	    lblCPFVazio.setVisible(false);
+	    
+	    lblRuaVazio = new JLabel("Informe uma Rua");
+	    lblRuaVazio.setForeground(new Color(255, 0, 0));
+	    lblRuaVazio.setBackground(new Color(255, 0, 0));
+	    lblRuaVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblRuaVazio.setBounds(100, 190, 69, 14);
+	    panel.add(lblRuaVazio);
+	    lblRuaVazio.setVisible(false);
+	    
+	    lblBairroVazio = new JLabel("Informe um Bairro");
+	    lblBairroVazio.setForeground(new Color(255, 0, 0));
+	    lblBairroVazio.setBackground(new Color(255, 0, 0));
+	    lblBairroVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblBairroVazio.setBounds(100, 220, 69, 14);
+	    panel.add(lblBairroVazio);
+	    lblBairroVazio.setVisible(false);
+	    
+	    lblCidadeVazio = new JLabel("Informe uma Cidade");
+	    lblCidadeVazio.setForeground(new Color(255, 0, 0));
+	    lblCidadeVazio.setBackground(new Color(255, 0, 0));
+	    lblCidadeVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblCidadeVazio.setBounds(100, 252, 89, 14);
+	    panel.add(lblCidadeVazio);
+	    lblCidadeVazio.setVisible(false);
+	    
+	    lblEstadoVazio = new JLabel("Informe um Estado");
+	    lblEstadoVazio.setForeground(new Color(255, 0, 0));
+	    lblEstadoVazio.setBackground(new Color(255, 0, 0));
+	    lblEstadoVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblEstadoVazio.setBounds(100, 285, 80, 14);
+	    panel.add(lblEstadoVazio);
+	    lblEstadoVazio.setVisible(false);
+	    
+	    lblSenhaVazio = new JLabel("Informe uma Senha");
+	    lblSenhaVazio.setForeground(new Color(255, 0, 0));
+	    lblSenhaVazio.setBackground(new Color(255, 0, 0));
+	    lblSenhaVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+	    lblSenhaVazio.setBounds(100, 318, 80, 14);
+	    panel.add(lblSenhaVazio);
+	    lblSenhaVazio.setVisible(false);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("CPF:");
 		lblNewLabel_1_2.setFont(new Font("Leelawadee", Font.PLAIN, 15));
@@ -214,55 +298,55 @@ public class TelaCadastro extends JFrame {
 		
 		JLabel lblNewLabel_1_3_2 = new JLabel("Bairro:");
 		lblNewLabel_1_3_2.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_2.setBounds(10, 211, 49, 14);
+		lblNewLabel_1_3_2.setBounds(10, 204, 49, 14);
 		panel.add(lblNewLabel_1_3_2);
 		
 		txtBairro = new JTextField();
 		txtBairro.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtBairro.setColumns(10);
-		txtBairro.setBounds(100, 210, 156, 20);
+		txtBairro.setBounds(100, 203, 156, 20);
 		panel.add(txtBairro);
 		
 		JLabel lblNewLabel_1_3_3 = new JLabel("Cidade:");
 		lblNewLabel_1_3_3.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_3.setBounds(10, 242, 69, 14);
+		lblNewLabel_1_3_3.setBounds(10, 235, 69, 14);
 		panel.add(lblNewLabel_1_3_3);
 		
 		txtCidade = new JTextField();
 		txtCidade.setDocument(new LimitarCaracteres(30, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtCidade.setColumns(10);
-		txtCidade.setBounds(100, 241, 156, 20);
+		txtCidade.setBounds(100, 234, 156, 20);
 		panel.add(txtCidade);
 		
 		JLabel lblNewLabel_1_3_4 = new JLabel("Estado:");
 		lblNewLabel_1_3_4.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_4.setBounds(10, 273, 49, 14);
+		lblNewLabel_1_3_4.setBounds(10, 266, 49, 14);
 		panel.add(lblNewLabel_1_3_4);
 		
 		txtEstado = new JTextField();
 		txtEstado.setDocument(new LimitarCaracteres(20, LimitarCaracteres.TipoEntrada.TEXTO));
 		txtEstado.setColumns(20);
-		txtEstado.setBounds(100, 272, 156, 20);
+		txtEstado.setBounds(100, 265, 156, 20);
 		panel.add(txtEstado);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Senha:");
-		lblNewLabel_1_3.setBounds(10, 301, 49, 14);
+		lblNewLabel_1_3.setBounds(10, 300, 49, 14);
 		panel.add(lblNewLabel_1_3);
 		lblNewLabel_1_3.setFont(new Font("Leelawadee", Font.PLAIN, 15));
 		
 		//Dar um limite de 8 caracteres
 		psSenha = new JPasswordField();
-		psSenha.setBounds(100, 300, 156, 20);
+		psSenha.setBounds(100, 299, 156, 20);
 		panel.add(psSenha);
 		
 		txtRua = new JTextField();
 		txtRua.setColumns(10);
-		txtRua.setBounds(100, 181, 156, 20);
+		txtRua.setBounds(100, 173, 156, 20);
 		panel.add(txtRua);
 		
 		JLabel lblNewLabel_1_3_1_1 = new JLabel("Rua:");
 		lblNewLabel_1_3_1_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
-		lblNewLabel_1_3_1_1.setBounds(10, 182, 49, 14);
+		lblNewLabel_1_3_1_1.setBounds(10, 173, 49, 14);
 		panel.add(lblNewLabel_1_3_1_1);
 		
 		try {
@@ -300,13 +384,22 @@ public class TelaCadastro extends JFrame {
 	                    txtRua.setText(consulta.getRua());
 	                    txtBairro.setText(consulta.getBairro());
 	                    txtCidade.setText(consulta.getCidade());
-	                    txtEstado.setText(consulta.getEstado());  
+	                    txtEstado.setText(consulta.getEstado()); 
 	                	lblCepErro.setVisible(false);
 	                }
                 }catch(Exception erro) {
                 	lblCepErro.setVisible(true);
+                	txtRua.setText("");
+                	txtCidade.setText("");
+                	txtBairro.setText("");
+                	txtEstado.setText("");
                 }
             }
         });	
+	}
+	
+	
+	public static void setVisibleLabelEmail(boolean visible) {
+		lblEmailVazio.setVisible(visible);
 	}
 }
