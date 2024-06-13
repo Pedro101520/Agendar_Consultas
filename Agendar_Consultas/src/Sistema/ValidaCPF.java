@@ -86,7 +86,7 @@ public class ValidaCPF {
                 return false;
             }
 		}else {
-			JOptionPane.showMessageDialog(null,"CPF inválido");
+//			JOptionPane.showMessageDialog(null,"CPF inválido");
 			return false ;
 		}
 	}

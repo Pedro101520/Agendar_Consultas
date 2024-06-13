@@ -42,11 +42,7 @@ public class registraEmail {
         	if (rs.next() && rs != null) {
         		JOptionPane.showMessageDialog(null,"Email Já esta em uso, tente fazer o login!");
                 return false;
-        	}else if(this.email.length() < 1){
-        		TelaCadastro.setVisibleLabelEmail(true);
-        		return false;
-            }else {
-        		TelaCadastro.setVisibleLabelEmail(false);
+        	}else {
             	return true;
             }
         } catch (SQLException e) {
