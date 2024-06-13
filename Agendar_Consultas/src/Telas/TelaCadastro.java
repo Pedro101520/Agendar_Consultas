@@ -77,6 +77,7 @@ public class TelaCadastro extends JFrame {
 	private static JLabel lblNomeVazio;
 	private static JLabel lblDataVazio;
 	private static JLabel lblCPFVazio;
+	private static JLabel lblCEPVazio;
 	private static JLabel lblRuaVazio;
 	private static JLabel lblBairroVazio;
 	private static JLabel lblCidadeVazio;
@@ -165,12 +166,12 @@ public class TelaCadastro extends JFrame {
 						lblEmailVazio.setVisible(true);
 						validaFormulario = false;
 					}
-					if(txtDataFormatted.getText().length() > 0) {
+					if(txtDataFormatted.getText().replace(" ", "").replace("/", "").length() > 0) {
 						lblDataVazio.setVisible(false);
-						cadastroUsuario.setNascimento(data.getData());	
+						cadastroUsuario.setNascimento(data.getData());
 					}else {
 						lblDataVazio.setVisible(true);
-						validaFormulario = false;					
+						validaFormulario = false;		
 					}
 					if (valida.valida(txtCPFFormatted.getText()) && txtCPFFormatted.getText().length() > 0) {
 						lblCPFVazio.setVisible(false);
@@ -179,7 +180,13 @@ public class TelaCadastro extends JFrame {
 						lblCPFVazio.setVisible(true);
 						validaFormulario = false;
 					}
-					cadastroUsuario.setCEP(txtCEPFormatted.getText());
+					if(txtCEPFormatted.getText().replace(" ", "").replace("-", "").length() > 0) {
+						lblCEPVazio.setVisible(false);
+						cadastroUsuario.setCEP(txtCEPFormatted.getText());
+					}else {
+						lblCEPVazio.setVisible(true);
+						validaFormulario = false;
+					}
 					if (txtRua.getText().length() > 0) {
 						lblRuaVazio.setVisible(false);
 						cadastroUsuario.setRua(txtRua.getText());
@@ -402,6 +409,13 @@ public class TelaCadastro extends JFrame {
 		lblNewLabel_1_3_1_1.setFont(new Font("Leelawadee", Font.PLAIN, 15));
 		lblNewLabel_1_3_1_1.setBounds(10, 173, 49, 14);
 		panel.add(lblNewLabel_1_3_1_1);
+		
+		lblCEPVazio = new JLabel("Informe um CEP");
+		lblCEPVazio.setBounds(100, 159, 66, 14);
+		panel.add(lblCEPVazio);
+		lblCEPVazio.setForeground(new Color(255, 0, 0));
+		lblCEPVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		lblCEPVazio.setVisible(false);
 
 		try {
 			MaskFormatter mask = new MaskFormatter("#####-###");
@@ -442,6 +456,7 @@ public class TelaCadastro extends JFrame {
 						lblCepErro.setVisible(false);
 					}
 				} catch (Exception erro) {
+					lblCEPVazio.setVisible(false);
 					lblCepErro.setVisible(true);
 					txtRua.setText("");
 					txtCidade.setText("");
