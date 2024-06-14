@@ -27,6 +27,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -139,7 +141,7 @@ public class TelaCadastro extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		JButton btnCad = new JButton("Confirmar");
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

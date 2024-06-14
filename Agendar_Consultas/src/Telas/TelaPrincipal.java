@@ -13,8 +13,49 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class TelaPrincipal extends JFrame {
+	
+	private void styleButton(JButton button) {
+		button.setForeground(new Color(200, 230, 201));
+		button.setBackground(new Color(200, 230, 201));
+        button.setContentAreaFilled(false);
+        button.setOpaque(false);
+        button.setBorderPainted(false);
+        button.setBorderPainted(false);
+		
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                button.setContentAreaFilled(true);
+                button.setOpaque(true);
+                button.setBackground(new Color(150, 150, 150));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                button.setContentAreaFilled(false);
+                button.setOpaque(false);
+                button.setBackground(new Color(200, 230, 201));
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setContentAreaFilled(true);
+                button.setOpaque(true);
+                button.setBackground(new Color(220, 220, 220));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setContentAreaFilled(false);
+                button.setOpaque(false);
+                button.setBackground(new Color(200, 230, 201));
+            }
+        });
+	}
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -42,51 +83,68 @@ public class TelaPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnCancelar = new JButton("");
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 			}
 		});
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\Cancelar copiar.png"));
-		btnNewButton.setForeground(new Color(200, 230, 201));
-		btnNewButton.setBackground(new Color(200, 230, 201));
-        btnNewButton.setContentAreaFilled(false);
-        btnNewButton.setOpaque(false);
-        btnNewButton.setBorderPainted(false);
-		btnNewButton.setBounds(50, 70, 86, 90);
+		btnCancelar.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\Cancelar copiar.png"));
+		btnCancelar.setBounds(206, 94, 86, 90);	
+		styleButton(btnCancelar);
+		contentPane.add(btnCancelar);
 		
-        btnNewButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                btnNewButton.setContentAreaFilled(true);
-                btnNewButton.setOpaque(true);
-                btnNewButton.setBackground(new Color(150, 150, 150));
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                btnNewButton.setContentAreaFilled(false);
-                btnNewButton.setOpaque(false);
-                btnNewButton.setBackground(new Color(200, 230, 201));
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnNewButton.setContentAreaFilled(true);
-                btnNewButton.setOpaque(true);
-                btnNewButton.setBackground(new Color(220, 220, 220));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnNewButton.setContentAreaFilled(false);
-                btnNewButton.setOpaque(false);
-                btnNewButton.setBackground(new Color(200, 230, 201));
-            }
-        });
-
+		JButton btnHistorico = new JButton("");
+		btnHistorico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnHistorico.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\Historioc.png"));
+		btnHistorico.setBounds(44, 240, 86, 77);
+		styleButton(btnHistorico);
+		contentPane.add(btnHistorico);
 		
-		contentPane.add(btnNewButton);
+		JButton btnAgendar = new JButton("");
+		btnAgendar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAgendar.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\Agendar.png"));
+		btnAgendar.setBounds(44, 95, 89, 77);
+		styleButton(btnAgendar);
+		contentPane.add(btnAgendar);
+		
+		JButton btnAtualizar = new JButton("");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAtualizar.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\atualizar.png"));
+		btnAtualizar.setBounds(203, 245, 89, 72);
+		styleButton(btnAtualizar);
+		contentPane.add(btnAtualizar);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setBounds(123, 364, 89, 23);
+		contentPane.add(btnVoltar);
+		
+		JLabel lblNewLabel = new JLabel("Agendar \r\nConsulta");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel.setBounds(33, 170, 119, 35);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Cancelar Consulta");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_1.setBounds(198, 180, 119, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Histórico de Consultas");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2.setBounds(22, 326, 140, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Atualizar Dados");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_3.setBounds(200, 326, 102, 14);
+		contentPane.add(lblNewLabel_3);
 	}
 }
