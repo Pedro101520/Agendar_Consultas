@@ -99,16 +99,15 @@ public class Login extends JFrame {
 					loginUsuario.setSenha(senha_usuario);
 					
 					UsuarioLogin objusuariologin = new UsuarioLogin();
-					ResultSet rsusuario = objusuariologin.autenticacaoUsuario(loginUsuario);
 					
-					if(rsusuario.next()) {
+					if(objusuariologin.autenticacaoUsuario(loginUsuario)) {
 						TelaPrincipal principal = new TelaPrincipal();
 						principal.setVisible(true);
 						dispose();
 					}else {
 						JOptionPane.showMessageDialog(null, "Usuário ou senha inválido");
 					}
-				}catch(SQLException erro) {
+				}catch(Exception erro) {
 					JOptionPane.showMessageDialog(null, "Login" + erro);
 				}
 			}

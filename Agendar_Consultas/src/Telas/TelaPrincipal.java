@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Conexoes.UsuarioLogin;
+import Sistema.UsuarioLogado;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -15,8 +19,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class TelaPrincipal extends JFrame {
+	
+	UsuarioLogado usuario = new UsuarioLogado();
+	UsuarioLogin user = new UsuarioLogin();
 	
 	private void styleButton(JButton button) {
 		button.setForeground(new Color(200, 230, 201));
@@ -146,5 +154,14 @@ public class TelaPrincipal extends JFrame {
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_3.setBounds(200, 326, 102, 14);
 		contentPane.add(lblNewLabel_3);
+		
+		JLabel lblOla = new JLabel("");
+		lblOla.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOla.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblOla.setBounds(0, 32, 336, 40);
+		String msgOla = user.getUsuarioLogado();
+		System.out.println("Teste" + msgOla);
+		lblOla.setText(msgOla);
+		contentPane.add(lblOla);
 	}
 }

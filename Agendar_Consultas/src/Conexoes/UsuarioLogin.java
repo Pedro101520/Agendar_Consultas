@@ -10,25 +10,37 @@ import javax.swing.JOptionPane;
 import Sistema.Usuario;
 
 public class UsuarioLogin {
+	
+	private String nomeUsuario;
+	
+	public UsuarioLogin() {
+	}
 
 	Connection conexao;
-	
-	public ResultSet autenticacaoUsuario(Usuario objusuario) {
+	public boolean autenticacaoUsuario(Usuario objusuario) {
 		conexao = new Conexao().conexaoDB();
 		
 		try{ 
-			String sql = "SELECT email, senha FROM usuarios WHERE email = ? and senha = ?";
+			String sql = "SELECT email, senha, nome FROM usuarios WHERE email = ? and senha = ?";
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, objusuario.getEmail());
 			pstm.setString(2, objusuario.getSenha());
-			
 			ResultSet rs = pstm.executeQuery();
-			return rs;
+			
+			if (rs.next()) {
+				this.nomeUsuario = rs.getString("nome");
+				return true;
+			}else {
+				return false;
+			}
 		} catch(SQLException erro) {
 			JOptionPane.showConfirmDialog(null, "UsuarioLogin: " + erro);
-			return null;
+			return false;
 		}
 	}
 	
+	public String getUsuarioLogado() {
+		return this.nomeUsuario;
+	}
 }
