@@ -11,7 +11,7 @@ import Sistema.Usuario;
 
 public class UsuarioLogin {
 	
-	private String nomeUsuario;
+	private static String nome;
 	
 	public UsuarioLogin() {
 	}
@@ -29,7 +29,10 @@ public class UsuarioLogin {
 			ResultSet rs = pstm.executeQuery();
 			
 			if (rs.next()) {
-				this.nomeUsuario = rs.getString("nome");
+				nome = rs.getString("nome");
+//				nomeUsuario.setNome(nome);
+//				System.out.println("Nome: " + nome);
+//				this.nomeUsuario = rs.getString("nome");
 				return true;
 			}else {
 				return false;
@@ -40,7 +43,7 @@ public class UsuarioLogin {
 		}
 	}
 	
-	public String getUsuarioLogado() {
-		return this.nomeUsuario;
+	public String getNome() {
+		return UsuarioLogin.nome;
 	}
 }

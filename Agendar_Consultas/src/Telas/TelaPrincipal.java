@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Conexoes.UsuarioLogin;
-import Sistema.UsuarioLogado;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -23,7 +22,6 @@ import javax.swing.SwingConstants;
 
 public class TelaPrincipal extends JFrame {
 	
-	UsuarioLogado usuario = new UsuarioLogado();
 	UsuarioLogin user = new UsuarioLogin();
 	
 	private void styleButton(JButton button) {
@@ -157,11 +155,10 @@ public class TelaPrincipal extends JFrame {
 		
 		JLabel lblOla = new JLabel("");
 		lblOla.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOla.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblOla.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblOla.setBounds(0, 32, 336, 40);
-		String msgOla = user.getUsuarioLogado();
-		System.out.println("Teste" + msgOla);
-		lblOla.setText(msgOla);
+		String msgOla = user.getNome();
+		lblOla.setText("Olá " + msgOla + " Seja bem vindo(a)");
 		contentPane.add(lblOla);
 	}
 }
