@@ -94,7 +94,7 @@ public class TelaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnCancelar.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\Cancelar copiar.png"));
+		btnCancelar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Cancelar.png")));
 		btnCancelar.setBounds(206, 94, 86, 90);	
 		styleButton(btnCancelar);
 		contentPane.add(btnCancelar);
@@ -104,7 +104,7 @@ public class TelaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnHistorico.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\Historioc.png"));
+		btnHistorico.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Historico.png")));
 		btnHistorico.setBounds(44, 240, 86, 77);
 		styleButton(btnHistorico);
 		contentPane.add(btnHistorico);
@@ -114,7 +114,7 @@ public class TelaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnAgendar.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\Agendar.png"));
+		btnAgendar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Agendar.png")));
 		btnAgendar.setBounds(44, 95, 89, 77);
 		styleButton(btnAgendar);
 		contentPane.add(btnAgendar);
@@ -124,7 +124,7 @@ public class TelaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnAtualizar.setIcon(new ImageIcon("C:\\Users\\Latitude\\Desktop\\atualizar.png"));
+		btnAtualizar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/atualizar.png")));
 		btnAtualizar.setBounds(203, 245, 89, 72);
 		styleButton(btnAtualizar);
 		contentPane.add(btnAtualizar);
