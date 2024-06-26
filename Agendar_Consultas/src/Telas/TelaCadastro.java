@@ -147,13 +147,6 @@ public class TelaCadastro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean validaFormulario = true;
 				try {
-					if(txtDataFormatted.getText().length() > 0) {
-						lblDataVazio.setVisible(false);
-						data.setData(txtDataFormatted.getText());
-					}else {
-						lblDataVazio.setVisible(true);
-						validaFormulario = false;
-					}
 					if(txtNome.getText().length() > 0) {
 						lblNomeVazio.setVisible(false);
 						cadastroUsuario.setNome(txtNome.getText());
@@ -169,11 +162,16 @@ public class TelaCadastro extends JFrame {
 						validaFormulario = false;
 					}
 					if(txtDataFormatted.getText().replace(" ", "").replace("/", "").length() > 0) {
-						lblDataVazio.setVisible(false);
-						cadastroUsuario.setNascimento(data.getData());
+						data.setData(txtDataFormatted.getText());
+						if(data.idade()) {
+							lblDataVazio.setVisible(false);
+							cadastroUsuario.setNascimento(data.getData());	
+							System.out.println("Passou no IF");
+						}else validaFormulario = false;
 					}else {
 						lblDataVazio.setVisible(true);
-						validaFormulario = false;		
+						validaFormulario = false;	
+						System.out.println("Passou no ELSE");
 					}
 					if (valida.valida(txtCPFFormatted.getText()) && txtCPFFormatted.getText().length() > 0) {
 						lblCPFVazio.setVisible(false);
@@ -455,6 +453,8 @@ public class TelaCadastro extends JFrame {
 						txtBairro.setText(consulta.getBairro());
 						txtCidade.setText(consulta.getCidade());
 						txtEstado.setText(consulta.getEstado());
+						lblCepErro.setVisible(false);
+					}else if(cep.length() == 0) {
 						lblCepErro.setVisible(false);
 					}
 				} catch (Exception erro) {

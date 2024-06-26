@@ -1,5 +1,11 @@
 package Sistema;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
+import javax.swing.JOptionPane;
+
 public class ConverteData {
 	private String data;
 	
@@ -17,4 +23,17 @@ public class ConverteData {
 		dataBanco = ano + '-' + mes + '-' + dia;
 		return dataBanco;
 	}
+	
+	public boolean idade() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate data;
+		data = LocalDate.parse(getData(), formatter);
+		LocalDate dataAtual = LocalDate.now();
+        if (data.isAfter(dataAtual)) {
+			JOptionPane.showMessageDialog(null, "A data de nascimento é uma data futura, por favor informe uma data válida");
+        	return false;
+        }else {
+        	return true;
+        }
+    }
 }

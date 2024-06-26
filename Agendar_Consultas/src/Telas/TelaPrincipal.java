@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.Choice;
 
 public class TelaPrincipal extends JFrame {
 	
@@ -129,7 +130,14 @@ public class TelaPrincipal extends JFrame {
 		styleButton(btnAtualizar);
 		contentPane.add(btnAtualizar);
 		
-		JButton btnVoltar = new JButton("Voltar");
+		JButton btnVoltar = new JButton("Sair");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login login = new Login();
+				login.setVisible(true);
+				dispose();
+			}
+		});
 		btnVoltar.setBounds(123, 364, 89, 23);
 		contentPane.add(btnVoltar);
 		

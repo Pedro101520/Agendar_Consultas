@@ -19,15 +19,12 @@ public class consultaCEP {
 	
 	public void exibeInfo(String cep) {
         try {
-            // CEP que você quer consultar
             String url = "https://viacep.com.br/ws/" + cep + "/json/";
 
-            // Criação da conexão HTTP
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
 
-            // Lendo a resposta
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
@@ -36,10 +33,8 @@ public class consultaCEP {
             }
             in.close();
             
-            // Convertendo a resposta para um objeto JSON
             JSONObject jsonResponse = new JSONObject(response.toString());
 
-            // Extraindo os campos desejados
             String cidade = jsonResponse.getString("localidade");
             String estado = jsonResponse.getString("uf");
             String rua = jsonResponse.getString("logradouro");
