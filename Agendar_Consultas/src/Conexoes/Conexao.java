@@ -11,7 +11,7 @@ public class Conexao {
 		Connection conexao = null;
 			
 		try {
-			String url = "jdbc:mysql://localhost:3306/consultas?user=agenda&password=12345";
+			String url = "jdbc:mysql://localhost:3306/consultas?user=pedro&password=12345";
 			conexao = DriverManager.getConnection(url);
 		}catch(SQLException erro) {
 			JOptionPane.showConfirmDialog(null, erro.getMessage());
