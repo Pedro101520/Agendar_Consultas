@@ -12,6 +12,7 @@ public class ConverteData {
 	public ConverteData() {
 	}
 	
+	
 	public void setData(String data) {
 		this.data = data;
 	}

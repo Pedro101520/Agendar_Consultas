@@ -11,6 +11,7 @@ import Conexoes.Conexao;
 import Telas.TelaCadastro;
 
 public class registraEmail {
+	
 	private String email;
 	
 	public registraEmail() {

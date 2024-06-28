@@ -11,22 +11,25 @@ import javax.swing.JOptionPane;
 
 import Sistema.Usuario;
 
-public class dadosConsulta {
+public class ProcessaAgenda {
+	
 	private static List<String> nome = new ArrayList<>();
 	private static List<String> especialidade = new ArrayList<>();
 	private static List<String> unidade = new ArrayList<>();
 	
-	public dadosConsulta() {
+	public ProcessaAgenda() {
 	}
 
 	Connection conexao;
-	public boolean acessaDadosMedico() {
+	public boolean infoAgenda(String buscaEspecialidade, String buscaUnidade) {
 		conexao = new Conexao().conexaoDB();
 		
 		try{ 
-			String sql = "SELECT * FROM medicos";
+			String sql = "SELECT nome, especialidade, unidade FROM medicos WHERE especialidade = ? OR unidade = ?";
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, buscaEspecialidade);
+			pstm.setString(2, buscaUnidade);
 			ResultSet rs = pstm.executeQuery();
 			
 			boolean verifica = true;
@@ -40,20 +43,18 @@ public class dadosConsulta {
 				}
 			}
 			return true;
-			
 		} catch(SQLException erro) {
-			JOptionPane.showConfirmDialog(null, "dadosConsulta: " + erro);
+			JOptionPane.showConfirmDialog(null, "ProcessaAgenda: " + erro);
 			return false;
 		}
 	}
-	
 	public List<String> getNome() {
-		return dadosConsulta.nome;
+		return ProcessaAgenda.nome;
 	}
 	public List<String> getEspecialidade() {
-		return dadosConsulta.especialidade;
+		return ProcessaAgenda.especialidade;
 	}
 	public List<String> getUnidade() {
-		return dadosConsulta.unidade;
+		return ProcessaAgenda.unidade;
 	}
 }

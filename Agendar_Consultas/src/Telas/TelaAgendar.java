@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Conexoes.ProcessaAgenda;
 import Conexoes.dadosConsulta;
 
 import javax.swing.JLabel;
@@ -22,6 +23,7 @@ import java.awt.event.ActionEvent;
 public class TelaAgendar extends JFrame {
 	
 	dadosConsulta consulta = new dadosConsulta();
+	ProcessaAgenda agenda = new ProcessaAgenda();
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -38,6 +40,8 @@ public class TelaAgendar extends JFrame {
 			}
 		});
 	}
+	
+	
 
 	public TelaAgendar() {		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,46 +60,85 @@ public class TelaAgendar extends JFrame {
 		
 		JLabel lblUnidade = new JLabel("Unidade:");
 		lblUnidade.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblUnidade.setBounds(38, 188, 82, 23);
+		lblUnidade.setBounds(30, 128, 82, 23);
 		contentPane.add(lblUnidade);
 		
 		JLabel lblNewLabel = new JLabel("Especialidade:");
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblNewLabel.setBounds(38, 128, 113, 17);
+		lblNewLabel.setBounds(30, 188, 113, 17);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Horário:");
 		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblNewLabel_1.setBounds(38, 248, 82, 17);
+		lblNewLabel_1.setBounds(30, 308, 82, 17);
 		contentPane.add(lblNewLabel_1);
 		
 		List<String> nome = new ArrayList<String>();
-		String especialidade = "";
-		String unidade = "";
-		if(consulta.autenticacaoUsuario()) {
+		List<String> especialidade = new ArrayList<String>();
+		List<String> unidade = new ArrayList<String>();
+		
+		if(consulta.acessaDadosMedico()) {
 			nome = consulta.getNome();
 			especialidade = consulta.getEspecialidade();
 			unidade = consulta.getUnidade();
-			System.out.println(nome.size());
 		}else {
 			System.out.println("Elemento não encontrado");
 		}
 		
 		JComboBox cbEspecialidade = new JComboBox();
-		cbEspecialidade.setBounds(169, 125, 155, 26);
+		cbEspecialidade.setBounds(150, 185, 180, 26);
 		contentPane.add(cbEspecialidade);
-        for (String nomeItem : nome) {
-            cbEspecialidade.addItem(nomeItem + " - " + especialidade);
+		cbEspecialidade.addItem("");
+        for (String especialidadeItem : especialidade) {
+            cbEspecialidade.addItem(especialidadeItem);
         }
+		cbEspecialidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<String> nomeFiltrado = new ArrayList<String>();
+				List<String> especialidadeFiltrado = new ArrayList<String>();
+				List<String> unidadeFiltrado = new ArrayList<String>();
+				
+				if(agenda.infoAgenda(cbEspecialidade.getSelectedItem().toString(), "")) {
+					cbEspecialidade.removeAll();
+					especialidadeFiltrado = agenda.getEspecialidade();
+				}else {
+					System.out.println("Não foi encontrado");
+				}
+			}
+		});
 		
+		JComboBox cbMedico = new JComboBox();
+		cbMedico.setBounds(150, 245, 180, 26);
+		contentPane.add(cbMedico);
+		cbMedico.addItem("");
+		cbMedico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		for (String nomeItem: nome) {
+			cbMedico.addItem(nomeItem);
+		}
+        
 		JComboBox cbUnidade = new JComboBox();
-		cbUnidade.setModel(new DefaultComboBoxModel(new String[] {unidade}));
-		cbUnidade.setBounds(169, 188, 155, 26);
+		cbUnidade.setBounds(150, 125, 180, 26);
 		contentPane.add(cbUnidade);
+		cbUnidade.addItem("");
+		cbUnidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(cbUnidade.getSelectedItem());
+			}
+		});
+		for (String unidadeItem : unidade) {
+			cbUnidade.addItem(unidadeItem);
+		}
 		
 		JComboBox cbHorario = new JComboBox();
-		cbHorario.setBounds(169, 245, 155, 26);
+		cbHorario.setBounds(150, 305, 180, 26);
 		contentPane.add(cbHorario);
+		cbHorario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setBounds(38, 411, 105, 27);
@@ -111,5 +154,10 @@ public class TelaAgendar extends JFrame {
 		});
 		btnCancelar.setBounds(219, 411, 105, 27);
 		contentPane.add(btnCancelar);
+		
+		JLabel lblNewLabel_2 = new JLabel("Médico:");
+		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblNewLabel_2.setBounds(30, 248, 92, 17);
+		contentPane.add(lblNewLabel_2);
 	}
 }

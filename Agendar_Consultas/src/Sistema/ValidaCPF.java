@@ -15,7 +15,7 @@ public class ValidaCPF {
 	
 	public ValidaCPF() {
 	}
-	public String getCPF() {
+	public String getCPF() {	
 		return CPF;
 	}
 	private int priDig(String semDigito) {
