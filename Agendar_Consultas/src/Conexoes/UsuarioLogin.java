@@ -21,7 +21,7 @@ public class UsuarioLogin {
 		conexao = new Conexao().conexaoDB();
 		
 		try{ 
-			String sql = "SELECT email, senha, nome FROM usuarios WHERE email = ? and senha = ?";
+			String sql = "SELECT nome FROM usuarios WHERE email = ? and senha = ?";
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, objusuario.getEmail());
@@ -30,9 +30,6 @@ public class UsuarioLogin {
 			
 			if (rs.next()) {
 				nome = rs.getString("nome");
-//				nomeUsuario.setNome(nome);
-//				System.out.println("Nome: " + nome);
-//				this.nomeUsuario = rs.getString("nome");
 				return true;
 			}else {
 				return false;

@@ -113,6 +113,9 @@ public class TelaPrincipal extends JFrame {
 		JButton btnAgendar = new JButton("");
 		btnAgendar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TelaAgendar agendar = new TelaAgendar();
+				agendar.setVisible(true);
+				dispose();
 			}
 		});
 		btnAgendar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Agendar.png")));
@@ -138,7 +141,7 @@ public class TelaPrincipal extends JFrame {
 				dispose();
 			}
 		});
-		btnVoltar.setBounds(123, 364, 89, 23);
+		btnVoltar.setBounds(123, 400, 89, 23);
 		contentPane.add(btnVoltar);
 		
 		JLabel lblNewLabel = new JLabel("Agendar \r\nConsulta");
