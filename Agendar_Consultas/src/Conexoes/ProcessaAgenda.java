@@ -76,6 +76,33 @@ public class ProcessaAgenda {
 		}
 	}
 	
+	public boolean selecionaPorUnidade(String buscaPorUnidade) {
+		conexao = new Conexao().conexaoDB();
+		
+		try{ 
+			String sql = "SELECT nome, especialidade, unidade FROM medicos WHERE unidade = ?";
+			
+			PreparedStatement pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, buscaPorUnidade);
+			ResultSet rs = pstm.executeQuery();
+			
+			boolean verifica = true;
+			while(verifica) {
+				if (rs.next()) {
+					nome.add(rs.getString("nome"));
+					especialidade.add(rs.getString("especialidade"));
+					unidade.add(rs.getString("unidade"));
+				}else {
+					verifica = false;
+				}
+			}
+			return true;
+		} catch(SQLException erro) {
+			JOptionPane.showConfirmDialog(null, "ProcessaAgenda: " + erro);
+			return false;
+		}
+	}
+	
 	public List<String> getNome() {
 		return ProcessaAgenda.nome;
 	}

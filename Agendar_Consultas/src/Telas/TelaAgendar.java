@@ -27,6 +27,7 @@ public class TelaAgendar extends JFrame {
 	
 	private static JComboBox<String> cbEspecialidade = new JComboBox<>();
 	private static JComboBox<String> cbUnidade = new JComboBox<>();
+	private static JComboBox<String> cbMedico = new JComboBox<>();
     private static List<String> nome = new ArrayList<String>();
     private static List<String> especialidade = new ArrayList<String>();
     private static List<String> unidade = new ArrayList<String>();
@@ -108,7 +109,7 @@ public class TelaAgendar extends JFrame {
 			}
 		});
 		
-		JComboBox cbMedico = new JComboBox();
+		cbMedico = new JComboBox();
 		cbMedico.setBounds(150, 245, 180, 26);
 		contentPane.add(cbMedico);
 		cbMedico.addItem("");
@@ -127,9 +128,9 @@ public class TelaAgendar extends JFrame {
 						}
 					}
 				}else if(cbMedico.getSelectedIndex() == 0) {
-					cbEspecialidade.removeAllItems();	
+//					cbEspecialidade.removeAllItems();	
 					cbEspecialidade.addItem("");
-					cbUnidade.removeAllItems();
+//					cbUnidade.removeAllItems();
 					cbUnidade.addItem("");
 			        for (String especialidadeItem : especialidade) {
 			            cbEspecialidade.addItem(especialidadeItem);
@@ -150,6 +151,31 @@ public class TelaAgendar extends JFrame {
 		cbUnidade.addItem("");
 		cbUnidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (cbUnidade.getSelectedIndex() > 0) {
+					String unidadeSelecionado = cbUnidade.getSelectedItem().toString();
+					if (agenda.selecionaPorUnidade(unidadeSelecionado)) {
+						for (String medicoStr : agenda.getNome()) {
+							cbMedico.removeAllItems();
+							cbMedico.addItem(medicoStr);
+					}
+						for (String especialidadeStr : agenda.getEspecialidade()) {
+							cbEspecialidade.removeAllItems();
+							cbEspecialidade.addItem(especialidadeStr);
+						}
+					}
+				}else if(cbUnidade.getSelectedIndex() == 0) {
+//					cbEspecialidade.removeAllItems();	
+					cbEspecialidade.addItem("");
+//					cbMedico.removeAllItems();
+					cbMedico.addItem("");
+			        for (String especialidadeItem : especialidade) {
+			            cbEspecialidade.addItem(especialidadeItem);
+			        }
+			        for (String medicoItem: nome) {
+			            cbMedico.addItem(medicoItem);
+			        }
+			        return;
+				}
 			}
 		});
 		for (String unidadeItem : unidade) {
