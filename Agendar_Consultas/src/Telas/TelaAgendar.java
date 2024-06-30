@@ -24,6 +24,12 @@ public class TelaAgendar extends JFrame {
 	
 	dadosConsulta consulta = new dadosConsulta();
 	ProcessaAgenda agenda = new ProcessaAgenda();
+	
+	private static JComboBox<String> cbEspecialidade = new JComboBox<>();
+	private static JComboBox<String> cbUnidade = new JComboBox<>();
+    private static List<String> nome = new ArrayList<String>();
+    private static List<String> especialidade = new ArrayList<String>();
+    private static List<String> unidade = new ArrayList<String>();
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -43,7 +49,8 @@ public class TelaAgendar extends JFrame {
 	
 	
 
-	public TelaAgendar() {		
+	public TelaAgendar() {	
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 450);
 		contentPane = new JPanel();
@@ -73,10 +80,6 @@ public class TelaAgendar extends JFrame {
 		lblNewLabel_1.setBounds(30, 308, 82, 17);
 		contentPane.add(lblNewLabel_1);
 		
-		List<String> nome = new ArrayList<String>();
-		List<String> especialidade = new ArrayList<String>();
-		List<String> unidade = new ArrayList<String>();
-		
 		if(consulta.acessaDadosMedico()) {
 			nome = consulta.getNome();
 			especialidade = consulta.getEspecialidade();
@@ -85,7 +88,7 @@ public class TelaAgendar extends JFrame {
 			System.out.println("Elemento não encontrado");
 		}
 		
-		JComboBox cbEspecialidade = new JComboBox();
+		cbEspecialidade = new JComboBox();
 		cbEspecialidade.setBounds(150, 185, 180, 26);
 		contentPane.add(cbEspecialidade);
 		cbEspecialidade.addItem("");
@@ -94,16 +97,14 @@ public class TelaAgendar extends JFrame {
         }
 		cbEspecialidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<String> nomeFiltrado = new ArrayList<String>();
-				List<String> especialidadeFiltrado = new ArrayList<String>();
-				List<String> unidadeFiltrado = new ArrayList<String>();
-				
-				if(agenda.infoAgenda(cbEspecialidade.getSelectedItem().toString(), "")) {
-					cbEspecialidade.removeAll();
-					especialidadeFiltrado = agenda.getEspecialidade();
-				}else {
-					System.out.println("Não foi encontrado");
-				}
+//				List<String> nomeFiltrado = new ArrayList<String>();
+//				List<String> especialidadeFiltrado = new ArrayList<String>();
+//				List<String> unidadeFiltrado = new ArrayList<String>();
+//				if(agenda.infoAgenda(cbEspecialidade.getSelectedItem().toString(), "")) {
+//					especialidadeFiltrado = agenda.getEspecialidade();
+//				}else {
+//					System.out.println("Não foi encontrado");
+//				}
 			}
 		});
 		
@@ -113,19 +114,42 @@ public class TelaAgendar extends JFrame {
 		cbMedico.addItem("");
 		cbMedico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (cbMedico.getSelectedIndex() > 0) {
+					String medicoSelecionado = cbMedico.getSelectedItem().toString();
+					if (agenda.selecionaPorNome(medicoSelecionado)) {
+						for (String especialidadeStr : agenda.getEspecialidade()) {
+							cbEspecialidade.removeAllItems();
+							cbEspecialidade.addItem(especialidadeStr);
+						}
+						for (String unidadeStr : agenda.getUnidade()) {
+							cbUnidade.removeAllItems();
+							cbUnidade.addItem(unidadeStr);
+						}
+					}
+				}else if(cbMedico.getSelectedIndex() == 0) {
+					cbEspecialidade.removeAllItems();	
+					cbEspecialidade.addItem("");
+					cbUnidade.removeAllItems();
+					cbUnidade.addItem("");
+			        for (String especialidadeItem : especialidade) {
+			            cbEspecialidade.addItem(especialidadeItem);
+			        }
+			        for (String unidadeItem: unidade) {
+			            cbUnidade.addItem(unidadeItem);
+			        }
+				}
 			}
 		});
 		for (String nomeItem: nome) {
 			cbMedico.addItem(nomeItem);
 		}
-        
-		JComboBox cbUnidade = new JComboBox();
+		
+		cbUnidade = new JComboBox();
 		cbUnidade.setBounds(150, 125, 180, 26);
 		contentPane.add(cbUnidade);
 		cbUnidade.addItem("");
 		cbUnidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(cbUnidade.getSelectedItem());
 			}
 		});
 		for (String unidadeItem : unidade) {
