@@ -31,6 +31,9 @@ public class TelaAgendar extends JFrame {
     private static List<String> nome = new ArrayList<String>();
     private static List<String> especialidade = new ArrayList<String>();
     private static List<String> unidade = new ArrayList<String>();
+    private static boolean verificaMedico = true;
+    private static boolean verificaEspecialidade = true;
+    private static boolean verificaUnidade = true;
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -93,53 +96,84 @@ public class TelaAgendar extends JFrame {
 		cbEspecialidade.setBounds(150, 185, 180, 26);
 		contentPane.add(cbEspecialidade);
 		cbEspecialidade.addItem("");
+		cbEspecialidade.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        if (verificaEspecialidade) {
+		            verificaMedico = false;
+		            verificaUnidade = false;
+		            
+		            if (cbEspecialidade.getSelectedIndex() > 0 && agenda.selecionaPorEspecialidade(cbEspecialidade.getSelectedItem().toString())) {
+		                System.out.println("If especialidade");
+		                cbMedico.removeAllItems();
+		                cbUnidade.removeAllItems();
+		                cbMedico.addItem("");
+		                cbUnidade.addItem("");
+		                                    
+		                for (String medico : agenda.getNome()) {
+		                    cbMedico.addItem(medico);
+		                }
+		                for (String unidade : agenda.getUnidade()) {
+		                    cbUnidade.addItem(unidade);
+		                }
+		            } else if (cbEspecialidade.getSelectedIndex() == 0) {
+		                System.out.println("Else if especialidade");
+		                cbMedico.removeAllItems();
+		                cbUnidade.removeAllItems();
+		                cbMedico.addItem("");
+		                cbUnidade.addItem("");
+
+		                for (String nomeItem : nome) {
+		                    cbMedico.addItem(nomeItem);
+		                }
+		                for (String unidadeItem : unidade) {
+		                    cbUnidade.addItem(unidadeItem);
+		                }
+		            }
+		            
+		            verificaMedico = true;
+		            verificaUnidade = true;
+		        }
+		    }
+		});
         for (String especialidadeItem : especialidade) {
             cbEspecialidade.addItem(especialidadeItem);
         }
-		cbEspecialidade.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				List<String> nomeFiltrado = new ArrayList<String>();
-//				List<String> especialidadeFiltrado = new ArrayList<String>();
-//				List<String> unidadeFiltrado = new ArrayList<String>();
-//				if(agenda.infoAgenda(cbEspecialidade.getSelectedItem().toString(), "")) {
-//					especialidadeFiltrado = agenda.getEspecialidade();
-//				}else {
-//					System.out.println("Não foi encontrado");
-//				}
-			}
-		});
 		
 		cbMedico = new JComboBox();
 		cbMedico.setBounds(150, 245, 180, 26);
 		contentPane.add(cbMedico);
 		cbMedico.addItem("");
 		cbMedico.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (cbMedico.getSelectedIndex() > 0) {
-					String medicoSelecionado = cbMedico.getSelectedItem().toString();
-					if (agenda.selecionaPorNome(medicoSelecionado)) {
-						for (String especialidadeStr : agenda.getEspecialidade()) {
-							cbEspecialidade.removeAllItems();
-							cbEspecialidade.addItem(especialidadeStr);
-						}
-						for (String unidadeStr : agenda.getUnidade()) {
-							cbUnidade.removeAllItems();
-							cbUnidade.addItem(unidadeStr);
-						}
-					}
-				}else if(cbMedico.getSelectedIndex() == 0) {
-//					cbEspecialidade.removeAllItems();	
-					cbEspecialidade.addItem("");
-//					cbUnidade.removeAllItems();
-					cbUnidade.addItem("");
-			        for (String especialidadeItem : especialidade) {
-			            cbEspecialidade.addItem(especialidadeItem);
-			        }
-			        for (String unidadeItem: unidade) {
-			            cbUnidade.addItem(unidadeItem);
-			        }
-				}
-			}
+		    public void actionPerformed(ActionEvent e) {
+		        if (verificaMedico) {
+		            verificaEspecialidade = false;
+		            verificaUnidade = false;
+		            
+		            if (cbMedico.getSelectedIndex() > 0 && agenda.selecionaPorNome(cbMedico.getSelectedItem().toString())) {
+		                System.out.println("If medico");
+		                cbEspecialidade.removeAllItems();
+		                cbUnidade.removeAllItems();
+		                cbEspecialidade.addItem("");
+		                cbUnidade.addItem("");
+		                                    
+		                for (String especialidade : agenda.getEspecialidade()) {
+		                    cbEspecialidade.addItem(especialidade);
+		                }
+		                for (String unidade : agenda.getUnidade()) {
+		                    cbUnidade.addItem(unidade);
+		                }
+		            } else if (cbMedico.getSelectedIndex() == 0) {
+		                System.out.println("Else if medico");
+		                cbEspecialidade.removeAllItems();
+		                cbUnidade.removeAllItems();
+		                cbEspecialidade.addItem("");
+		                cbUnidade.addItem("");
+		            }
+		            
+		            verificaEspecialidade = true;
+		            verificaUnidade = true;
+		        }
+		    }
 		});
 		for (String nomeItem: nome) {
 			cbMedico.addItem(nomeItem);
@@ -151,31 +185,7 @@ public class TelaAgendar extends JFrame {
 		cbUnidade.addItem("");
 		cbUnidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (cbUnidade.getSelectedIndex() > 0) {
-					String unidadeSelecionado = cbUnidade.getSelectedItem().toString();
-					if (agenda.selecionaPorUnidade(unidadeSelecionado)) {
-						for (String medicoStr : agenda.getNome()) {
-							cbMedico.removeAllItems();
-							cbMedico.addItem(medicoStr);
-					}
-						for (String especialidadeStr : agenda.getEspecialidade()) {
-							cbEspecialidade.removeAllItems();
-							cbEspecialidade.addItem(especialidadeStr);
-						}
-					}
-				}else if(cbUnidade.getSelectedIndex() == 0) {
-//					cbEspecialidade.removeAllItems();	
-					cbEspecialidade.addItem("");
-//					cbMedico.removeAllItems();
-					cbMedico.addItem("");
-			        for (String especialidadeItem : especialidade) {
-			            cbEspecialidade.addItem(especialidadeItem);
-			        }
-			        for (String medicoItem: nome) {
-			            cbMedico.addItem(medicoItem);
-			        }
-			        return;
-				}
+
 			}
 		});
 		for (String unidadeItem : unidade) {
