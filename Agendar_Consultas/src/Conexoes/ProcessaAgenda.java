@@ -87,11 +87,15 @@ public class ProcessaAgenda {
 			ResultSet rs = pstm.executeQuery();
 			
 			boolean verifica = true;
+			ProcessaAgenda.nome.clear();
+			ProcessaAgenda.especialidade.clear();
+			ProcessaAgenda.unidade.clear();
 			while(verifica) {
 				if (rs.next()) {
 					nome.add(rs.getString("nome"));
 					especialidade.add(rs.getString("especialidade"));
 					unidade.add(rs.getString("unidade"));
+					System.out.println(unidade);
 				}else {
 					verifica = false;
 				}

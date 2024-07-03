@@ -30,9 +30,10 @@ public class TelaAgendar extends JFrame {
     private static List<String> nome = new ArrayList<>();
     private static List<String> especialidade = new ArrayList<>();
     private static List<String> unidade = new ArrayList<>();
-    private static boolean verificaMedico = false;
-    private static boolean verificaEspecialidade = false;
-    private static boolean verificaUnidade = false;
+    private static boolean verificaUnidade = true;
+    private static boolean verificaEspecialidade = true;
+    private static boolean verificaMedico = true;
+
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -95,27 +96,7 @@ public class TelaAgendar extends JFrame {
         for (String especialidadeItem : especialidade) {
             cbEspecialidade.addItem(especialidadeItem);
         }
-        cbEspecialidade.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (cbEspecialidade.getSelectedIndex() == 0) {
-                    System.out.println("Especialidade não selecionada");
-                } else {
-                    // Remover o ActionListener do cbUnidade temporariamente
-                    cbUnidade.removeActionListener(cbUnidadeActionListener);
-
-                    // Limpar e adicionar novos itens ao cbUnidade
-                    cbUnidade.removeAllItems();
-                    cbUnidade.addItem("Pedro");
-                    // Aqui você pode adicionar lógica para preencher cbUnidade baseado na especialidade selecionada
-                    // Exemplo: cbUnidade.addItem("Nova unidade");
-
-                    // Adicionar o ActionListener de volta ao cbUnidade
-                    cbUnidade.addActionListener(cbUnidadeActionListener);
-                    verificaUnidade = true;
-                    cbUnidade.insertItemAt("", 0);
-                }
-            }
-        });
+        cbEspecialidade.addActionListener(cbEspecialidadeListener);
 
         cbMedico = new JComboBox<>();
         cbMedico.setBounds(150, 245, 180, 26);
@@ -127,6 +108,7 @@ public class TelaAgendar extends JFrame {
         cbMedico.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (cbMedico.getSelectedIndex() == 0) {
+                	System.out.println("If medico");
                     System.out.println("Médico não selecionado");
                 }
             }
@@ -171,15 +153,71 @@ public class TelaAgendar extends JFrame {
         contentPane.add(lblNewLabel_2);
     }
 
-    // ActionListener para cbUnidade
     private ActionListener cbUnidadeActionListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            if (cbUnidade.getSelectedIndex() == 0 && verificaUnidade) {
-            	cbUnidade.insertItemAt("", 0);
+            if (cbUnidade.getSelectedIndex() == 0) {
+            	System.out.println("If unidade");
+            	cbUnidade.removeAllItems();
+            	cbEspecialidade.removeAllItems();
+            	cbEspecialidade.insertItemAt("", 0);
+            	cbEspecialidade.setSelectedIndex(0);
+                for (String especialidadeItem : especialidade) {
+                    cbEspecialidade.addItem(especialidadeItem);
+                }
+                especialidade.clear();
+//            	cbUnidade.insertItemAt("", 0);
+                for (String unidadeItem : unidade) {
+                    cbUnidade.addItem(unidadeItem);
+                }
                 System.out.println("Unidade não selecionada");
-                // Aqui você pode adicionar lógica para o que fazer se a unidade não estiver selecionada
-                // Exemplo: cbUnidade.addItem("Nova unidade");
+                verificaEspecialidade = true;
+            }else if(cbUnidade.getSelectedIndex() > 0 && verificaUnidade){
+            	System.out.println("Else unidade");
+                cbEspecialidade.removeActionListener(cbEspecialidadeListener);
+                cbEspecialidade.removeAllItems();
+                cbEspecialidade.insertItemAt("", 0);
+                cbEspecialidade.setSelectedIndex(0);
+                if(agenda.selecionaPorUnidade(cbUnidade.getSelectedItem().toString()))
+                	System.out.println("Teste");
+                    for (String bancoEspecialidade : agenda.getEspecialidade()) {
+                        cbEspecialidade.addItem(bancoEspecialidade);
+                    }
+                cbEspecialidade.addActionListener(cbEspecialidadeListener);
+//                verificaUnidade = false;
+                verificaEspecialidade = false;
+            }
+        }
+    };
+    
+    private ActionListener cbEspecialidadeListener = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            if (cbEspecialidade.getSelectedIndex() == 0) {
+//            	cbEspecialidade.setSelectedIndex(0);
+            	cbUnidade.removeAllItems();
+            	cbUnidade.insertItemAt("", 0);
+                for (String unidadeItem : unidade) {
+                    cbUnidade.addItem(unidadeItem);
+                }
+                for (String especialidadeItem : especialidade) {
+                    cbEspecialidade.addItem(especialidadeItem);
+                }
+            	System.out.println("If especialidade");
+            	verificaUnidade = true;
+            	verificaEspecialidade = true;
+            } else if(cbEspecialidade.getSelectedIndex() > 0 && verificaEspecialidade){
+            	System.out.println("Else especialidade");
+                cbUnidade.removeActionListener(cbUnidadeActionListener);
+                cbUnidade.removeAllItems();
+                cbUnidade.insertItemAt("", 0);
+                cbUnidade.setSelectedIndex(0);
+                if(agenda.selecionaPorEspecialidade(cbEspecialidade.getSelectedItem().toString()))
+                	System.out.println("Teste");
+                    for (String bancoUnidade : agenda.getUnidade()) {
+                        cbUnidade.addItem(bancoUnidade);
+                    }
+                cbUnidade.addActionListener(cbUnidadeActionListener);
                 verificaUnidade = false;
+//                verificaEspecialidade = false;
             }
         }
     };
