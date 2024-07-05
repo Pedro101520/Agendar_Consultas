@@ -13,6 +13,7 @@ public class ValidaCPF {
 	private String CPF;
 	private String cpfValidado;
 	
+	//Teste
 	public ValidaCPF() {
 	}
 	public String getCPF() {	

@@ -85,7 +85,7 @@ public class TelaAgendar extends JFrame {
         contentPane.add(lblNewLabel_1);
         
         
-        
+        //Teste
         if (consulta.acessaDadosMedico()) {
             nome = consulta.getNome();
             especialidade = consulta.getEspecialidade();
