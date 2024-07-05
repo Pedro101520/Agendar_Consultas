@@ -71,12 +71,12 @@ public class TelaAgendar extends JFrame {
 
         JLabel lblUnidade = new JLabel("Unidade:");
         lblUnidade.setFont(new Font("Dialog", Font.BOLD, 16));
-        lblUnidade.setBounds(30, 128, 82, 23);
+        lblUnidade.setBounds(20, 128, 82, 23);
         contentPane.add(lblUnidade);
 
         JLabel lblNewLabel = new JLabel("Especialidade:");
         lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
-        lblNewLabel.setBounds(30, 188, 113, 17);
+        lblNewLabel.setBounds(20, 188, 113, 17);
         contentPane.add(lblNewLabel);
 
         JLabel lblNewLabel_1 = new JLabel("Horário:");
@@ -95,7 +95,7 @@ public class TelaAgendar extends JFrame {
         }
 
         cbEspecialidade = new JComboBox<>();
-        cbEspecialidade.setBounds(150, 185, 180, 26);
+        cbEspecialidade.setBounds(140, 185, 180, 26);
         contentPane.add(cbEspecialidade);
         cbEspecialidade.addItem("");
         for (String especialidadeItem : especialidade) {
@@ -104,7 +104,7 @@ public class TelaAgendar extends JFrame {
         cbEspecialidade.addActionListener(cbEspecialidadeListener);
 
         cbMedico = new JComboBox<>();
-        cbMedico.setBounds(150, 245, 180, 26);
+        cbMedico.setBounds(140, 245, 180, 26);
         contentPane.add(cbMedico);
         cbMedico.addItem("");
         for (String nomeItem : nome) {
@@ -113,7 +113,7 @@ public class TelaAgendar extends JFrame {
         cbMedico.addActionListener(cbMedicoListener);
 
         cbUnidade = new JComboBox<>();
-        cbUnidade.setBounds(150, 125, 180, 26);
+        cbUnidade.setBounds(140, 125, 180, 26);
         contentPane.add(cbUnidade);
         cbUnidade.addItem("");
         for (String unidadeItem : unidade) {
@@ -123,7 +123,7 @@ public class TelaAgendar extends JFrame {
 
         JComboBox<String> cbHorario = new JComboBox<>();
         cbHorario.setModel(new DefaultComboBoxModel(new String[] {"", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"}));
-        cbHorario.setBounds(150, 365, 180, 26);
+        cbHorario.setBounds(140, 305, 180, 26);
         contentPane.add(cbHorario);
         cbHorario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -147,7 +147,7 @@ public class TelaAgendar extends JFrame {
 
         JLabel lblNewLabel_2 = new JLabel("Médico:");
         lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 16));
-        lblNewLabel_2.setBounds(30, 248, 92, 17);
+        lblNewLabel_2.setBounds(20, 248, 92, 17);
         contentPane.add(lblNewLabel_2);
         
         JLabel lblData = new JLabel("Data:");

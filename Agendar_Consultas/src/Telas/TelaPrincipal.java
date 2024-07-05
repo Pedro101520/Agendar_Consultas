@@ -142,7 +142,7 @@ public class TelaPrincipal extends JFrame {
 				dispose();
 			}
 		});
-		btnVoltar.setBounds(123, 400, 89, 23);
+		btnVoltar.setBounds(123, 380, 89, 23);
 		contentPane.add(btnVoltar);
 		
 		JLabel lblNewLabel = new JLabel("Agendar \r\nConsulta");
