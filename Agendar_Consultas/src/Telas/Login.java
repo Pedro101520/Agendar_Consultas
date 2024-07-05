@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import Conexoes.UsuarioLogin;
 import Sistema.Usuario;
+import view.util.LimitarCaracteres;
 
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -127,6 +128,7 @@ public class Login extends JFrame {
 		panel.add(btnCad);
 		
 		psSenha = new JPasswordField();
+		psSenha.setDocument(new LimitarCaracteres(8, LimitarCaracteres.TipoEntrada.SENHA));
 		psSenha.setBounds(56, 111, 156, 20);
 		panel.add(psSenha);
 	}

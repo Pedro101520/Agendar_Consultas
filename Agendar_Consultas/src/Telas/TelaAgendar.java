@@ -6,9 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import Conexoes.ProcessaAgenda;
 import Conexoes.dadosConsulta;
+import com.toedter.calendar.JMonthChooser;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -18,6 +18,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.TextField;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.DefaultComboBoxModel;
 
 public class TelaAgendar extends JFrame {
 
@@ -51,7 +54,7 @@ public class TelaAgendar extends JFrame {
         });
     }
 
-    public TelaAgendar() {
+    public TelaAgendar() {	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 350, 450);
         contentPane = new JPanel();
@@ -78,9 +81,11 @@ public class TelaAgendar extends JFrame {
 
         JLabel lblNewLabel_1 = new JLabel("Horário:");
         lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 16));
-        lblNewLabel_1.setBounds(30, 308, 82, 17);
+        lblNewLabel_1.setBounds(30, 368, 82, 17);
         contentPane.add(lblNewLabel_1);
-
+        
+        
+        
         if (consulta.acessaDadosMedico()) {
             nome = consulta.getNome();
             especialidade = consulta.getEspecialidade();
@@ -117,7 +122,8 @@ public class TelaAgendar extends JFrame {
         cbUnidade.addActionListener(cbUnidadeActionListener);
 
         JComboBox<String> cbHorario = new JComboBox<>();
-        cbHorario.setBounds(150, 305, 180, 26);
+        cbHorario.setModel(new DefaultComboBoxModel(new String[] {"", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"}));
+        cbHorario.setBounds(150, 365, 180, 26);
         contentPane.add(cbHorario);
         cbHorario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -143,6 +149,16 @@ public class TelaAgendar extends JFrame {
         lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 16));
         lblNewLabel_2.setBounds(30, 248, 92, 17);
         contentPane.add(lblNewLabel_2);
+        
+        JLabel lblData = new JLabel("Data:");
+        lblData.setFont(new Font("Dialog", Font.BOLD, 16));
+        lblData.setBounds(30, 308, 60, 17);
+        contentPane.add(lblData);
+        
+        JDateChooser dateChooser = new JDateChooser();
+        dateChooser.setBounds(150, 305, 180, 26);
+        contentPane.add(dateChooser);
+
     }
     
     // Lógica unidade
