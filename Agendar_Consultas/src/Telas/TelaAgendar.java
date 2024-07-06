@@ -7,14 +7,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import Conexoes.ProcessaAgenda;
+import Conexoes.agendaConsulta;
 import Conexoes.dadosConsulta;
+import Sistema.ConverteData;
+
 import com.toedter.calendar.JMonthChooser;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -26,10 +32,12 @@ public class TelaAgendar extends JFrame {
 
     dadosConsulta consulta = new dadosConsulta();
     ProcessaAgenda agenda = new ProcessaAgenda();
+	agendaConsulta confirmaAgendamento = new agendaConsulta();
 
     private static JComboBox<String> cbEspecialidade;
     private static JComboBox<String> cbUnidade;
     private static JComboBox<String> cbMedico;
+    private static JDateChooser dcData;
     private static List<String> nome = new ArrayList<>();
     private static List<String> especialidade = new ArrayList<>();
     private static List<String> unidade = new ArrayList<>();
@@ -85,7 +93,6 @@ public class TelaAgendar extends JFrame {
         contentPane.add(lblNewLabel_1);
         
         
-        //Teste
         if (consulta.acessaDadosMedico()) {
             nome = consulta.getNome();
             especialidade = consulta.getEspecialidade();
@@ -131,6 +138,21 @@ public class TelaAgendar extends JFrame {
         });
 
         JButton btnConfirmar = new JButton("Confirmar");
+        btnConfirmar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+
+                SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
+                String data = formatacao.format(dcData.getDate());
+        		
+        		if(confirmaAgendamento.agendar(cbMedico.getSelectedItem().toString(), cbHorario.getSelectedItem().toString(), data)) {
+        			JOptionPane.showMessageDialog(null, "Horário indisponivel");
+        		}else {
+        			
+        			
+        			JOptionPane.showMessageDialog(null, "Consulta Agendada");
+        		}
+        	}
+        });
         btnConfirmar.setBounds(38, 411, 105, 27);
         contentPane.add(btnConfirmar);
 
@@ -155,9 +177,9 @@ public class TelaAgendar extends JFrame {
         lblData.setBounds(30, 308, 60, 17);
         contentPane.add(lblData);
         
-        JDateChooser dateChooser = new JDateChooser();
-        dateChooser.setBounds(150, 305, 180, 26);
-        contentPane.add(dateChooser);
+        dcData = new JDateChooser();
+        dcData.setBounds(150, 305, 180, 26);
+        contentPane.add(dcData);
 
     }
     
