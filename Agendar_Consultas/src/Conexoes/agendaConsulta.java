@@ -11,13 +11,16 @@ import Sistema.Usuario;
 
 public class agendaConsulta {
 	
+	UsuarioLogin usuario = new UsuarioLogin();
+	
 	private static String nomeMedico;
+	
 	
 	public agendaConsulta() {
 	}
 
 	Connection conexao;
-	public boolean agendar(String medico, String hora, String data) {
+	public boolean verificaHorario(String medico, String horario, String data) {
 		conexao = new Conexao().conexaoDB();
 		
 		try{ 
@@ -27,9 +30,10 @@ public class agendaConsulta {
 		                    "WHERE m.nome = ? AND a.hora = ? AND a.data_consulta = ? " +
 		                    "AND a.id_usuarios = u.id AND a.id_medicos = m.id";
 			
+			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, medico);
-			pstm.setString(2, hora);
+			pstm.setString(2, horario);
 			pstm.setString(3, data);
 			ResultSet rs = pstm.executeQuery();
 			
@@ -41,6 +45,25 @@ public class agendaConsulta {
 				JOptionPane.showConfirmDialog(null, "Não foi encontrado");
 				return false;
 			}
+		} catch(SQLException erro) {
+			JOptionPane.showConfirmDialog(null, "UsuarioLogin: " + erro);
+			return false;
+		}
+	}
+	
+	public boolean agendar(String horario, String data) {
+		conexao = new Conexao().conexaoDB();
+		
+		try{ 
+			String sql = "INSERT INTO agendamento (id_medicos, id_usuarios, hora, data_consulta) VALUES (?, ?, ?, ?)";
+			PreparedStatement pstm = conexao.prepareStatement(sql);
+			
+			pstm.setInt(1, 1);
+			pstm.setInt(2, usuario.getIdUsuario());
+			pstm.setString(3, horario);
+			pstm.setString(4, data);	
+			pstm.executeUpdate();
+			return true;
 		} catch(SQLException erro) {
 			JOptionPane.showConfirmDialog(null, "UsuarioLogin: " + erro);
 			return false;

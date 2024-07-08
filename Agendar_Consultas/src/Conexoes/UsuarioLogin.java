@@ -12,6 +12,7 @@ import Sistema.Usuario;
 public class UsuarioLogin {
 	
 	private static String nome;
+	private static int idUsuario;
 	
 	public UsuarioLogin() {
 	}
@@ -21,7 +22,7 @@ public class UsuarioLogin {
 		conexao = new Conexao().conexaoDB();
 		
 		try{ 
-			String sql = "SELECT nome FROM usuarios WHERE email = ? and senha = ?";
+			String sql = "SELECT id, nome FROM usuarios WHERE email = ? and senha = ?";
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, objusuario.getEmail());
@@ -30,6 +31,8 @@ public class UsuarioLogin {
 			
 			if (rs.next()) {
 				nome = rs.getString("nome");
+				idUsuario = rs.getInt("id");
+				System.out.println(idUsuario);
 				return true;
 			}else {
 				return false;
@@ -42,5 +45,9 @@ public class UsuarioLogin {
 	
 	public String getNome() {
 		return UsuarioLogin.nome;
+	}
+	
+	public int getIdUsuario() {
+		return UsuarioLogin.idUsuario;
 	}
 }

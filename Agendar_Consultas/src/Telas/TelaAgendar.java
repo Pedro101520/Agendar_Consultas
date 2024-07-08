@@ -143,12 +143,12 @@ public class TelaAgendar extends JFrame {
 
                 SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
                 String data = formatacao.format(dcData.getDate());
+                String horario = cbHorario.getSelectedItem().toString() + ":00";
         		
-        		if(confirmaAgendamento.agendar(cbMedico.getSelectedItem().toString(), cbHorario.getSelectedItem().toString(), data)) {
+        		if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), horario, data)) {
         			JOptionPane.showMessageDialog(null, "Horário indisponivel");
         		}else {
-        			
-        			
+        			confirmaAgendamento.agendar(cbHorario.getSelectedItem().toString(), data);
         			JOptionPane.showMessageDialog(null, "Consulta Agendada");
         		}
         	}
@@ -187,7 +187,6 @@ public class TelaAgendar extends JFrame {
     private ActionListener cbUnidadeActionListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             if (cbUnidade.getSelectedIndex() == 0) {
-            	System.out.println("If unidade");
             	cbUnidade.removeAllItems();
             	cbEspecialidade.removeAllItems();
             	cbMedico.removeAllItems();
@@ -203,13 +202,11 @@ public class TelaAgendar extends JFrame {
                 for (String medicoItem : nome) {
                     cbMedico.addItem(medicoItem);
                 }
-                System.out.println("Unidade não selecionada");
                 agenda.getEspecialidade().clear();
                 agenda.getNome().clear();
                 verificaEspecialidade = true;
                 verificaUnidade = true;
             }else if(cbUnidade.getSelectedIndex() > 0 && verificaUnidade){
-            	System.out.println("Else unidade");
                 cbEspecialidade.removeActionListener(cbEspecialidadeListener);
                 cbMedico.removeActionListener(cbMedicoListener);
                 cbEspecialidade.removeAllItems();
@@ -219,7 +216,6 @@ public class TelaAgendar extends JFrame {
                 cbMedico.insertItemAt("", 0);
                 cbMedico.setSelectedIndex(0);
                 if(agenda.selecionaPorUnidade(cbUnidade.getSelectedItem().toString())) {
-                	System.out.println("Teste");
                     for (String bancoEspecialidade : agenda.getEspecialidade()) {
                         cbEspecialidade.addItem(bancoEspecialidade);
                     }
@@ -256,13 +252,11 @@ public class TelaAgendar extends JFrame {
                 for (String medicoItem : nome) {
                 	cbMedico.addItem(medicoItem);
                 }
-            	System.out.println("If especialidade");
                 agenda.getUnidade().clear();
                 agenda.getNome().clear();
             	verificaUnidade = true;
             	verificaEspecialidade = true;
             } else if(cbEspecialidade.getSelectedIndex() > 0 && verificaEspecialidade){
-            	System.out.println("Else especialidade");
                 cbUnidade.removeActionListener(cbUnidadeActionListener);
                 cbMedico.removeActionListener(cbMedicoListener);
                 cbUnidade.removeAllItems();
@@ -272,7 +266,6 @@ public class TelaAgendar extends JFrame {
                 cbMedico.insertItemAt("", 0);
                 cbMedico.setSelectedIndex(0);
                 if(agenda.selecionaPorEspecialidade(cbEspecialidade.getSelectedItem().toString())) {
-                	System.out.println("Teste");
                     for (String bancoUnidade : agenda.getUnidade()) {
                         cbUnidade.addItem(bancoUnidade);
                     }
@@ -295,7 +288,6 @@ public class TelaAgendar extends JFrame {
     private ActionListener cbMedicoListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             if (cbMedico.getSelectedIndex() == 0) {
-            	System.out.println("If medico");
             	cbMedico.removeAllItems();
             	cbMedico.insertItemAt("", 0);
             	cbMedico.setSelectedIndex(0);
@@ -311,14 +303,12 @@ public class TelaAgendar extends JFrame {
                 for (String especialidadeItem : especialidade) {
                     cbEspecialidade.addItem(especialidadeItem);
                 }
-                System.out.println("Medico não selecionada");
                 agenda.getUnidade().clear();
                 agenda.getEspecialidade().clear();
                 verificaEspecialidade = true;
                 verificaUnidade = true;
                 verificaMedico = true;
             }else if(cbMedico.getSelectedIndex() > 0 && verificaMedico){
-            	System.out.println("Else Medico");
                 cbEspecialidade.removeActionListener(cbEspecialidadeListener);
                 cbUnidade.removeActionListener(cbUnidadeActionListener);
                 cbEspecialidade.removeAllItems();
