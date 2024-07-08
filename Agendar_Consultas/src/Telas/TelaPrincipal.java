@@ -172,9 +172,5 @@ public class TelaPrincipal extends JFrame {
 		String msgOla = user.getNome();
 		lblOla.setText("Olá " + msgOla + " Seja bem vindo(a)");
 		contentPane.add(lblOla);
-		
-		JLabel lblNewLabel_4 = new JLabel("New label");
-		lblNewLabel_4.setBounds(44, 372, 60, 17);
-		contentPane.add(lblNewLabel_4);
 	}
 }
