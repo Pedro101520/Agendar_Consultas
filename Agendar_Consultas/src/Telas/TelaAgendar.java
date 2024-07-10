@@ -27,6 +27,14 @@ import java.awt.event.ActionEvent;
 import java.awt.TextField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
 public class TelaAgendar extends JFrame {
 
@@ -38,6 +46,7 @@ public class TelaAgendar extends JFrame {
     private static JComboBox<String> cbUnidade;
     private static JComboBox<String> cbMedico;
     private static JDateChooser dcData;
+    private static String data;
     private static List<String> nome = new ArrayList<>();
     private static List<String> especialidade = new ArrayList<>();
     private static List<String> unidade = new ArrayList<>();
@@ -128,6 +137,8 @@ public class TelaAgendar extends JFrame {
         }
         cbUnidade.addActionListener(cbUnidadeActionListener);
 
+        
+        // Logica do Horario
         JComboBox<String> cbHorario = new JComboBox<>();
         cbHorario.setModel(new DefaultComboBoxModel(new String[] {"", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"}));
         cbHorario.setBounds(150, 365, 180, 26);
@@ -137,20 +148,24 @@ public class TelaAgendar extends JFrame {
             }
         });
 
+        
+        
+        
         JButton btnConfirmar = new JButton("Confirmar");
         btnConfirmar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 
-                SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
-                String data = formatacao.format(dcData.getDate());
-                String horario = cbHorario.getSelectedItem().toString() + ":00";
+                int idMedico = agenda.getIdMedico(cbMedico.getSelectedItem().toString());
         		
-        		if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), horario, data)) {
+        		if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), data)) {
         			JOptionPane.showMessageDialog(null, "Horário indisponivel");
         		}else {
-        			confirmaAgendamento.agendar(cbHorario.getSelectedItem().toString(), data);
         			JOptionPane.showMessageDialog(null, "Consulta Agendada");
+					TelaPrincipal frame = new TelaPrincipal();
+					frame.setVisible(true);
+					dispose();
         		}
+        		
         	}
         });
         btnConfirmar.setBounds(38, 411, 105, 27);
@@ -178,9 +193,16 @@ public class TelaAgendar extends JFrame {
         contentPane.add(lblData);
         
         dcData = new JDateChooser();
+        dcData.addPropertyChangeListener(new PropertyChangeListener() {
+        	public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("date")) {
+                    SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
+                    data = formatacao.format(dcData.getDate());
+                    }
+                }
+        });
         dcData.setBounds(150, 305, 180, 26);
         contentPane.add(dcData);
-
     }
     
     // Lógica unidade
@@ -257,6 +279,11 @@ public class TelaAgendar extends JFrame {
             	verificaUnidade = true;
             	verificaEspecialidade = true;
             } else if(cbEspecialidade.getSelectedIndex() > 0 && verificaEspecialidade){
+            	
+//            	for(String hora : confirmaAgendamento.getHorario()) {
+//            		System.out.println(hora);
+//            	}
+            	
                 cbUnidade.removeActionListener(cbUnidadeActionListener);
                 cbMedico.removeActionListener(cbMedicoListener);
                 cbUnidade.removeAllItems();
@@ -270,6 +297,9 @@ public class TelaAgendar extends JFrame {
                         cbUnidade.addItem(bancoUnidade);
                     }
                     for (String bancoMedico : agenda.getNome()) {
+//                    	System.out.println(bancoMedico);
+                    	
+                    	
                         cbMedico.addItem(bancoMedico);
                     }
                     
@@ -337,4 +367,9 @@ public class TelaAgendar extends JFrame {
             }
         }
     };
+    
+    
+    public String getData() {
+    	return data;
+    }
 }

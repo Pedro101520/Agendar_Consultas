@@ -49,6 +49,26 @@ public class ProcessaAgenda {
 		}
 	}
 	
+	public int getIdMedico(String nome) {
+		int idMedico = 0;
+		conexao = new Conexao().conexaoDB();
+		try{ 
+			String sql = "SELECT id FROM medicos WHERE nome = ?";
+			
+			PreparedStatement pstm = conexao.prepareStatement(sql);
+			pstm.setString(1, nome);
+			ResultSet rs = pstm.executeQuery();
+			
+			if (rs.next()) {
+				idMedico = rs.getInt("id");
+			}
+		}catch(SQLException erro) {
+			JOptionPane.showConfirmDialog(null, "ProcessaAgenda: " + erro);
+			return 0;
+		}
+		return idMedico;
+	}
+	
 	public boolean selecionaPorNome(String buscaPorNome) {
 		conexao = new Conexao().conexaoDB();
 		
@@ -127,7 +147,7 @@ public class ProcessaAgenda {
 					nome.add(rs.getString("nome"));
 					especialidade.add(rs.getString("especialidade"));
 					unidade.add(rs.getString("unidade"));
-					System.out.println(nome);
+//					System.out.println(nome);
 				}else {
 					verifica = false;
 				}
