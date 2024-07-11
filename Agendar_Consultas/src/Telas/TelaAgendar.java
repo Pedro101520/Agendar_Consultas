@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.TextField;
@@ -140,7 +141,10 @@ public class TelaAgendar extends JFrame {
         
         // Logica do Horario
         JComboBox<String> cbHorario = new JComboBox<>();
-        cbHorario.setModel(new DefaultComboBoxModel(new String[] {"", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"}));
+        cbHorario.addFocusListener(new FocusAdapter() {
+        	public void focusGained(FocusEvent e) { 
+            }
+        });
         cbHorario.setBounds(150, 365, 180, 26);
         contentPane.add(cbHorario);
         cbHorario.addActionListener(new ActionListener() {
@@ -148,24 +152,13 @@ public class TelaAgendar extends JFrame {
             }
         });
 
-        
-        
-        
+
         JButton btnConfirmar = new JButton("Confirmar");
         btnConfirmar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-
-                int idMedico = agenda.getIdMedico(cbMedico.getSelectedItem().toString());
-        		
-        		if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), data)) {
-        			JOptionPane.showMessageDialog(null, "Horário indisponivel");
-        		}else {
-        			JOptionPane.showMessageDialog(null, "Consulta Agendada");
-					TelaPrincipal frame = new TelaPrincipal();
-					frame.setVisible(true);
-					dispose();
-        		}
-        		
+        		int id = agenda.getIdMedico(cbMedico.getSelectedItem().toString());
+        		confirmaAgendamento.agendar(cbHorario.getSelectedItem().toString(), data, id);
+        		JOptionPane.showMessageDialog(null, "Consulta Agendada");
         	}
         });
         btnConfirmar.setBounds(38, 411, 105, 27);
@@ -195,11 +188,39 @@ public class TelaAgendar extends JFrame {
         dcData = new JDateChooser();
         dcData.addPropertyChangeListener(new PropertyChangeListener() {
         	public void propertyChange(PropertyChangeEvent evt) {
+        		
                 if (evt.getPropertyName().equals("date")) {
-                    SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
+                	String[] horarios = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"};
+                	SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
                     data = formatacao.format(dcData.getDate());
-                    }
+                    
+            		if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), data)) {
+            			System.out.println("If data");
+            			List<String> listHorario = new ArrayList<>(Arrays.asList(horarios));
+            			List<String> horaDisponivel = confirmaAgendamento.getHorario(); 
+            			
+            			for(int i = 0; i < horaDisponivel.size(); i++) {
+            				String hora = horaDisponivel.get(i);
+            				horaDisponivel.set(i, hora.substring(0, 5));
+            			}
+
+            			listHorario.removeAll(horaDisponivel);
+            			
+            			cbHorario.removeAllItems();
+            			cbHorario.addItem("");
+            			for(String horaFiltrada : listHorario) {
+            				cbHorario.addItem(horaFiltrada);
+            			}
+            		}else {
+            			System.out.println("Else Data");
+            			cbHorario.removeAllItems();
+            			cbHorario.addItem("");
+            			for(String horaPadrao : horarios) {
+            				cbHorario.addItem(horaPadrao);
+            			}
+            		}
                 }
+        	}
         });
         dcData.setBounds(150, 305, 180, 26);
         contentPane.add(dcData);
@@ -367,9 +388,4 @@ public class TelaAgendar extends JFrame {
             }
         }
     };
-    
-    
-    public String getData() {
-    	return data;
-    }
 }

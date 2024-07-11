@@ -27,10 +27,7 @@ public class agendaConsulta {
 
     public boolean verificaHorario(String medico, String data) {
         conexao = new Conexao().conexaoDB();
-//        SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
-//        String data = formatacao.format(dcData.getDate());
-//        int idMedico = agenda.getIdMedico(cbMedico.getSelectedItem().toString());
-        
+
         try {
             String sql = 
                 "SELECT a.hora " +
@@ -38,29 +35,33 @@ public class agendaConsulta {
                 "WHERE m.nome = ? AND a.data_consulta = ? " +
                 "AND a.id_medicos = m.id";
             
-            PreparedStatement pstm = conexao.prepareStatement(sql);
+            PreparedStatement pstm = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstm.setString(1, medico);
             pstm.setString(2, data);
             ResultSet rs = pstm.executeQuery();
-            
-            int qtde = 0;
-            while(rs.next()) {
-                Time time = rs.getTime("hora");
-                horarioDisponivel.add(time.toString());
-                qtde++;
-            }
-            
-            if(qtde > 0) {
+
+            horarioDisponivel.clear();
+
+            rs.last();
+            int qtde = rs.getRow();
+            rs.beforeFirst();
+
+            if (qtde > 0) {
+                while (rs.next()) {
+                    Time time = rs.getTime("hora");
+                    horarioDisponivel.add(time.toString());
+                }
                 return true;
             } else {
                 return false;
             }
-
+            
         } catch(SQLException erro) {
             JOptionPane.showConfirmDialog(null, "Erro ao verificar horário: " + erro);
             return false;
         }
     }
+
     
     public void agendar(String horario, String data, int idMedico) {
         conexao = new Conexao().conexaoDB();
