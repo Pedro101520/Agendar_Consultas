@@ -395,8 +395,8 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_3);
 		lblNewLabel_1_3.setFont(new Font("Leelawadee", Font.PLAIN, 15));
 
-		// Dar um limite de 8 caracteres
 		psSenha = new JPasswordField();
+		psSenha.setDocument(new LimitarCaracteres(8, LimitarCaracteres.TipoEntrada.SENHA));
 		psSenha.setBounds(100, 299, 156, 20);
 		panel.add(psSenha);
 

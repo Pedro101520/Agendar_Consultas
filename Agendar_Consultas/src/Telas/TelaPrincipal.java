@@ -94,6 +94,9 @@ public class TelaPrincipal extends JFrame {
 		JButton btnCancelar = new JButton("");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+                TelaCancelar cancelar = new TelaCancelar();
+                cancelar.setVisible(true);
+                dispose();
 			}
 		});
 		btnCancelar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Cancelar.png")));

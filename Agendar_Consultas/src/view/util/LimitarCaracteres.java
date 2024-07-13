@@ -16,7 +16,6 @@ public class LimitarCaracteres extends PlainDocument {
         this.tpEntrada = tpEntrada;
     }
 
-    @Override
     public void insertString(int offs, String str, javax.swing.text.AttributeSet a) throws BadLocationException {
         if (str == null) {
             return;
