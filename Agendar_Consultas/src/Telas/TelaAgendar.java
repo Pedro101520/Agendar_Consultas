@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.TextField;
@@ -193,32 +194,32 @@ public class TelaAgendar extends JFrame {
                 	String[] horarios = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"};
                 	SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
                     data = formatacao.format(dcData.getDate());
-                    
-            		if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), data)) {
-            			System.out.println("If data");
-            			List<String> listHorario = new ArrayList<>(Arrays.asList(horarios));
-            			List<String> horaDisponivel = confirmaAgendamento.getHorario(); 
-            			
-            			for(int i = 0; i < horaDisponivel.size(); i++) {
-            				String hora = horaDisponivel.get(i);
-            				horaDisponivel.set(i, hora.substring(0, 5));
-            			}
-
-            			listHorario.removeAll(horaDisponivel);
-            			
-            			cbHorario.removeAllItems();
-            			cbHorario.addItem("");
-            			for(String horaFiltrada : listHorario) {
-            				cbHorario.addItem(horaFiltrada);
-            			}
-            		}else {
-            			System.out.println("Else Data");
-            			cbHorario.removeAllItems();
-            			cbHorario.addItem("");
-            			for(String horaPadrao : horarios) {
-            				cbHorario.addItem(horaPadrao);
-            			}
-            		}
+	            		if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), data)) {
+	            			System.out.println("If data");
+	            			List<String> listHorario = new ArrayList<>(Arrays.asList(horarios));
+	            			List<String> horaDisponivel = confirmaAgendamento.getHorario(); 
+	            			
+	            			for(int i = 0; i < horaDisponivel.size(); i++) {
+	            				String hora = horaDisponivel.get(i);
+	            				horaDisponivel.set(i, hora.substring(0, 5));
+	            			}
+	
+	            			listHorario.removeAll(horaDisponivel);
+	            			
+	            			cbHorario.removeAllItems();
+	            			cbHorario.addItem("");
+	            			for(String horaFiltrada : listHorario) {
+	            				cbHorario.addItem(horaFiltrada);
+	            			}
+	            		}else {
+	            			System.out.println("Else Data");
+	            			cbHorario.removeAllItems();
+	            			cbHorario.addItem("");
+	            			for(String horaPadrao : horarios) {
+	            				cbHorario.addItem(horaPadrao);
+	            			}
+	      
+	            	} 
                 }
         	}
         });
@@ -259,7 +260,12 @@ public class TelaAgendar extends JFrame {
                 cbMedico.insertItemAt("", 0);
                 cbMedico.setSelectedIndex(0);
                 if(agenda.selecionaPorUnidade(cbUnidade.getSelectedItem().toString())) {
-                    for (String bancoEspecialidade : agenda.getEspecialidade()) {
+                	
+                	List<String> resultEspecialidade = agenda.getEspecialidade();
+                	HashSet<String> setEspecialidade = new HashSet<>(resultEspecialidade);
+                	List<String> listaSemDuplicados = new ArrayList<>(setEspecialidade);
+                	           	
+                    for (String bancoEspecialidade : listaSemDuplicados) {
                         cbEspecialidade.addItem(bancoEspecialidade);
                     }
                     
@@ -299,12 +305,7 @@ public class TelaAgendar extends JFrame {
                 agenda.getNome().clear();
             	verificaUnidade = true;
             	verificaEspecialidade = true;
-            } else if(cbEspecialidade.getSelectedIndex() > 0 && verificaEspecialidade){
-            	
-//            	for(String hora : confirmaAgendamento.getHorario()) {
-//            		System.out.println(hora);
-//            	}
-            	
+            } else if(cbEspecialidade.getSelectedIndex() > 0 && verificaEspecialidade){           	
                 cbUnidade.removeActionListener(cbUnidadeActionListener);
                 cbMedico.removeActionListener(cbMedicoListener);
                 cbUnidade.removeAllItems();
@@ -314,13 +315,16 @@ public class TelaAgendar extends JFrame {
                 cbMedico.insertItemAt("", 0);
                 cbMedico.setSelectedIndex(0);
                 if(agenda.selecionaPorEspecialidade(cbEspecialidade.getSelectedItem().toString())) {
-                    for (String bancoUnidade : agenda.getUnidade()) {
+                	
+                	List<String> resultUnidade = agenda.getUnidade();
+                	HashSet<String> setUnidade = new HashSet<>(resultUnidade);
+                	List<String> listaSemDuplicados = new ArrayList<>(setUnidade);
+                	
+                    for (String bancoUnidade : listaSemDuplicados) {
                         cbUnidade.addItem(bancoUnidade);
                     }
-                    for (String bancoMedico : agenda.getNome()) {
-//                    	System.out.println(bancoMedico);
-                    	
-                    	
+                    
+                    for (String bancoMedico : agenda.getNome()) {         	
                         cbMedico.addItem(bancoMedico);
                     }
                     

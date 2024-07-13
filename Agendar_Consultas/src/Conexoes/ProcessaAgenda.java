@@ -147,7 +147,6 @@ public class ProcessaAgenda {
 					nome.add(rs.getString("nome"));
 					especialidade.add(rs.getString("especialidade"));
 					unidade.add(rs.getString("unidade"));
-//					System.out.println(nome);
 				}else {
 					verifica = false;
 				}
