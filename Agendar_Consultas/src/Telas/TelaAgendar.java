@@ -160,6 +160,9 @@ public class TelaAgendar extends JFrame {
         		int id = agenda.getIdMedico(cbMedico.getSelectedItem().toString());
         		confirmaAgendamento.agendar(cbHorario.getSelectedItem().toString(), data, id);
         		JOptionPane.showMessageDialog(null, "Consulta Agendada");
+                TelaPrincipal principal = new TelaPrincipal();
+                principal.setVisible(true);
+                dispose();
         	}
         });
         btnConfirmar.setBounds(38, 411, 105, 27);

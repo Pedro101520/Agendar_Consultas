@@ -18,6 +18,7 @@ public class agendaConsulta {
     UsuarioLogin usuario = new UsuarioLogin();
     
     private static String nomeMedico;
+    private static int idConsulta;
     private static List<String> horarioDisponivel = new ArrayList<>();
     
     public agendaConsulta() {
@@ -82,6 +83,10 @@ public class agendaConsulta {
     
     public String getNome() {
         return agendaConsulta.nomeMedico;
+    }
+    
+    public int getId() {
+    	return agendaConsulta.idConsulta;
     }
     
     public List<String> getHorario() {

@@ -427,17 +427,14 @@ public class TelaCadastro extends JFrame {
 		}
 
 		txtCEPFormatted.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
 			public void insertUpdate(DocumentEvent e) {
 				verificarCEP();
 			}
 
-			@Override
 			public void removeUpdate(DocumentEvent e) {
 				verificarCEP();
 			}
 
-			@Override
 			public void changedUpdate(DocumentEvent e) {
 				verificarCEP();
 			}

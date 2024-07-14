@@ -6,19 +6,30 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import Conexoes.CancelaConsulta;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaCancelar extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtID;
+	private JTextArea textInfo;
+	
+	CancelaConsulta cancela = new CancelaConsulta();
 
-	public static void main(String[] args) {
+		public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -55,18 +66,58 @@ public class TelaCancelar extends JFrame {
 		txtID.setBounds(35, 140, 164, 31);
 		contentPane.add(txtID);
 		txtID.setColumns(10);
-		
-		JLabel lblInfo = new JLabel("");
-		lblInfo.setBounds(35, 192, 278, 171);
-		contentPane.add(lblInfo);
+		txtID.getDocument().addDocumentListener(new DocumentListener() {
+			public void insertUpdate(DocumentEvent e) {
+				exibeInfo();
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				exibeInfo();
+			}
+
+			public void changedUpdate(DocumentEvent e) {
+				exibeInfo();
+			}
+
+			private void exibeInfo() {
+				cancela.acessaConsulta(Integer.parseInt(txtID.getText()));
+				System.out.println(cancela.getNome());
+				textInfo.setText("");
+				String info;
+				info = "Medico: " + cancela.getNome() + "\n" +
+						"Especialidade: " + cancela.getEspecialidade() + "\n" +
+						"Unidade: " + cancela.getUnidade() + "\n" +
+						"Hora: " + cancela.getHora() + "\n" +
+						"Data: " + cancela.getData();
+				
+				
+				textInfo.append(info);
+			}
+		});
 		
 		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancela.cancelaConsulta(Integer.parseInt(txtID.getText()));
+			}
+		});
 		btnConfirmar.setBounds(35, 385, 105, 27);
 		contentPane.add(btnConfirmar);
 		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                TelaPrincipal voltar = new TelaPrincipal();
+                voltar.setVisible(true);
+                dispose();
+			}
+		});
 		btnVoltar.setBounds(208, 385, 105, 27);
 		contentPane.add(btnVoltar);
+		
+		textInfo = new JTextArea();
+		textInfo.setBounds(35, 183, 278, 190);
+		contentPane.add(textInfo);
 
 	}
 }
