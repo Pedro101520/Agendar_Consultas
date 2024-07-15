@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Conexoes.HistoricoConsulta;
 import Conexoes.UsuarioLogin;
 
 import java.awt.Color;
@@ -25,6 +26,10 @@ import javax.swing.JDesktopPane;
 public class TelaPrincipal extends JFrame {
 	
 	UsuarioLogin user = new UsuarioLogin();
+	HistoricoConsulta consulta = new HistoricoConsulta();
+	
+	private String historicoData;
+	private String historicoEspecialidade;
 	
 	private void styleButton(JButton button) {
 		button.setForeground(new Color(200, 230, 201));
@@ -107,6 +112,13 @@ public class TelaPrincipal extends JFrame {
 		JButton btnHistorico = new JButton("");
 		btnHistorico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(consulta.historico()) {
+					historicoEspecialidade = consulta.getEspecialidade();
+					historicoData = consulta.getEspecialidade();
+				}else {
+					System.out.println("Erro ao consultar Histórico");
+				}
 			}
 		});
 		btnHistorico.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Historico.png")));
@@ -175,5 +187,12 @@ public class TelaPrincipal extends JFrame {
 		String msgOla = user.getNome();
 		lblOla.setText("Olá " + msgOla + " Seja bem vindo(a)");
 		contentPane.add(lblOla);
+	}
+	
+	public String getHistoricoEspecialidade() {
+		return historicoEspecialidade;
+	}
+	public String getHistoricoData() {
+		return historicoData;
 	}
 }

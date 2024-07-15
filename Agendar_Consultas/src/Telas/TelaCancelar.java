@@ -12,6 +12,8 @@ import javax.swing.event.DocumentListener;
 import Conexoes.CancelaConsulta;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -99,6 +101,11 @@ public class TelaCancelar extends JFrame {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cancela.cancelaConsulta(Integer.parseInt(txtID.getText()));
+				
+				JOptionPane.showMessageDialog(null, "Consulta cancelada com sucesso!");
+                TelaPrincipal voltar = new TelaPrincipal();
+                voltar.setVisible(true);
+                dispose();
 			}
 		});
 		btnConfirmar.setBounds(35, 385, 105, 27);
