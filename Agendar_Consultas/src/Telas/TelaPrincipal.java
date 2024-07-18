@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -26,10 +28,6 @@ import javax.swing.JDesktopPane;
 public class TelaPrincipal extends JFrame {
 	
 	UsuarioLogin user = new UsuarioLogin();
-	HistoricoConsulta consulta = new HistoricoConsulta();
-	
-	private String historicoData;
-	private String historicoEspecialidade;
 	
 	private void styleButton(JButton button) {
 		button.setForeground(new Color(200, 230, 201));
@@ -40,28 +38,24 @@ public class TelaPrincipal extends JFrame {
         button.setBorderPainted(false);
 		
         button.addMouseListener(new MouseAdapter() {
-            @Override
             public void mousePressed(MouseEvent e) {
                 button.setContentAreaFilled(true);
                 button.setOpaque(true);
                 button.setBackground(new Color(150, 150, 150));
             }
 
-            @Override
             public void mouseReleased(MouseEvent e) {
                 button.setContentAreaFilled(false);
                 button.setOpaque(false);
                 button.setBackground(new Color(200, 230, 201));
             }
 
-            @Override
             public void mouseEntered(MouseEvent e) {
                 button.setContentAreaFilled(true);
                 button.setOpaque(true);
                 button.setBackground(new Color(220, 220, 220));
             }
 
-            @Override
             public void mouseExited(MouseEvent e) {
                 button.setContentAreaFilled(false);
                 button.setOpaque(false);
@@ -112,13 +106,10 @@ public class TelaPrincipal extends JFrame {
 		JButton btnHistorico = new JButton("");
 		btnHistorico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(consulta.historico()) {
-					historicoEspecialidade = consulta.getEspecialidade();
-					historicoData = consulta.getEspecialidade();
-				}else {
-					System.out.println("Erro ao consultar Histórico");
-				}
+                TelaHistorico historico = new TelaHistorico();
+				historico.executaInfo();
+                historico.setVisible(true);
+                dispose();
 			}
 		});
 		btnHistorico.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Historico.png")));
@@ -187,12 +178,5 @@ public class TelaPrincipal extends JFrame {
 		String msgOla = user.getNome();
 		lblOla.setText("Olá " + msgOla + " Seja bem vindo(a)");
 		contentPane.add(lblOla);
-	}
-	
-	public String getHistoricoEspecialidade() {
-		return historicoEspecialidade;
-	}
-	public String getHistoricoData() {
-		return historicoData;
 	}
 }

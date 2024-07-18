@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -13,14 +15,14 @@ public class HistoricoConsulta {
 	
 	UsuarioLogin idUser = new UsuarioLogin();
 	
-	private static String especialidade;
-	private static String data;
+	private static List<String> especialidade = new ArrayList<>();
+	private static List<String> data = new ArrayList<>();	
 	
 	public HistoricoConsulta() {
 	}
 
 	Connection conexao;
-	public boolean historico() {
+	public boolean historicoInfo() {
 		conexao = new Conexao().conexaoDB();
 		
 		try{ 
@@ -34,24 +36,29 @@ public class HistoricoConsulta {
 			pstm.setInt(1, idUser.getIdUsuario());
 			ResultSet rs = pstm.executeQuery();
 			
-			if (rs.next()) {
-				especialidade = rs.getString("especialidade");
-				data = rs.getString("data_consulta_formatada");
-				return true;
-			}else {
-				return false;
+			
+			boolean verifica = true;
+			while(verifica) {
+				if(rs.next()) {
+					especialidade.add(rs.getString("especialidade"));
+					data.add(rs.getString("data_consulta_formatada"));
+				}else {
+					verifica = false;
+				}
 			}
+			return true;
+			
 		} catch(SQLException erro) {
 			JOptionPane.showConfirmDialog(null, "HistoricoConsulta: " + erro);
 			return false;
 		}
 	}
 	
-	public String getEspecialidade() {
+	public List<String> getEspecialidade() {
 		return HistoricoConsulta.especialidade;
 	}
 	
-	public String getData() {
+	public List<String> getData() {
 		return HistoricoConsulta.data;
 	}
 }
