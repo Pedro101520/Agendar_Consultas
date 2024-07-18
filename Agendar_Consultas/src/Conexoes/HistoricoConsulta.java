@@ -24,7 +24,6 @@ public class HistoricoConsulta {
 	Connection conexao;
 	public boolean historicoInfo() {
 		conexao = new Conexao().conexaoDB();
-		
 		try{ 
 			String sql = "SELECT DATE_FORMAT(a.data_consulta, '%d/%m/%Y') AS data_consulta_formatada, m.especialidade "
 					+ "FROM agendamento AS a, medicos AS m "

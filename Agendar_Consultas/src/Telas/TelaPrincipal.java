@@ -133,6 +133,9 @@ public class TelaPrincipal extends JFrame {
 		JButton btnAtualizar = new JButton("");
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TelaAtualizar atualizar = new TelaAtualizar();
+				atualizar.setVisible(true);
+				dispose();
 			}
 		});
 		btnAtualizar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/atualizar.png")));
