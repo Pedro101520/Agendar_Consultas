@@ -11,6 +11,7 @@ import javax.swing.text.MaskFormatter;
 
 import Conexoes.UsuarioCad;
 import Conexoes.UsuarioLogin;
+import Conexoes.atualizaDados;
 import Sistema.ConverteData;
 import Sistema.Usuario;
 import Sistema.ValidaCPF;
@@ -56,6 +57,7 @@ public class TelaAtualizar extends JFrame {
 	ConverteData data = new ConverteData();
 	registraEmail regEmail = new registraEmail();
 	consultaCEP consulta = new consultaCEP();
+	UsuarioCad dadosUser = new UsuarioCad();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -85,6 +87,22 @@ public class TelaAtualizar extends JFrame {
 	private static JLabel lblCidadeVazio;
 	private static JLabel lblEstadoVazio;
 	private static JLabel lblSenhaVazio;
+	
+	public void setValores() {
+		if(dadosUser.dadosUsuario()) {
+			txtNome.setText(dadosUser.getNome());
+			txtEmail.setText(dadosUser.getEmail());
+			txtDataFormatted.setText(dadosUser.getData());
+			txtCPFFormatted.setText(dadosUser.getCPF());
+			txtCEPFormatted.setText(dadosUser.getCep());
+			txtRua.setText(dadosUser.getRua());
+			txtBairro.setText(dadosUser.getBairro());
+			txtCidade.setText(dadosUser.getCidade());
+			txtEstado.setText(dadosUser.getEstado());
+		}else {
+			System.out.println("Usuário não encontrado");
+		}
+	}
 
 	public TelaAtualizar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -145,7 +163,112 @@ public class TelaAtualizar extends JFrame {
 		JButton btnCad = new JButton("Confirmar");
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				boolean validaFormulario = true;
+				try {
+					if(txtNome.getText().length() > 0) {
+						lblNomeVazio.setVisible(false);
+						cadastroUsuario.setNome(txtNome.getText());
+					}else {
+						lblNomeVazio.setVisible(true);
+						validaFormulario = false;
+					}
+					if (regEmail.emailDB(txtEmail.getText()) && txtEmail.getText().length() > 0) {
+						lblEmailVazio.setVisible(false);
+						cadastroUsuario.setEmail(txtEmail.getText());
+					} else {
+						lblEmailVazio.setVisible(true);
+						validaFormulario = false;
+					}
+					if(txtDataFormatted.getText().replace(" ", "").replace("/", "").length() > 0) {
+						data.setData(txtDataFormatted.getText());
+						if(data.idade()) {
+							lblDataVazio.setVisible(false);
+							cadastroUsuario.setNascimento(data.getData());	
+							System.out.println("Passou no IF");
+						}else validaFormulario = false;
+					}else {
+						lblDataVazio.setVisible(true);
+						validaFormulario = false;	
+						System.out.println("Passou no ELSE");
+					}
+					if (valida.valida(txtCPFFormatted.getText()) && txtCPFFormatted.getText().length() > 0) {
+						lblCPFVazio.setVisible(false);
+						cadastroUsuario.setCpf(txtCPFFormatted.getText());
+					} else {
+						lblCPFVazio.setVisible(true);
+						validaFormulario = false;
+					}
+					if(txtCEPFormatted.getText().replace(" ", "").replace("-", "").length() > 0) {
+						lblCEPVazio.setVisible(false);
+						cadastroUsuario.setCEP(txtCEPFormatted.getText());
+					}else {
+						lblCEPVazio.setVisible(true);
+						validaFormulario = false;
+					}
+					if (txtRua.getText().length() > 0) {
+						lblRuaVazio.setVisible(false);
+						cadastroUsuario.setRua(txtRua.getText());
+					} else {
+						lblRuaVazio.setVisible(true);
+						validaFormulario = false;
+					}
+					if (txtBairro.getText().length() > 0) {
+						lblBairroVazio.setVisible(false);
+						cadastroUsuario.setBairro(txtBairro.getText());
+					} else {
+						lblBairroVazio.setVisible(true);
+						validaFormulario = false;
+					}
+					if (txtCidade.getText().length() > 0) {
+						lblCidadeVazio.setVisible(false);
+						cadastroUsuario.setCidade(txtCidade.getText());
+					} else {
+						lblCidadeVazio.setVisible(true);
+						validaFormulario = false;
+					}
+					if (txtEstado.getText().length() > 0) {
+						lblEstadoVazio.setVisible(false);
+						cadastroUsuario.setEstado(txtEstado.getText());
+					} else {
+						lblEstadoVazio.setVisible(true);
+						validaFormulario = false;
+					}
+					if (psSenha.getPassword().length > 0) {
+						lblSenhaVazio.setVisible(false);
+						cadastroUsuario.setSenha(new String(psSenha.getPassword()));
+					} else {
+						lblSenhaVazio.setVisible(true);
+						validaFormulario = false;
+					}
+
+					if(validaFormulario) {
+						atualizaDados update = new atualizaDados();
+						boolean rsAtualiza = update.atualiza(
+							    txtNome.getText(),
+							    txtEmail.getText(),
+							    new String(psSenha.getPassword()),
+							    txtDataFormatted.getText(),
+							    txtCPFFormatted.getText(),
+							    txtCEPFormatted.getText(),
+							    txtRua.getText(),
+							    txtBairro.getText(),
+							    txtCidade.getText(),
+							    txtEstado.getText()
+							);						
+						if (rsAtualiza) {
+							TelaPrincipal voltar = new TelaPrincipal();
+							JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso!");
+							voltar.setVisible(true);
+							dispose();
+						} else {
+							JOptionPane.showMessageDialog(null, "Verifique as informações e tente novamente!");
+						}
+					}else {
+						return;
+					}
+				} catch (Exception erro) {
+					JOptionPane.showMessageDialog(null, "Cadastro" + erro);
+				}
 			}
 		});
 		btnCad.setBounds(10, 331, 103, 23);

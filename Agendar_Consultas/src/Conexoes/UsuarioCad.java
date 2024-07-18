@@ -11,6 +11,20 @@ import Sistema.Usuario;
 
 public class UsuarioCad {
 
+	UsuarioLogin idUser = new UsuarioLogin();
+	
+	private static String nome;
+	private static String email;
+	private static String cep;
+	private static String rua;
+	private static String bairro;
+	private static String cidade;
+	private static String estado;
+	private static String senha;
+	private static String data;
+	private static String cpf;
+	
+	
 	Connection conexao;
 	
 	public boolean cadastrarUsuario(Usuario objcadastra) {
@@ -37,5 +51,66 @@ public class UsuarioCad {
 			JOptionPane.showConfirmDialog(null, "UsuarioLogin: " + erro);
 			return false;
 		}
+	}
+	
+	public boolean dadosUsuario() {
+		conexao = new Conexao().conexaoDB();
+		
+		try{ 
+			String sql = "SELECT nome, email, cep, rua, bairro, cidade, estado, senha, DATE_FORMAT(data_nascimento, '%d/%m/%Y') as data_nascimento, cpf FROM usuarios WHERE id = ?";
+			
+			PreparedStatement pstm = conexao.prepareStatement(sql);
+			pstm.setInt(1, idUser.getIdUsuario());
+			ResultSet rs = pstm.executeQuery();
+			
+			if(rs.next()) {
+				nome = rs.getString("nome");
+				email = rs.getString("email");
+				cep = rs.getString("cep");
+				rua = rs.getString("rua");
+				bairro = rs.getString("bairro");
+				cidade = rs.getString("cidade");
+				estado = rs.getString("estado");
+				senha = rs.getString("senha");
+				data = rs.getString("data_nascimento");
+				cpf = rs.getString("cpf");
+			}
+
+			return true;
+		} catch(SQLException erro) {
+			JOptionPane.showConfirmDialog(null, "UsuarioLogin: " + erro);
+			return false;
+		}
+	}
+	
+	public String getNome() {
+		return UsuarioCad.nome;
+	}
+	public String getEmail() {
+		return UsuarioCad.email;
+	}
+	public String getCep() {
+		return UsuarioCad.cep;
+	}
+	public String getRua() {
+		return UsuarioCad.rua;
+	}
+	public String getBairro() {
+		return UsuarioCad.bairro;
+	}
+	public String getCidade() {
+		return UsuarioCad.cidade;
+	}
+	public String getEstado() {
+		return UsuarioCad.estado;
+	}
+	public String getSenha() {
+		return UsuarioCad.senha;
+	}
+	public String getData() {
+		return UsuarioCad.data;
+	}
+	public String getCPF() {
+		return UsuarioCad.cpf;
 	}
 }

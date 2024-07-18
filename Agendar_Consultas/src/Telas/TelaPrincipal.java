@@ -134,6 +134,7 @@ public class TelaPrincipal extends JFrame {
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaAtualizar atualizar = new TelaAtualizar();
+				atualizar.setValores();
 				atualizar.setVisible(true);
 				dispose();
 			}
