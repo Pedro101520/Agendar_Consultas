@@ -7,21 +7,16 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import Sistema.ConverteData;
 import Sistema.Usuario;
 
 public class atualizaDados {
-	
-	ConverteData converte = new ConverteData();
 	
 	public atualizaDados() {
 	}
 
 	Connection conexao;
-	public boolean atualiza(String nome, String email, String senha, String data, String cpf, String cep, String rua, String bairro, String cidade, String estado) {
+	public boolean atualiza(String nome, String email, String senha, String cpf, String cep, String rua, String bairro, String cidade, String estado, String dataNasc) {
 		conexao = new Conexao().conexaoDB();
-		
-		converte.setData(data);
 		
 		try{ 
 			String sql = "UPDATE usuarios SET "
@@ -41,7 +36,7 @@ public class atualizaDados {
 			pstm.setString(1, nome);
 			pstm.setString(2, email);
 			pstm.setString(3, senha);
-			pstm.setString(4, converte.getData());
+			pstm.setString(4, dataNasc);
 			pstm.setString(5, cpf);
 			pstm.setString(6, cep);
 			pstm.setString(7, rua);

@@ -9,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 import Conexoes.ProcessaAgenda;
 import Conexoes.agendaConsulta;
 import Conexoes.dadosConsulta;
-import Sistema.ConverteData;
 
 import com.toedter.calendar.JMonthChooser;
 

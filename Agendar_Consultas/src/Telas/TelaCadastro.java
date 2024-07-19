@@ -11,7 +11,6 @@ import javax.swing.text.MaskFormatter;
 
 import Conexoes.UsuarioCad;
 import Conexoes.UsuarioLogin;
-import Sistema.ConverteData;
 import Sistema.Usuario;
 import Sistema.ValidaCPF;
 import Sistema.consultaCEP;
@@ -31,6 +30,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JEditorPane;
 import javax.swing.DropMode;
@@ -39,6 +39,7 @@ import java.awt.Window;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
+import com.toedter.calendar.JDateChooser;
 
 public class TelaCadastro extends JFrame {
 
@@ -53,7 +54,6 @@ public class TelaCadastro extends JFrame {
 	ValidaCPF valida = new ValidaCPF();
 	Usuario cadastroUsuario = new Usuario();
 	UsuarioCad cadastra = new UsuarioCad();
-	ConverteData data = new ConverteData();
 	registraEmail regEmail = new registraEmail();
 	consultaCEP consulta = new consultaCEP();
 
@@ -70,7 +70,7 @@ public class TelaCadastro extends JFrame {
 		});
 	}
 
-	private JFormattedTextField txtDataFormatted;
+	private JDateChooser dcData;
 	private JFormattedTextField txtCPFFormatted;
 	private JFormattedTextField txtCEPFormatted;
 	private JPasswordField psSenha;
@@ -125,15 +125,6 @@ public class TelaCadastro extends JFrame {
 		panel.add(lblNewLabel_1_1);
 
 		try {
-			MaskFormatter mask = new MaskFormatter("##/##/####");
-			txtDataFormatted = new JFormattedTextField(mask);
-			txtDataFormatted.setBounds(100, 79, 156, 20);
-			panel.add(txtDataFormatted);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
 			MaskFormatter mask = new MaskFormatter("###.###.###-##");
 			txtCPFFormatted = new JFormattedTextField(mask);
 			txtCPFFormatted.setBounds(100, 110, 156, 20);
@@ -161,17 +152,15 @@ public class TelaCadastro extends JFrame {
 						lblEmailVazio.setVisible(true);
 						validaFormulario = false;
 					}
-					if(txtDataFormatted.getText().replace(" ", "").replace("/", "").length() > 0) {
-						data.setData(txtDataFormatted.getText());
-						if(data.idade()) {
-							lblDataVazio.setVisible(false);
-							cadastroUsuario.setNascimento(data.getData());	
-							System.out.println("Passou no IF");
-						}else validaFormulario = false;
+					if(dcData.getDate() != null) {
+						SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
+						String dataFormatada = formatacao.format(dcData.getDate()).toString();
+						System.out.println(dataFormatada);
+						lblDataVazio.setVisible(false);
+						cadastroUsuario.setNascimento(dataFormatada);	
 					}else {
 						lblDataVazio.setVisible(true);
 						validaFormulario = false;	
-						System.out.println("Passou no ELSE");
 					}
 					if (valida.valida(txtCPFFormatted.getText()) && txtCPFFormatted.getText().length() > 0) {
 						lblCPFVazio.setVisible(false);
@@ -416,12 +405,16 @@ public class TelaCadastro extends JFrame {
 		lblCEPVazio.setForeground(new Color(255, 0, 0));
 		lblCEPVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		lblCEPVazio.setVisible(false);
+		
+		dcData = new JDateChooser();
+		dcData.setBounds(100, 77, 154, 21);
+		panel.add(dcData);
 
 		try {
 			MaskFormatter mask = new MaskFormatter("#####-###");
 			txtCEPFormatted = new JFormattedTextField(mask);
 			txtCEPFormatted.setBounds(100, 141, 156, 20);
-			panel.add(txtCEPFormatted);
+			panel.add(txtCEPFormatted);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

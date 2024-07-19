@@ -9,10 +9,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 
+import com.toedter.calendar.JDateChooser;
+
 import Conexoes.UsuarioCad;
 import Conexoes.UsuarioLogin;
 import Conexoes.atualizaDados;
-import Sistema.ConverteData;
 import Sistema.Usuario;
 import Sistema.ValidaCPF;
 import Sistema.consultaCEP;
@@ -32,6 +33,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JEditorPane;
 import javax.swing.DropMode;
@@ -54,7 +56,6 @@ public class TelaAtualizar extends JFrame {
 	ValidaCPF valida = new ValidaCPF();
 	Usuario cadastroUsuario = new Usuario();
 	UsuarioCad cadastra = new UsuarioCad();
-	ConverteData data = new ConverteData();
 	registraEmail regEmail = new registraEmail();
 	consultaCEP consulta = new consultaCEP();
 	UsuarioCad dadosUser = new UsuarioCad();
@@ -72,7 +73,8 @@ public class TelaAtualizar extends JFrame {
 		});
 	}
 
-	private JFormattedTextField txtDataFormatted;
+	private JDateChooser dcData;
+//	private JFormattedTextField txtDataFormatted;
 	private JFormattedTextField txtCPFFormatted;
 	private JFormattedTextField txtCEPFormatted;
 	private JPasswordField psSenha;
@@ -92,7 +94,7 @@ public class TelaAtualizar extends JFrame {
 		if(dadosUser.dadosUsuario()) {
 			txtNome.setText(dadosUser.getNome());
 			txtEmail.setText(dadosUser.getEmail());
-			txtDataFormatted.setText(dadosUser.getData());
+			dcData.setDate(dadosUser.getDataNascimento());
 			txtCPFFormatted.setText(dadosUser.getCPF());
 			txtCEPFormatted.setText(dadosUser.getCep());
 			txtRua.setText(dadosUser.getRua());
@@ -142,14 +144,9 @@ public class TelaAtualizar extends JFrame {
 		lblNewLabel_1_1.setBounds(10, 80, 80, 14);
 		panel.add(lblNewLabel_1_1);
 
-		try {
-			MaskFormatter mask = new MaskFormatter("##/##/####");
-			txtDataFormatted = new JFormattedTextField(mask);
-			txtDataFormatted.setBounds(100, 79, 156, 20);
-			panel.add(txtDataFormatted);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		dcData = new JDateChooser();
+		dcData.setBounds(100, 77, 154, 21);
+		panel.add(dcData);
 
 		try {
 			MaskFormatter mask = new MaskFormatter("###.###.###-##");
@@ -164,6 +161,7 @@ public class TelaAtualizar extends JFrame {
 		btnCad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean validaFormulario = true;
+				String dataFormatada = "";
 				try {
 					if(txtNome.getText().length() > 0) {
 						lblNomeVazio.setVisible(false);
@@ -179,17 +177,15 @@ public class TelaAtualizar extends JFrame {
 						lblEmailVazio.setVisible(true);
 						validaFormulario = false;
 					}
-					if(txtDataFormatted.getText().replace(" ", "").replace("/", "").length() > 0) {
-						data.setData(txtDataFormatted.getText());
-						if(data.idade()) {
-							lblDataVazio.setVisible(false);
-							cadastroUsuario.setNascimento(data.getData());	
-							System.out.println("Passou no IF");
-						}else validaFormulario = false;
+					if(dcData.getDate() != null) {
+						SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
+						dataFormatada = formatacao.format(dcData.getDate()).toString();
+						System.out.println(dataFormatada);
+						lblDataVazio.setVisible(false);
+						cadastroUsuario.setNascimento(dataFormatada);	
 					}else {
 						lblDataVazio.setVisible(true);
 						validaFormulario = false;	
-						System.out.println("Passou no ELSE");
 					}
 					if (valida.valida(txtCPFFormatted.getText()) && txtCPFFormatted.getText().length() > 0) {
 						lblCPFVazio.setVisible(false);
@@ -247,13 +243,13 @@ public class TelaAtualizar extends JFrame {
 							    txtNome.getText(),
 							    txtEmail.getText(),
 							    new String(psSenha.getPassword()),
-							    txtDataFormatted.getText(),
 							    txtCPFFormatted.getText(),
 							    txtCEPFormatted.getText(),
 							    txtRua.getText(),
 							    txtBairro.getText(),
 							    txtCidade.getText(),
-							    txtEstado.getText()
+							    txtEstado.getText(),
+							    dataFormatada
 							);						
 						if (rsAtualiza) {
 							TelaPrincipal voltar = new TelaPrincipal();
