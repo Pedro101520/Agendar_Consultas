@@ -12,6 +12,7 @@ import Sistema.Usuario;
 public class CancelaConsulta {
 	
 	private static String nome, especialidade, unidade, hora, data;	
+	UsuarioLogin idUser = new UsuarioLogin();
 	
 	public CancelaConsulta() {
 	}
@@ -23,11 +24,12 @@ public class CancelaConsulta {
 		try{ 
 			String sql = "SELECT m.nome, m.especialidade, m.unidade, a.hora, a.data_consulta "
 					+ "FROM medicos AS m, agendamento AS a "
-					+ "WHERE a.id = ? "
+					+ "WHERE a.id = ? AND a.id_usuarios = ? "
 					+ "AND a.id_medicos = m.id";
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
 			pstm.setInt(1, idConsulta);
+			pstm.setInt(2, idUser.getIdUsuario());
 			ResultSet rs = pstm.executeQuery();
 			
 			if (rs.next()) {
@@ -51,10 +53,11 @@ public class CancelaConsulta {
 		conexao = new Conexao().conexaoDB();
 		
 		try{ 
-			String sql = "DELETE FROM agendamento WHERE id = ?";
+			String sql = "DELETE FROM agendamento WHERE id = ? AND id_usuarios = ?";
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
 			pstm.setInt(1, idConsulta);
+			pstm.setInt(2, idUser.getIdUsuario());
 			
 			// Aqui serve para capturar o numero de linhas afetadas
 			int rowsAffected = pstm.executeUpdate();

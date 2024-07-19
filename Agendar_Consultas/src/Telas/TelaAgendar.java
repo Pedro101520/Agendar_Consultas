@@ -21,8 +21,10 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -190,41 +192,44 @@ public class TelaAgendar extends JFrame {
         contentPane.add(lblData);
         
         dcData = new JDateChooser();
+        dcData.setMinSelectableDate(new Date());
         dcData.addPropertyChangeListener(new PropertyChangeListener() {
-        	public void propertyChange(PropertyChangeEvent evt) {
-        		
+            public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("date")) {
-                	String[] horarios = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"};
-                	SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
+                    String[] horarios = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"};
+                    SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
                     data = formatacao.format(dcData.getDate());
-	            		if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), data)) {
-	            			System.out.println("If data");
-	            			List<String> listHorario = new ArrayList<>(Arrays.asList(horarios));
-	            			List<String> horaDisponivel = confirmaAgendamento.getHorario(); 
-	            			
-	            			for(int i = 0; i < horaDisponivel.size(); i++) {
-	            				String hora = horaDisponivel.get(i);
-	            				horaDisponivel.set(i, hora.substring(0, 5));
-	            			}
-	
-	            			listHorario.removeAll(horaDisponivel);
-	            			
-	            			cbHorario.removeAllItems();
-	            			cbHorario.addItem("");
-	            			for(String horaFiltrada : listHorario) {
-	            				cbHorario.addItem(horaFiltrada);
-	            			}
-	            		}else {
-	            			System.out.println("Else Data");
-	            			cbHorario.removeAllItems();
-	            			cbHorario.addItem("");
-	            			for(String horaPadrao : horarios) {
-	            				cbHorario.addItem(horaPadrao);
-	            			}
-	      
-	            	} 
+
+                    Date hoje = new Date();
+                    SimpleDateFormat formatData = new SimpleDateFormat("yyyy-MM-dd");
+                    String dataHoje = formatData.format(hoje);
+                    
+                    List<String> listHorario = new ArrayList<>(Arrays.asList(horarios));
+                    
+                    if(data.equals(dataHoje)) {
+                        LocalTime horaAtual = LocalTime.now();
+                        listHorario.removeIf(horario -> LocalTime.parse(horario).isBefore(horaAtual));
+                    }
+
+                    if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), data)) {
+                        System.out.println("If data");
+                        List<String> horaDisponivel = confirmaAgendamento.getHorario(); 
+
+                        for(int i = 0; i < horaDisponivel.size(); i++) {
+                            String hora = horaDisponivel.get(i);
+                            horaDisponivel.set(i, hora.substring(0, 5));
+                        }
+
+                        listHorario.removeAll(horaDisponivel);
+                    }
+                    
+                    cbHorario.removeAllItems();
+                    cbHorario.addItem("");
+                    for(String horaFiltrada : listHorario) {
+                        cbHorario.addItem(horaFiltrada);
+                    }
                 }
-        	}
+            }
         });
         dcData.setBounds(150, 305, 180, 26);
         contentPane.add(dcData);

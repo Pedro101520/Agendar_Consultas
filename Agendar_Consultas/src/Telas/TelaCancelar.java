@@ -82,17 +82,17 @@ public class TelaCancelar extends JFrame {
 			}
 
 			private void exibeInfo() {
-				cancela.acessaConsulta(Integer.parseInt(txtID.getText()));
-				System.out.println(cancela.getNome());
-				textInfo.setText("");
 				String info;
-				info = "Medico: " + cancela.getNome() + "\n" +
-						"Especialidade: " + cancela.getEspecialidade() + "\n" +
-						"Unidade: " + cancela.getUnidade() + "\n" +
-						"Hora: " + cancela.getHora() + "\n" +
-						"Data: " + cancela.getData();
-				
-				
+				if(cancela.acessaConsulta(Integer.parseInt(txtID.getText()))) {
+					textInfo.setText("");
+					info = "Medico: " + cancela.getNome() + "\n" +
+							"Especialidade: " + cancela.getEspecialidade() + "\n" +
+							"Unidade: " + cancela.getUnidade() + "\n" +
+							"Hora: " + cancela.getHora() + "\n" +
+							"Data: " + cancela.getData();
+				}else {
+					info = "";
+				}
 				textInfo.append(info);
 			}
 		});
@@ -100,12 +100,13 @@ public class TelaCancelar extends JFrame {
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cancela.cancelaConsulta(Integer.parseInt(txtID.getText()));
-				
-				JOptionPane.showMessageDialog(null, "Consulta cancelada com sucesso!");
-                TelaPrincipal voltar = new TelaPrincipal();
-                voltar.setVisible(true);
-                dispose();
+				if(cancela.cancelaConsulta(Integer.parseInt(txtID.getText()))) {
+					JOptionPane.showMessageDialog(null, "Consulta cancelada com sucesso!");
+	                TelaPrincipal voltar = new TelaPrincipal();
+	                voltar.setVisible(true);
+	                dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Verifique o ID da consulta e tente novamente!");				}
 			}
 		});
 		btnConfirmar.setBounds(35, 385, 105, 27);
