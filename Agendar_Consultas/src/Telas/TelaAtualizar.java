@@ -74,7 +74,6 @@ public class TelaAtualizar extends JFrame {
 	}
 
 	private JDateChooser dcData;
-//	private JFormattedTextField txtDataFormatted;
 	private JFormattedTextField txtCPFFormatted;
 	private JFormattedTextField txtCEPFormatted;
 	private JPasswordField psSenha;

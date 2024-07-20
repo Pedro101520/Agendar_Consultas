@@ -41,7 +41,6 @@ public class registraEmail {
         ResultSet rs = autenticacaoUsuario();
         try {
         	if (rs.next() && rs != null) {
-        		JOptionPane.showMessageDialog(null,"Email Já esta em uso, tente fazer o login!");
                 return false;
         	}else {
             	return true;

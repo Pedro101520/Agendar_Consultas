@@ -74,7 +74,6 @@ public class ValidaCPF {
             ResultSet rs = autenticacaoUsuario();
             try {
                 if (rs.next() && rs != null) {
-        			JOptionPane.showMessageDialog(null,"CPF Já esta em uso, tente fazer o login!");
                     return false;
                 }else if (cpf.chars().distinct().count() == 1) {
                     JOptionPane.showMessageDialog(null, "CPF inválido: todos os dígitos são iguais");
