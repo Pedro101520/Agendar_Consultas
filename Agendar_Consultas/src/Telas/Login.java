@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import Conexoes.UsuarioLogin;
 import Sistema.Usuario;
+import Sistema.envioEmail;
 import view.util.LimitarCaracteres;
 
 import java.awt.Toolkit;

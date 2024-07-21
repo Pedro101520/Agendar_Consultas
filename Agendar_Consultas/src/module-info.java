@@ -9,4 +9,5 @@ module Agendar_Consultas {
 	requires jcalendar;
 	requires java.sql;
 	requires org.json;
+	requires commons.email;
 }

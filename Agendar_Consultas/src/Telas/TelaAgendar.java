@@ -6,9 +6,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Conexoes.CancelaConsulta;
 import Conexoes.ProcessaAgenda;
+import Conexoes.UsuarioCad;
 import Conexoes.agendaConsulta;
 import Conexoes.dadosConsulta;
+import Sistema.envioEmail;
 
 import com.toedter.calendar.JMonthChooser;
 
@@ -44,6 +48,8 @@ public class TelaAgendar extends JFrame {
     dadosConsulta consulta = new dadosConsulta();
     ProcessaAgenda agenda = new ProcessaAgenda();
 	agendaConsulta confirmaAgendamento = new agendaConsulta();
+	UsuarioCad dadosUsuario = new UsuarioCad();
+	CancelaConsulta dados = new CancelaConsulta();
 
     private static JComboBox<String> cbEspecialidade;
     private static JComboBox<String> cbUnidade;
@@ -160,8 +166,24 @@ public class TelaAgendar extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         		int id = agenda.getIdMedico(cbMedico.getSelectedItem().toString());
         		confirmaAgendamento.agendar(cbHorario.getSelectedItem().toString(), data, id);
-        		JOptionPane.showMessageDialog(null, "Consulta Agendada");
                 TelaPrincipal principal = new TelaPrincipal();
+                envioEmail envio = new envioEmail();
+                
+                if(consulta.dadosEmail()) {
+                    String dadosEmail = "Olá " + consulta.getNomeUser() + "\n" +
+	                		"Sua consulta foi agendada com sucesso! Abaixo vou te fornecer mais informações: " + "\n" +
+	                		"Nome do médico: " + consulta.getNomeMedico() + "\n" +
+	                		"Especialidade: " + consulta.getEspecialidadeConsulta() + "\n" +
+	                		"Unidade: " + consulta.getUnidadeConsulta() + "\n" +
+	                		"Id da consulta: " + consulta.getId() + "\n" +
+	                		"Obs: Caso deseje cancelar a consulta, é necessário que informe o id da consulta no sistema, na parte de cancelamento de consultas";	
+                    if(dadosUsuario.dadosUsuario()) {
+                        envio.email(dadosUsuario.getEmail(), dadosEmail);
+                    }
+
+                }
+
+        		JOptionPane.showMessageDialog(null, "Consulta Agendada! Enviei as informações de sua consulta no seu email!");
                 principal.setVisible(true);
                 dispose();
         	}

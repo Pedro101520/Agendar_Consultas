@@ -62,7 +62,6 @@ public class agendaConsulta {
             return false;
         }
     }
-
     
     public void agendar(String horario, String data, int idMedico) {
         conexao = new Conexao().conexaoDB();
@@ -85,7 +84,7 @@ public class agendaConsulta {
         return agendaConsulta.nomeMedico;
     }
     
-    public int getId() {
+    public int getIdConsulta() {
     	return agendaConsulta.idConsulta;
     }
     
