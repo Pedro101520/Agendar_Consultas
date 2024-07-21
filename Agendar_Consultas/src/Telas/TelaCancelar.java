@@ -82,18 +82,22 @@ public class TelaCancelar extends JFrame {
 			}
 
 			private void exibeInfo() {
-				String info;
-				if(cancela.acessaConsulta(Integer.parseInt(txtID.getText()))) {
+				String info = "";
+				try {
+					if(cancela.acessaConsulta(Integer.parseInt(txtID.getText()))) {
+						textInfo.setText("");
+						info = "Medico: " + cancela.getNome() + "\n" +
+								"Especialidade: " + cancela.getEspecialidade() + "\n" +
+								"Unidade: " + cancela.getUnidade() + "\n" +
+								"Hora: " + cancela.getHora() + "\n" +
+								"Data: " + cancela.getData();
+						textInfo.setText(info);
+					}else {
+						textInfo.setText("");
+					}
+				}catch(Exception e) {
 					textInfo.setText("");
-					info = "Medico: " + cancela.getNome() + "\n" +
-							"Especialidade: " + cancela.getEspecialidade() + "\n" +
-							"Unidade: " + cancela.getUnidade() + "\n" +
-							"Hora: " + cancela.getHora() + "\n" +
-							"Data: " + cancela.getData();
-				}else {
-					info = "";
 				}
-				textInfo.append(info);
 			}
 		});
 		
