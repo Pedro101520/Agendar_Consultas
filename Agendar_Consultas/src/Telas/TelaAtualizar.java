@@ -17,6 +17,7 @@ import Conexoes.atualizaDados;
 import Sistema.Usuario;
 import Sistema.ValidaCPF;
 import Sistema.consultaCEP;
+import Sistema.criptografarSenha;
 import Sistema.registraEmail;
 import view.util.LimitarCaracteres;
 
@@ -164,14 +165,14 @@ public class TelaAtualizar extends JFrame {
 				try {
 					if(txtNome.getText().length() > 0) {
 						lblNomeVazio.setVisible(false);
-						cadastroUsuario.setNome(txtNome.getText());
+//						cadastroUsuario.setNome(txtNome.getText());
 					}else {
 						lblNomeVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (regEmail.emailDB(txtEmail.getText()) && txtEmail.getText().length() > 0) {
 						lblEmailVazio.setVisible(false);
-						cadastroUsuario.setEmail(txtEmail.getText());
+//						cadastroUsuario.setEmail(txtEmail.getText());
 					} else {
 						lblEmailVazio.setVisible(true);
 						validaFormulario = false;
@@ -181,67 +182,71 @@ public class TelaAtualizar extends JFrame {
 						dataFormatada = formatacao.format(dcData.getDate()).toString();
 						System.out.println(dataFormatada);
 						lblDataVazio.setVisible(false);
-						cadastroUsuario.setNascimento(dataFormatada);	
+//						cadastroUsuario.setNascimento(dataFormatada);	
 					}else {
 						lblDataVazio.setVisible(true);
 						validaFormulario = false;	
 					}
 					if (valida.valida(txtCPFFormatted.getText()) && txtCPFFormatted.getText().length() > 0) {
 						lblCPFVazio.setVisible(false);
-						cadastroUsuario.setCpf(txtCPFFormatted.getText());
+//						cadastroUsuario.setCpf(txtCPFFormatted.getText());
 					} else {
 						lblCPFVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if(txtCEPFormatted.getText().replace(" ", "").replace("-", "").length() > 0) {
 						lblCEPVazio.setVisible(false);
-						cadastroUsuario.setCEP(txtCEPFormatted.getText());
+//						cadastroUsuario.setCEP(txtCEPFormatted.getText());
 					}else {
 						lblCEPVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (txtRua.getText().length() > 0) {
 						lblRuaVazio.setVisible(false);
-						cadastroUsuario.setRua(txtRua.getText());
+//						cadastroUsuario.setRua(txtRua.getText());
 					} else {
 						lblRuaVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (txtBairro.getText().length() > 0) {
 						lblBairroVazio.setVisible(false);
-						cadastroUsuario.setBairro(txtBairro.getText());
+//						cadastroUsuario.setBairro(txtBairro.getText());
 					} else {
 						lblBairroVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (txtCidade.getText().length() > 0) {
 						lblCidadeVazio.setVisible(false);
-						cadastroUsuario.setCidade(txtCidade.getText());
+//						cadastroUsuario.setCidade(txtCidade.getText());
 					} else {
 						lblCidadeVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (txtEstado.getText().length() > 0) {
 						lblEstadoVazio.setVisible(false);
-						cadastroUsuario.setEstado(txtEstado.getText());
+//						cadastroUsuario.setEstado(txtEstado.getText());
 					} else {
 						lblEstadoVazio.setVisible(true);
 						validaFormulario = false;
 					}
-					if (psSenha.getPassword().length > 0) {
+					String senha = new String(psSenha.getPassword());
+					if (senha.length() > 0) {
 						lblSenhaVazio.setVisible(false);
-						cadastroUsuario.setSenha(new String(psSenha.getPassword()));
+//						cadastroUsuario.setSenha(new String(psSenha.getPassword()));
 					} else {
 						lblSenhaVazio.setVisible(true);
 						validaFormulario = false;
 					}
 
 					if(validaFormulario) {
+//					    cadastroUsuario.setSenha(criptografarSenha.md5(senha));
+
 						atualizaDados update = new atualizaDados();
 						boolean rsAtualiza = update.atualiza(
 							    txtNome.getText(),
 							    txtEmail.getText(),
-							    new String(psSenha.getPassword()),
+//							    new String(psSenha.getPassword()),
+							    criptografarSenha.md5(senha),
 							    txtCPFFormatted.getText(),
 							    txtCEPFormatted.getText(),
 							    txtRua.getText(),

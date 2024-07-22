@@ -23,11 +23,14 @@ public class HistoricoConsulta {
 
 	Connection conexao;
 	public boolean historicoInfo() {
+		especialidade.clear();
+		data.clear();
+		
 		conexao = new Conexao().conexaoDB();
 		try{ 
 			String sql = "SELECT DATE_FORMAT(a.data_consulta, '%d/%m/%Y') AS data_consulta_formatada, m.especialidade "
 					+ "FROM agendamento AS a, medicos AS m "
-					+ "WHERE a.data_consulta < CURDATE() "
+					+ "WHERE a.data_consulta < NOW() "
 					+ "AND a.id_usuarios = ? "
 					+ "AND a.id_medicos = m.id";
 			
