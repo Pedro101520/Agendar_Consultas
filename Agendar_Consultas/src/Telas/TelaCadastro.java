@@ -14,6 +14,7 @@ import Conexoes.UsuarioLogin;
 import Sistema.Usuario;
 import Sistema.ValidaCPF;
 import Sistema.consultaCEP;
+import Sistema.criptografarSenha;
 import Sistema.registraEmail;
 import view.util.LimitarCaracteres;
 
@@ -28,6 +29,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -204,12 +207,14 @@ public class TelaCadastro extends JFrame {
 						lblEstadoVazio.setVisible(true);
 						validaFormulario = false;
 					}
-					if (psSenha.getPassword().length > 0) {
-						lblSenhaVazio.setVisible(false);
-						cadastroUsuario.setSenha(new String(psSenha.getPassword()));
+					
+					String senha = new String(psSenha.getPassword());
+					if (senha.length() > 0) {
+					    lblSenhaVazio.setVisible(false);
+					    cadastroUsuario.setSenha(criptografarSenha.md5(senha));
 					} else {
-						lblSenhaVazio.setVisible(true);
-						validaFormulario = false;
+					    lblSenhaVazio.setVisible(true);
+					    validaFormulario = false;
 					}
 
 					if(validaFormulario) {

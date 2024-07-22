@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import Sistema.Usuario;
+import Sistema.criptografarSenha;
 
 public class UsuarioLogin {
 	
@@ -26,7 +27,7 @@ public class UsuarioLogin {
 			
 			PreparedStatement pstm = conexao.prepareStatement(sql);
 			pstm.setString(1, objusuario.getEmail());
-			pstm.setString(2, objusuario.getSenha());
+            pstm.setString(2, criptografarSenha.md5(objusuario.getSenha()));
 			ResultSet rs = pstm.executeQuery();
 			
 			if (rs.next()) {
