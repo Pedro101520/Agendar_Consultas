@@ -33,7 +33,6 @@ public class UsuarioLogin {
 			if (rs.next()) {
 				nome = rs.getString("nome");
 				idUsuario = rs.getInt("id");
-				System.out.println(idUsuario);
 				return true;
 			}else {
 				return false;

@@ -167,7 +167,6 @@ public class TelaCadastro extends JFrame {
 					if(dcData.getDate() != null) {
 						SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
 						String dataFormatada = formatacao.format(dcData.getDate()).toString();
-						System.out.println(dataFormatada);
 						lblDataVazio.setVisible(false);
 						cadastroUsuario.setNascimento(dataFormatada);	
 					}else {

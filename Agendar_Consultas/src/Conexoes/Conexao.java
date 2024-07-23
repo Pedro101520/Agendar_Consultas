@@ -18,4 +18,15 @@ public class Conexao {
 		}
 		return conexao;
 	}
+	
+	public static void desconectar(Connection conn) {
+		if(conn != null) {
+			try {
+				conn.close();
+			}catch (SQLException erro) {
+				System.out.println("Não foi possível fechar a conexão");
+				erro.printStackTrace();
+			}
+		}
+	}
 }

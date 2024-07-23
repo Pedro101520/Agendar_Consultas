@@ -23,7 +23,7 @@ public class agendaConsulta {
     
     public agendaConsulta() {
     }
-
+    
     Connection conexao;
 
     public boolean verificaHorario(String medico, String data) {

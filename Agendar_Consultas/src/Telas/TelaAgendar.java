@@ -233,7 +233,6 @@ public class TelaAgendar extends JFrame {
                     }
 
                     if(confirmaAgendamento.verificaHorario(cbMedico.getSelectedItem().toString(), data)) {
-                        System.out.println("If data");
                         List<String> horaDisponivel = confirmaAgendamento.getHorario(); 
 
                         for(int i = 0; i < horaDisponivel.size(); i++) {
@@ -402,7 +401,6 @@ public class TelaAgendar extends JFrame {
                 cbUnidade.insertItemAt("", 0);
                 cbUnidade.setSelectedIndex(0);
                 if(agenda.selecionaPorNome(cbMedico.getSelectedItem().toString())) {
-                	System.out.println("Teste");
                     for (String bancoEspecialidade : agenda.getEspecialidade()) {
                         cbEspecialidade.addItem(bancoEspecialidade);
                     }

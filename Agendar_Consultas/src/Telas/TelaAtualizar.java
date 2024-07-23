@@ -89,6 +89,8 @@ public class TelaAtualizar extends JFrame {
 	private static JLabel lblCidadeVazio;
 	private static JLabel lblEstadoVazio;
 	private static JLabel lblSenhaVazio;
+	private static JLabel lblCPFInvalido;
+
 	
 	public void setValores() {
 		if(dadosUser.dadosUsuario()) {
@@ -166,14 +168,17 @@ public class TelaAtualizar extends JFrame {
 				try {
 					if(txtNome.getText().length() > 0) {
 						lblNomeVazio.setVisible(false);
-//						cadastroUsuario.setNome(txtNome.getText());
 					}else {
 						lblNomeVazio.setVisible(true);
 						validaFormulario = false;
 					}
-					if (regEmail.emailDB(txtEmail.getText()) && txtEmail.getText().length() > 0) {
+					if (txtEmail.getText().length() > 0) {
 						lblEmailVazio.setVisible(false);
-//						cadastroUsuario.setEmail(txtEmail.getText());
+						if(regEmail.emailDB(txtEmail.getText())) {
+							cadastroUsuario.setEmail(txtEmail.getText());
+						}else {
+							JOptionPane.showMessageDialog(null, "Email em uso, tente fazer o login!");
+						}
 					} else {
 						lblEmailVazio.setVisible(true);
 						validaFormulario = false;
@@ -181,51 +186,55 @@ public class TelaAtualizar extends JFrame {
 					if(dcData.getDate() != null) {
 						SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
 						dataFormatada = formatacao.format(dcData.getDate()).toString();
-						System.out.println(dataFormatada);
 						lblDataVazio.setVisible(false);
-//						cadastroUsuario.setNascimento(dataFormatada);	
 					}else {
 						lblDataVazio.setVisible(true);
 						validaFormulario = false;	
 					}
-					if (valida.valida(txtCPFFormatted.getText()) && txtCPFFormatted.getText().length() > 0) {
-						lblCPFVazio.setVisible(false);
-//						cadastroUsuario.setCpf(txtCPFFormatted.getText());
+					if (!txtCPFFormatted.getText().equals("   .   .   -  ")) {
+					    lblCPFVazio.setVisible(false);
+					    if (cadastra.buscaPorCPF(txtCPFFormatted.getText())) {
+					        JOptionPane.showMessageDialog(null, "CPF já está em uso!");
+					        validaFormulario = false;
+					    } else {
+					        if (valida.valida(txtCPFFormatted.getText())) {
+					            lblCPFInvalido.setVisible(false);
+					            cadastroUsuario.setCpf(txtCPFFormatted.getText());
+					        } else {
+					            lblCPFInvalido.setVisible(true);
+					            validaFormulario = false;
+					        }
+					    }
 					} else {
-						lblCPFVazio.setVisible(true);
-						validaFormulario = false;
-					}
+					    lblCPFVazio.setVisible(true);
+					    validaFormulario = false;
+					}	
 					if(txtCEPFormatted.getText().replace(" ", "").replace("-", "").length() > 0) {
 						lblCEPVazio.setVisible(false);
-//						cadastroUsuario.setCEP(txtCEPFormatted.getText());
 					}else {
 						lblCEPVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (txtRua.getText().length() > 0) {
 						lblRuaVazio.setVisible(false);
-//						cadastroUsuario.setRua(txtRua.getText());
 					} else {
 						lblRuaVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (txtBairro.getText().length() > 0) {
 						lblBairroVazio.setVisible(false);
-//						cadastroUsuario.setBairro(txtBairro.getText());
 					} else {
 						lblBairroVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (txtCidade.getText().length() > 0) {
 						lblCidadeVazio.setVisible(false);
-//						cadastroUsuario.setCidade(txtCidade.getText());
 					} else {
 						lblCidadeVazio.setVisible(true);
 						validaFormulario = false;
 					}
 					if (txtEstado.getText().length() > 0) {
 						lblEstadoVazio.setVisible(false);
-//						cadastroUsuario.setEstado(txtEstado.getText());
 					} else {
 						lblEstadoVazio.setVisible(true);
 						validaFormulario = false;
@@ -233,20 +242,17 @@ public class TelaAtualizar extends JFrame {
 					String senha = new String(psSenha.getPassword());
 					if (senha.length() > 0) {
 						lblSenhaVazio.setVisible(false);
-//						cadastroUsuario.setSenha(new String(psSenha.getPassword()));
 					} else {
 						lblSenhaVazio.setVisible(true);
 						validaFormulario = false;
 					}
 
 					if(validaFormulario) {
-//					    cadastroUsuario.setSenha(criptografarSenha.md5(senha));
 
 						atualizaDados update = new atualizaDados();
 						boolean rsAtualiza = update.atualiza(
 							    txtNome.getText(),
 							    txtEmail.getText(),
-//							    new String(psSenha.getPassword()),
 							    criptografarSenha.md5(senha),
 							    txtCPFFormatted.getText(),
 							    txtCEPFormatted.getText(),
@@ -320,6 +326,13 @@ public class TelaAtualizar extends JFrame {
 		lblEmailVazio.setBounds(100, 66, 69, 14);
 		panel.add(lblEmailVazio);
 		lblEmailVazio.setVisible(false);
+		
+		lblCPFInvalido = new JLabel("CPF inválido");
+		lblCPFInvalido.setBounds(100, 128, 65, 17);
+		panel.add(lblCPFInvalido);
+		lblCPFInvalido.setForeground(new Color(237, 51, 59));
+		lblCPFInvalido.setFont(new Font("Dialog", Font.BOLD, 8));
+		lblCPFInvalido.setVisible(false);
 
 		lblDataVazio = new JLabel("Informe uma data");
 		lblDataVazio.setForeground(new Color(255, 0, 0));

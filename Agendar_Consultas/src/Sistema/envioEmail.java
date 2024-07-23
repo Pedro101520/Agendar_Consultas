@@ -15,7 +15,7 @@ public class envioEmail {
         email.setSmtpPort(465);
         email.setAuthenticator(new DefaultAuthenticator(meuEmail, minhaSenha));
         email.setSSLOnConnect(true);
-        email.setSSLCheckServerIdentity(true); // Adiciona verificação de identidade do servidor
+        email.setSSLCheckServerIdentity(true);
         email.setSocketTimeout(10000);
         email.setSocketConnectionTimeout(10000);
         System.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
@@ -27,10 +27,8 @@ public class envioEmail {
             email.setSubject(assunto);
             email.setMsg(mensagem);
             email.send();
-            System.out.println("E-mail enviado com sucesso!");
         } catch (EmailException e) {
             e.printStackTrace();
-            System.out.println("Erro ao enviar o e-mail");
         }
     }
 }

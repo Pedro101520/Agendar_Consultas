@@ -75,7 +75,6 @@ public class TelaHistorico extends JFrame {
         List<String> infoData = new ArrayList<>();
 		
 		if(historico.historicoInfo()) {
-			System.out.println("Pedro");
 	        infoEspecialidade = historico.getEspecialidade();
 	        infoData = historico.getData();
 	        
