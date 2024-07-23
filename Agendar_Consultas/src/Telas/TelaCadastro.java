@@ -29,11 +29,15 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JEditorPane;
 import javax.swing.DropMode;
@@ -88,6 +92,7 @@ public class TelaCadastro extends JFrame {
 	private static JLabel lblCidadeVazio;
 	private static JLabel lblEstadoVazio;
 	private static JLabel lblSenhaVazio;
+	private static JLabel lblCPFInvalido;
 
 	public TelaCadastro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -148,9 +153,13 @@ public class TelaCadastro extends JFrame {
 						lblNomeVazio.setVisible(true);
 						validaFormulario = false;
 					}
-					if (regEmail.emailDB(txtEmail.getText()) && txtEmail.getText().length() > 0) {
+					if (txtEmail.getText().length() > 0) {
 						lblEmailVazio.setVisible(false);
-						cadastroUsuario.setEmail(txtEmail.getText());
+						if(regEmail.emailDB(txtEmail.getText())) {
+							cadastroUsuario.setEmail(txtEmail.getText());
+						}else {
+							JOptionPane.showMessageDialog(null, "Email em uso, tente fazer o login!");
+						}
 					} else {
 						lblEmailVazio.setVisible(true);
 						validaFormulario = false;
@@ -165,13 +174,24 @@ public class TelaCadastro extends JFrame {
 						lblDataVazio.setVisible(true);
 						validaFormulario = false;	
 					}
-					if (valida.valida(txtCPFFormatted.getText()) && txtCPFFormatted.getText().length() > 0) {
-						lblCPFVazio.setVisible(false);
-						cadastroUsuario.setCpf(txtCPFFormatted.getText());
+					if (!txtCPFFormatted.getText().equals("   .   .   -  ")) {
+					    lblCPFVazio.setVisible(false);
+					    if (cadastra.buscaPorCPF(txtCPFFormatted.getText())) {
+					        JOptionPane.showMessageDialog(null, "CPF já está em uso, tente fazer o Login!");
+					        validaFormulario = false;
+					    } else {
+					        if (valida.valida(txtCPFFormatted.getText())) {
+					            lblCPFInvalido.setVisible(false);
+					            cadastroUsuario.setCpf(txtCPFFormatted.getText());
+					        } else {
+					            lblCPFInvalido.setVisible(true);
+					            validaFormulario = false;
+					        }
+					    }
 					} else {
-						lblCPFVazio.setVisible(true);
-						validaFormulario = false;
-					}
+					    lblCPFVazio.setVisible(true);
+					    validaFormulario = false;
+					}			
 					if(txtCEPFormatted.getText().replace(" ", "").replace("-", "").length() > 0) {
 						lblCEPVazio.setVisible(false);
 						cadastroUsuario.setCEP(txtCEPFormatted.getText());
@@ -273,7 +293,7 @@ public class TelaCadastro extends JFrame {
 		lblNomeVazio.setForeground(new Color(255, 0, 0));
 		lblNomeVazio.setBackground(new Color(255, 0, 0));
 		lblNomeVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		lblNomeVazio.setBounds(100, 35, 69, 14);
+		lblNomeVazio.setBounds(100, 35, 89, 14);
 		panel.add(lblNomeVazio);
 		lblNomeVazio.setVisible(false);
 
@@ -411,9 +431,35 @@ public class TelaCadastro extends JFrame {
 		lblCEPVazio.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		lblCEPVazio.setVisible(false);
 		
-		dcData = new JDateChooser();
-		dcData.setBounds(100, 77, 154, 21);
-		panel.add(dcData);
+		lblCPFInvalido = new JLabel("CPF inválido");
+		lblCPFInvalido.setBounds(100, 128, 65, 17);
+		panel.add(lblCPFInvalido);
+		lblCPFInvalido.setForeground(new Color(237, 51, 59));
+		lblCPFInvalido.setFont(new Font("Dialog", Font.BOLD, 8));
+		lblCPFInvalido.setVisible(false);
+		
+		  dcData = new JDateChooser();
+		    dcData.setBounds(100, 77, 154, 21);
+		    panel.add(dcData);
+
+		    Calendar calendar = Calendar.getInstance();
+		    calendar.set(1900, Calendar.JANUARY, 1);
+		    Date minDate = calendar.getTime();
+
+		    dcData.setMinSelectableDate(minDate);
+		    dcData.setMaxSelectableDate(new Date());
+
+		    dcData.getDateEditor().getUiComponent().addKeyListener(new KeyAdapter() {
+		        public void keyTyped(KeyEvent e) {
+		            e.consume();
+		        }
+		        public void keyPressed(KeyEvent e) {
+		            e.consume();
+		        }
+		        public void keyReleased(KeyEvent e) {
+		            e.consume();
+		        }
+		    });
 
 		try {
 			MaskFormatter mask = new MaskFormatter("#####-###");
