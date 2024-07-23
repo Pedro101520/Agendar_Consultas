@@ -26,17 +26,16 @@ import java.awt.Choice;
 import javax.swing.JDesktopPane;
 
 public class TelaPrincipal extends JFrame {
-	
-	UsuarioLogin user = new UsuarioLogin();
-	
-	private void styleButton(JButton button) {
-		button.setForeground(new Color(200, 230, 201));
-		button.setBackground(new Color(200, 230, 201));
+
+    UsuarioLogin user = new UsuarioLogin();
+
+    private void styleButton(JButton button) {
+        button.setForeground(new Color(200, 230, 201));
+        button.setBackground(new Color(200, 230, 201));
         button.setContentAreaFilled(false);
         button.setOpaque(false);
         button.setBorderPainted(false);
-        button.setBorderPainted(false);
-		
+
         button.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 button.setContentAreaFilled(true);
@@ -62,125 +61,129 @@ public class TelaPrincipal extends JFrame {
                 button.setBackground(new Color(200, 230, 201));
             }
         });
-	}
+    }
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaPrincipal frame = new TelaPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    TelaPrincipal frame = new TelaPrincipal();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-	public TelaPrincipal() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 350, 450);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(200, 230, 201));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    public TelaPrincipal() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 350, 450);
+        contentPane = new JPanel();
+        contentPane.setBackground(new Color(200, 230, 201));
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JButton btnCancelar = new JButton("");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JButton btnCancelar = new JButton("");
+        btnCancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 TelaCancelar cancelar = new TelaCancelar();
                 cancelar.setVisible(true);
                 dispose();
-			}
-		});
-		btnCancelar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Cancelar.png")));
-		btnCancelar.setBounds(206, 94, 86, 90);	
-		styleButton(btnCancelar);
-		contentPane.add(btnCancelar);
-		
-		JButton btnHistorico = new JButton("");
-		btnHistorico.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+            }
+        });
+        btnCancelar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Cancelar.png")));
+        btnCancelar.setBounds(206, 94, 86, 90);
+        styleButton(btnCancelar);
+        contentPane.add(btnCancelar);
+
+        JButton btnHistorico = new JButton("");
+        btnHistorico.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 TelaHistorico historico = new TelaHistorico();
-				historico.executaInfo();
+                historico.executaInfo();
                 historico.setVisible(true);
                 dispose();
-			}
-		});
-		btnHistorico.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Historico.png")));
-		btnHistorico.setBounds(44, 240, 86, 77);
-		styleButton(btnHistorico);
-		contentPane.add(btnHistorico);
-		
-		JButton btnAgendar = new JButton("");
-		btnAgendar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaAgendar agendar = new TelaAgendar();
-				agendar.setVisible(true);
-				dispose();
-			}
-		});
-		btnAgendar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Agendar.png")));
-		btnAgendar.setBounds(44, 95, 89, 77);
-		styleButton(btnAgendar);
-		contentPane.add(btnAgendar);
-		
-		JButton btnAtualizar = new JButton("");
-		btnAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaAtualizar atualizar = new TelaAtualizar();
-				atualizar.setValores();
-				atualizar.setVisible(true);
-				dispose();
-			}
-		});
-		btnAtualizar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/atualizar.png")));
-		btnAtualizar.setBounds(203, 245, 89, 72);
-		styleButton(btnAtualizar);
-		contentPane.add(btnAtualizar);
-		
-		JButton btnVoltar = new JButton("Sair");
-		btnVoltar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Login login = new Login();
-				login.setVisible(true);
-				dispose();
-			}
-		});
-		btnVoltar.setBounds(123, 400, 89, 23);
-		contentPane.add(btnVoltar);
-		
-		JLabel lblNewLabel = new JLabel("Agendar \r\nConsulta");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel.setBounds(33, 170, 119, 35);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Cancelar Consulta");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(198, 180, 119, 14);
-		contentPane.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Histórico de Consultas");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_2.setBounds(22, 326, 140, 14);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("Atualizar Dados");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_3.setBounds(200, 326, 102, 14);
-		contentPane.add(lblNewLabel_3);
-		
-		JLabel lblOla = new JLabel("");
-		lblOla.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOla.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblOla.setBounds(0, 32, 336, 40);
-		String msgOla = user.getNome();
-		lblOla.setText("Olá " + msgOla + " Seja bem vindo(a)");
-		contentPane.add(lblOla);
-	}
+            }
+        });
+        btnHistorico.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Historico.png")));
+        btnHistorico.setBounds(44, 240, 86, 77);
+        styleButton(btnHistorico);
+        contentPane.add(btnHistorico);
+
+        JButton btnAgendar = new JButton("");
+        btnAgendar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TelaAgendar agendar = new TelaAgendar();
+                agendar.setVisible(true);
+                dispose();
+            }
+        });
+        btnAgendar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/Agendar.png")));
+        btnAgendar.setBounds(44, 95, 89, 77);
+        styleButton(btnAgendar);
+        contentPane.add(btnAgendar);
+
+        JButton btnAtualizar = new JButton("");
+        btnAtualizar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TelaAtualizar atualizar = new TelaAtualizar();
+                atualizar.setValores();
+                atualizar.setVisible(true);
+                dispose();
+            }
+        });
+        btnAtualizar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/atualizar.png")));
+        btnAtualizar.setBounds(203, 245, 89, 72);
+        styleButton(btnAtualizar);
+        contentPane.add(btnAtualizar);
+
+        JButton btnVoltar = new JButton("Sair");
+        btnVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Login login = new Login();
+                login.setVisible(true);
+                dispose();
+            }
+        });
+        btnVoltar.setBounds(123, 400, 89, 23);
+        contentPane.add(btnVoltar);
+
+        JLabel lblNewLabel = new JLabel("Agendar \r\nConsulta");
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblNewLabel.setBounds(33, 170, 119, 35);
+        contentPane.add(lblNewLabel);
+
+        JLabel lblNewLabel_1 = new JLabel("Cancelar Consulta");
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblNewLabel_1.setBounds(198, 180, 119, 14);
+        contentPane.add(lblNewLabel_1);
+
+        JLabel lblNewLabel_2 = new JLabel("Histórico de Consultas");
+        lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblNewLabel_2.setBounds(22, 326, 140, 14);
+        contentPane.add(lblNewLabel_2);
+
+        JLabel lblNewLabel_3 = new JLabel("Atualizar Dados");
+        lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 12));
+        lblNewLabel_3.setBounds(200, 326, 102, 14);
+        contentPane.add(lblNewLabel_3);
+
+        JLabel lblOla = new JLabel("");
+        lblOla.setHorizontalAlignment(SwingConstants.CENTER);
+        lblOla.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblOla.setBounds(0, 32, 336, 40);
+        
+        String nomeCompleto = user.getNome();
+        String[] partes = nomeCompleto.split(" ");
+        String primeiroNome = partes[0];
+        lblOla.setText("Olá " + primeiroNome + " Seja bem vindo(a)");
+        
+        contentPane.add(lblOla);
+    }
 }

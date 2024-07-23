@@ -151,6 +151,7 @@ public class TelaAtualizar extends JFrame {
 		try {
 			MaskFormatter mask = new MaskFormatter("###.###.###-##");
 			txtCPFFormatted = new JFormattedTextField(mask);
+			txtCPFFormatted.setEditable(false);
 			txtCPFFormatted.setBounds(100, 110, 156, 20);
 			panel.add(txtCPFFormatted);
 		} catch (Exception e) {

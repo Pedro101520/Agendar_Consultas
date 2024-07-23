@@ -92,6 +92,26 @@ public class UsuarioCad {
         }
     }
     
+    public boolean buscaPorCPF(String cpf) {
+        conexao = new Conexao().conexaoDB();
+        
+        try { 
+            String sql = "SELECT cpf FROM usuarios WHERE cpf = ?";
+            
+            PreparedStatement pstm = conexao.prepareStatement(sql);
+            pstm.setString(1, cpf);
+            ResultSet rs = pstm.executeQuery();
+            
+            if(rs.next()) {
+                return true;
+            }
+            return false;
+        } catch(SQLException erro) {
+            JOptionPane.showConfirmDialog(null, "buscaPorCPF: " + erro);
+            return false;
+        }
+    }
+    
     public String getNome() {
         return UsuarioCad.nome;
     }
