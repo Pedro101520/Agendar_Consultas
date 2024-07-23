@@ -32,9 +32,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JEditorPane;
 import javax.swing.DropMode;
@@ -146,9 +150,28 @@ public class TelaAtualizar extends JFrame {
 		lblNewLabel_1_1.setBounds(10, 80, 80, 14);
 		panel.add(lblNewLabel_1_1);
 
-		dcData = new JDateChooser();
-		dcData.setBounds(100, 77, 154, 21);
-		panel.add(dcData);
+		  dcData = new JDateChooser();
+		    dcData.setBounds(100, 77, 154, 21);
+		    panel.add(dcData);
+
+		    Calendar calendar = Calendar.getInstance();
+		    calendar.set(1900, Calendar.JANUARY, 1);
+		    Date minDate = calendar.getTime();
+
+		    dcData.setMinSelectableDate(minDate);
+		    dcData.setMaxSelectableDate(new Date());
+
+		    dcData.getDateEditor().getUiComponent().addKeyListener(new KeyAdapter() {
+		        public void keyTyped(KeyEvent e) {
+		            e.consume();
+		        }
+		        public void keyPressed(KeyEvent e) {
+		            e.consume();
+		        }
+		        public void keyReleased(KeyEvent e) {
+		            e.consume();
+		        }
+		    });
 
 		try {
 			MaskFormatter mask = new MaskFormatter("###.###.###-##");

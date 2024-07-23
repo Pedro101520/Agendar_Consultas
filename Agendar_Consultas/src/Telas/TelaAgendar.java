@@ -40,6 +40,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
 
@@ -252,6 +255,17 @@ public class TelaAgendar extends JFrame {
             }
         });
         dcData.setBounds(150, 305, 180, 26);
+	    dcData.getDateEditor().getUiComponent().addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+	            e.consume();
+	        }
+	        public void keyPressed(KeyEvent e) {
+	            e.consume();
+	        }
+	        public void keyReleased(KeyEvent e) {
+	            e.consume();
+	        }
+	    });
         contentPane.add(dcData);
     }
     
