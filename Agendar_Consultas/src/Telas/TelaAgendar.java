@@ -166,29 +166,39 @@ public class TelaAgendar extends JFrame {
 
         JButton btnConfirmar = new JButton("Confirmar");
         btnConfirmar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		int id = agenda.getIdMedico(cbMedico.getSelectedItem().toString());
-        		confirmaAgendamento.agendar(cbHorario.getSelectedItem().toString(), data, id);
-                TelaPrincipal principal = new TelaPrincipal();
-                envioEmail envio = new envioEmail();
-                
-                if(consulta.dadosEmail()) {
-                    String dadosEmail = "Olá " + consulta.getNomeUser() + "\n" +
-	                		"Sua consulta foi agendada com sucesso! Abaixo vou te fornecer mais informações: " + "\n" +
-	                		"Nome do médico: " + consulta.getNomeMedico() + "\n" +
-	                		"Especialidade: " + consulta.getEspecialidadeConsulta() + "\n" +
-	                		"Unidade: " + consulta.getUnidadeConsulta() + "\n" +
-	                		"Id da consulta: " + consulta.getId() + "\n" +
-	                		"Obs: Caso deseje cancelar a consulta, é necessário que informe o id da consulta no sistema, na parte de cancelamento de consultas";	
-                    if(dadosUsuario.dadosUsuario()) {
-                        envio.email(dadosUsuario.getEmail(), dadosEmail);
+        	public void actionPerformed(ActionEvent e) {                
+                try {
+            		int id = agenda.getIdMedico(cbMedico.getSelectedItem().toString());
+            		confirmaAgendamento.agendar(cbHorario.getSelectedItem().toString(), data, id);
+                    TelaPrincipal principal = new TelaPrincipal();
+                    envioEmail envio = new envioEmail();
+                    
+                    boolean hora = true;
+                    if(cbHorario.getSelectedItem().toString() == "") {
+                    	hora = false;
+                    	JOptionPane.showMessageDialog(null, "Selecione todas as opções e tente novamente!");
                     }
-
+                    
+	                if(consulta.dadosEmail() && hora) {
+	                    String dadosEmail = "Olá " + consulta.getNomeUser() + "\n" +
+		                		"Sua consulta foi agendada com sucesso! Abaixo vou te fornecer mais informações: " + "\n" +
+		                		"Nome do médico: " + consulta.getNomeMedico() + "\n" +
+		                		"Especialidade: " + consulta.getEspecialidadeConsulta() + "\n" +
+		                		"Unidade: " + consulta.getUnidadeConsulta() + "\n" +
+		                		"Id da consulta: " + consulta.getId() + "\n" +
+		                		"Obs: Caso deseje cancelar a consulta, é necessário que informe o id da consulta no sistema, na parte de cancelamento de consultas";	
+	                    if(dadosUsuario.dadosUsuario()) {
+	                        envio.email(dadosUsuario.getEmail(), dadosEmail);
+	                    }
+	                    
+	            		JOptionPane.showMessageDialog(null, "Consulta Agendada! Enviei as informações de sua consulta no seu email!");
+	                    principal.setVisible(true);
+	                    dispose();
+	
+	                }
+                }catch(Exception err) {
+                	JOptionPane.showMessageDialog(null, "Selecione todas as opções e tente novamente!");
                 }
-
-        		JOptionPane.showMessageDialog(null, "Consulta Agendada! Enviei as informações de sua consulta no seu email!");
-                principal.setVisible(true);
-                dispose();
         	}
         });
         btnConfirmar.setBounds(38, 411, 105, 27);
