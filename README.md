@@ -1,4 +1,4 @@
-# 📰WebScraping de Notícias
+# 📒 Agendamento de consultas
 
 Este projeto CRUD foi desenvolvido com Java e MySQL, e se trata de um sistema de agendamento de consultas médicas. Neste sistema coloquei algumas funcionalidades de sistemas reais, como por exemplo:
 Cadastro de usuários, sistema de login, envio de emails de confirmação de agendamento, histórico e cancelamento de consultas
